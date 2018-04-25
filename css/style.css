@@ -182,6 +182,18 @@ margin-top: 0;
 text-align: justify;
 }
 
+.portfolio-text4{
+margin-top: 0;
+margin-bottom: 5px;
+text-align: justify;
+}
+
+.portfolio-text5{
+margin-top: 5px;
+margin-bottom: 5px;
+text-align: justify;
+}
+
 .outline{
 border: 2px solid green; 
 padding: 5px;	
