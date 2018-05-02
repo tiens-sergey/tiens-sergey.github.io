@@ -281,6 +281,20 @@ padding-bottom: 110px;
 	transition: 0.2s;
 	}
 
+.contacts{
+	font-size: 14px;
+	text-align: center;
+	color: #fff;
+	transition: 0.2s;
+	}
+
+	a{
+	color: #fff;
+	}
+
+	.footertel{
+	margin: 5px;
+}
 	@media (max-width: 1200px) {
 	.header-pretitle{
 	margin-top: 45px;
