@@ -236,7 +236,10 @@ border-bottom: none;
 
 .ya-share2__list{
 margin-top: 20px !important;
+}
 
+#community_header{
+display: none;	
 }
 
 .ya-share2__container_size_m .ya-share2__icon{
