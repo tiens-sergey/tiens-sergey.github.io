@@ -238,7 +238,7 @@ border-bottom: none;
 margin-top: 20px !important;
 }
 
-.community_header.wcommunity_header{
+#community_header .wcommunity_header{
 display: none !important;
 }
 
