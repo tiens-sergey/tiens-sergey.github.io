@@ -248,6 +248,10 @@ padding-bottom: 12px;
 color: #000;
 }
 
+.wcommunity_header{
+display: none !important;	
+}
+
 .ya-share2__container_size_m .ya-share2__icon{
 
 	height: 50px !important;
