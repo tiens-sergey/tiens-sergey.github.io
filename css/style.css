@@ -331,6 +331,12 @@ padding-bottom: 110px;
 	 }
 	}
 
+	@media (max-width: 576px) {
+	.ya-share2{
+	text-align: center;
+	 }
+	}
+
 	/*@media (max-width: 992px) {
 		.header-img{
 		display: none;	
