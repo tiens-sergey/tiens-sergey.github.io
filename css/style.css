@@ -238,19 +238,10 @@ border-bottom: none;
 margin-top: 20px !important;
 }
 
-#wcommunity_header{
-display: none !important;	
-position: relative;
-font-size: 0;
-padding-top: 34px;
-border-bottom: 1px solid #e7e8ec;
-padding-bottom: 12px;
-color: #000;
+#wcommunity_header .wcommunity_header{
+display: none !important;
 }
 
-.wcommunity_header{
-display: none !important;	
-}
 
 .ya-share2__container_size_m .ya-share2__icon{
 
