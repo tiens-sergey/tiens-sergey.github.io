@@ -234,7 +234,12 @@ margin-top: 15px;
 border-bottom: none;
 }
 
+.ya-share2__container_size_m .ya-share2__icon{
 
+	height: 50px !important;
+    width: 50px !important;
+    background-size: 24px 24px;
+}
 
 .outline{
 border: 2px solid #D316D8;
