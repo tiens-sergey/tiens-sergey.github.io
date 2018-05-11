@@ -238,8 +238,12 @@ border-bottom: none;
 margin-top: 20px !important;
 }
 
-.wcommunity_header {
+.wcommunity_header_avatar {
  display: none !important;
+}
+
+.wcommunity_name_link{
+ display: none !important;	
 }
 
 .ya-share2__container_size_m .ya-share2__icon{
