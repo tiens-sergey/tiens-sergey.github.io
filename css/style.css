@@ -242,8 +242,12 @@ margin-top: 20px !important;
  display: none !important;
 }
 
-.wcommunity_name .wcommunity_name_link{
+.wcommunity_name_link{
  display: none !important;	
+}
+
+.wcommunity_header_avatar{
+display: none !important;	
 }
 
 .ya-share2__container_size_m .ya-share2__icon{
