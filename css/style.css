@@ -229,8 +229,13 @@ margin-bottom: 15px;
 text-align: justify;
 }
 
-#vk_groups{
+#vk_subscribe{
 margin-top: 20px;
+
+}
+
+#vk_comments{
+margin-top: 20px;	
 }
 
 .ya-share2 a{
