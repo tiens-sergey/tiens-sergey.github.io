@@ -3,6 +3,19 @@ body {
 	margin: 0;
 	font-family: 'Roboto';
 	font-size: 20px;
+}1
+2
+3
+4
+5
+6
+7
+.overlay{
+  display:none;
+  position: absolute;
+}
+a:hover .overlay{
+ display: block;
 }
 
 img {
@@ -20,6 +33,14 @@ header {
 .header-img{
 
 }*/
+
+.overlay{
+  display:none;
+  position: absolute;
+}
+a:hover .overlay{
+ display: block;
+}
 
 /************** Стили для видео***************/
 .embed-responsive.embed-responsive-16by9 {
