@@ -8,7 +8,7 @@ body {
   display:none;
   position: absolute;
 }
-a:hover .overlay{
+.txtdescr:hover .overlay{
  display: block;
 }
 
