@@ -4,13 +4,7 @@ body {
 	font-family: 'Roboto';
 	font-size: 20px;
 }
-.overlay{
-  display:none;
-  position: absolute;
-}
-.txtdescr:hover .overlay{
- display: block;
-}
+
 
 img {
 	max-width: 100%;
