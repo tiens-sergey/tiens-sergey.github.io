@@ -23,6 +23,68 @@ header {
 }*/
 
 
+.wrapper-specification-ico-help .ico-help-small {
+    cursor: pointer;
+    margin-top: -.5rem;
+    margin-bottom: -.4rem;
+}
+.link-help, .link-with-arrow::after {
+    display: inline-block;
+    margin-left: .8rem;
+}
+.ico-help-small {
+    background-position: -75px -277px;
+    width: 20px;
+    height: 20px;
+}
+
+.product-details-overview-specification {
+    display: table-cell;
+}
+
+.product-details-overview-specification, .wrapper-specification-ico-help {
+    padding-right: 1rem;
+    display: table-cell;
+}
+
+.active .ico-grid, .active .ico-list, .breadcrumbs-home-link, 
+.close-popover, .fake-checkbox, .fake-radio, .footer-yandex-link 
+.fake-checkbox, .footer-yandex-link .ico, .footer-yandex-link 
+.select-area .select-button, .header-menu-btn, .ico-add-guarantee, 
+.ico-alfa-bank, .ico-arrow-back, .ico-arrow-down-white, .ico-bonus-payment, 
+.ico-bonus-payment-small, .ico-cancelled, .ico-cancelled-black, .ico-cancelled-small, 
+.ico-city, .ico-close, .ico-close-popover, .ico-close-popup, .ico-close-transparent, 
+.ico-digital-helper, .ico-facet-close, .ico-facet-close-large, .ico-facet-open, 
+.ico-facet-open-large, .ico-fake-checkbox-off, .ico-fake-checkbox-off-large, 
+.ico-fake-checkbox-on, .ico-fake-checkbox-on-large, .ico-fake-checkbox-on-round, 
+.ico-fake-checkbox-on-round-large, .ico-fake-radio-header-off, .ico-fake-radio-header-on, 
+.ico-fake-radio-off, .ico-fake-radio-off-large, .ico-fake-radio-on, .ico-fake-radio-on-large, 
+.ico-footer-yandex-link, .ico-grid, .ico-grid-active, .ico-help, .ico-help-small, 
+.ico-help-small-hover, .ico-link-more-small, .ico-list, .ico-list-active, .ico-mastercard, 
+.ico-mastercard-large, .ico-mastercard-large2, .ico-menu, .ico-money-back, .ico-more, .ico-mtube, 
+.ico-mvideo-small, .ico-placed, .ico-placed-small, .ico-play, .ico-progress, .ico-progress-small, 
+.ico-qiwi, .ico-qiwi-large, .ico-read-more, .ico-right-red, .ico-sample-payment, .ico-sample-payment-small, 
+.ico-select-arrow-down, .ico-select-arrow-up, .ico-settings, .ico-settings-off, .ico-settings-on, 
+.ico-stock-level-full, .ico-stock-level-low, .ico-stock-level-none, .ico-stock-level-normal, 
+.ico-stock-level-out-of, .ico-stock-level-showcase, .ico-stock-level-very-low, .ico-success, 
+.ico-success-small, .ico-thumbs-up, .ico-thumbs-up-large, .ico-timer, .ico-up, .ico-up_hover, 
+.ico-visa, .ico-visa-large, .ico-visa-large2, .ico-warning, .ico-warning-big, .ico-warning-small, 
+.ico-ya-money, .ico-ya-money-large, .input-checkbox:checked ~ .label-checkbox .fake-checkbox, 
+.input-radio:checked ~ .label-radio .fake-radio, .input.error .after, .input.error::after, 
+.input.success .after, .input.success::after, .input.warning .after, .input.warning::after, 
+.link-with-arrow::after, .no-touchevents .ico-help-small:hover, .required-radiobutton .error::after, 
+.select-area .footer-yandex-link .select-button, .select-area.cs-opened::after, .select-area::after, 
+.support-type-link::after, .top-back-btn-block .back-btn-link::before, .view-all-link::after, input[type="checkbox"] + label .facet-color-item .facet-color-icon {
+    background: url(../img/sprite.png?ca17ae1e99f0d24f8610857f3bf545af) no-repeat;
+        background-position-x: 0%;
+        background-position-y: 0%;
+    display: inline-block;
+    vertical-align: middle;
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    border: 0;
+}
 
 /************** Стили для видео***************/
 .embed-responsive.embed-responsive-16by9 {
