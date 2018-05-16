@@ -28,13 +28,7 @@ header {
 
 }*/
 
-.overlay{
-  display:none;
-  position: absolute;
-}
-a:hover .overlay{
- display: block;
-}
+
 
 /************** Стили для видео***************/
 .embed-responsive.embed-responsive-16by9 {
