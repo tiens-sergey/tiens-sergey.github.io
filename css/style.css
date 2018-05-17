@@ -316,6 +316,28 @@ padding-bottom: 110px;
 	transition: 0.2s;
 	}
 
+	.footer-button2{
+	display: inline-block;
+	text-decoration: none;
+	border: 1px solid #ffffff;
+	background-color: transparent;
+	color: #c32017;
+	font-size: 18px;
+	border-radius: 50px;
+	padding: 12px 40px;	
+	-webkit-transition: 0.2s;
+	-o-transition: 0.2s;
+	transition: 0.2s;
+	}
+
+	.footer-button2:hover {
+	background-color: #c32017;	
+	color: #3a7dfd;
+	-webkit-transition: 0.2s;
+	-o-transition: 0.2s;
+	transition: 0.2s;
+	}
+
 .contacts{
 	font-size: 17px;
 	text-align: center;
