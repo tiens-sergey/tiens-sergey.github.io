@@ -58,6 +58,10 @@ header {
 	border-radius: 50px;
 }*/
 
+h2{
+color: #c32017;	
+}
+
 h3{
 text-align: center;
 
@@ -81,7 +85,9 @@ margin-top: 21px;
 
 .header-subtitle {
 	margin-top: 20px;
+	color: #fff;
 }
+
 .header-button {
 display: inline-block;
 text-decoration: none;
@@ -323,7 +329,7 @@ line-height: 21px;/*высота строки, ну и соответствен�
 	text-decoration: none;
 	border: 1px solid #ffffff;
 	/*background-color: transparent;*/
-	background-color: #27DB29;
+	background-color: #0C920C;
 	color: #fff;
 	font-size: 18px;
 	border-radius: 50px;
@@ -334,7 +340,7 @@ line-height: 21px;/*высота строки, ну и соответствен�
 	}
 
 	.link-button:hover {
-	background-color: #0C920C;	
+	background-color: #035F03;	
 	color: #fff;
 	-webkit-transition: 0.2s;
 	-o-transition: 0.2s;
