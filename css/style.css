@@ -14,7 +14,8 @@ img {
 header {
 	padding-top: 59px ;
 	padding-bottom: 22px;
-	background-color: #3a7dfd;
+	/*background-color: #3a7dfd;*/
+	background-image: url(img/bg-image.jpg); /* Путь к фоновому изображению */
 	color: #ffffff;
 }
 /*
