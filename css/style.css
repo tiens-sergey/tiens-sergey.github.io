@@ -103,7 +103,9 @@ z-index: 1;}
 	height: 100%;
 	border: 0;
 }
-
+.centered {
+    text-align: center;
+}
 /*.header-img{
 	border: 5px solid #7CDB22;
 	border-radius: 50px;
