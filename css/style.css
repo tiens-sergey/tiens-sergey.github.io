@@ -436,14 +436,8 @@ line-height: 21px;/*высота строки, ну и соответствен�
 	.ya-share2{
 	text-align: center;
 	 }
-
-	 @media (max-width: 576px) {
-	.brake{
-	padding-left: 0px;
-	padding-right: 20px;
-	margin-right: 50px;
-	 }
 	}
+
 	
 	
 	/*@media (max-width: 992px) {
@@ -453,7 +447,8 @@ line-height: 21px;/*высота строки, ну и соответствен�
 	
 	
 	.footer-author{
-	font-size: 18px;	
+	font-size: 18px;
+	text-align: center;	
 	}
 	
 	.footer-text{
