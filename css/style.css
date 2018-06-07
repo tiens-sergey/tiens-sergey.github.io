@@ -165,6 +165,7 @@ header small {
 }
 .header-button-block {
 	max-width: 210px;
+	margin: 0 auto;	
 }
 /* Секция портфолио */
 .portfolio {
