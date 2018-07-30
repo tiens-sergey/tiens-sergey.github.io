@@ -415,7 +415,7 @@ line-height: 21px;/*высота строки, ну и соответствен�
 	.footertel{
 	margin: 5px;
 	text-decoration: none;
-	border-bottom: 1px dashed #fff;
+	border-bottom: 2px dotted #fff;
 }
 	@media (max-width: 1200px) {
 	.header-pretitle{
