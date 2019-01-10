@@ -19,10 +19,10 @@ header {
 }
 
 
-/*
-.header-img{
 
-}*/
+.header-img{
+margin-bottom: 15px;
+}
 
 /* задаем относительное позиционирование контейнеру */
 .block{position:relative;}
