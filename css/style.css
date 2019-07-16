@@ -380,6 +380,7 @@ line-height: 21px;/*высота строки, ну и соответствен�
 	}
 
 	.link-button{
+	margin-top: 30px;
 	display: inline-block;
 	text-decoration: none;
 	border: 1px solid #ffffff;
