@@ -410,6 +410,23 @@ line-height: 21px;/*высота строки, ну и соответствен�
 	color: #fff;
 	transition: 0.2s;
 	}
+.copyright{
+color: #FFFFFF;
+font-size: 15px;
+margin-top: 50px;
+margin-bottom: 5px;	
+}	
+
+p.support{
+margin-top: 5px;
+color: #fff;	
+}
+
+.support{
+color: #FFDD00;
+font-size: 15px;
+margin-top: 5px;	
+}
 
 	a{
 	color: #fff;
