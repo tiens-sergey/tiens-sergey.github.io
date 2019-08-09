@@ -131,6 +131,9 @@ font-size: 48px;
 font-weight: 700;
 line-height: 46.81px;	
 margin-top: 21px;
+border-radius: 15px;
+padding: 10px 23px;
+box-shadow: 0 10px 10px rgba(0,0,0,0.5);	
 }
 
 .header-pretitle{
