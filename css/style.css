@@ -73,29 +73,6 @@ z-index: 1;}
 /* Появление скрытого элемента при клике */
 .focus:focus + .hidden{display: block;}
 
-/*Стили подсказки */
-. tip-checkbox {
-display: none;
-}
-
-#tip-checkbox:checked ~ * .tip-three {
-display: block;
-}
-
-.tip-close {
-display: inline-block;
-position: absolute;
-background: #333;
-border-radius: 20px;
-border: 2px solid #FFF;
-top: -8px;
-right: -8px;
-font: normal bold 14px Comic Sans MS;
-text-align: center;
-color: #fff;
-cursor: pointer;
-padding: 0 4px;
-}
 
 
 /************** Стили для видео***************/
