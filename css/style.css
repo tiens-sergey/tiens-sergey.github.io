@@ -4,7 +4,14 @@ body {
 	font-family: 'Roboto';
 	font-size: 20px;
 }
-
+.progress{
+position: fixed;
+left: 0;
+top: 0;
+width: 0;
+height: 6px;
+background-color: tomato;	
+}
 
 img {
 	max-width: 100%;
