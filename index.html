@@ -18,8 +18,12 @@
 		<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=cyrillic-ext" rel="stylesheet"> 
 		<!-- Подключаем наш файл со стилями, который находится в папке css-->
 		<link rel="stylesheet" href="css/bootstrap-grid.min.css">
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/parallax.css">
 		<link rel="stylesheet" href="css/animate.css">
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/input.css">
+		<link rel="stylesheet" href="css/links.css">
 
 
 		<!-- Yandex.Metrika counter -->
@@ -58,6 +62,7 @@
 <script type="text/javascript">
   VK.init({apiId: 6478597, onlyWidgets: true});
 </script>
+
 	
 </head>
 
@@ -66,24 +71,34 @@
 	<script type="text/javascript" src="//vk.com/js/api/openapi.js?154"></script>
 	<script src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
 	<script src="//yastatic.net/share2/share.js"></script>
-
+    <script src="js/nav.js"></script>
+	
+<section_1 class="parallax-window" data-speed="0.5" data-parallax="scroll" data-image-src="img/bg-image3.jpg">
 <header>
-	<div class="container">
+	
+      <div class="container">
 	  <div class="row">
-		<div class="col-lg-7 col-md-8 col-sm-6"> 
+		<div class="col-lg-7 col-md-6 col-sm-6"> 
 		   <img class="header-img wow fadeInLeftBig" src="img/main-foto2.jpg" alt="Моё фото">
 		   </div>
 		<!-- /.col-7 -->
-		<div class="col-lg-5 col-md-4 col-sm-6">
+		<div class="col-lg-5 col-md-6 col-sm-6">
 		  <p class="header-pretitle wow fadeInRightBig" data-wow-delay="0.1s">Бизнес-консультант команды "Прорыв"</p>
 			<h1 class="header-title wow fadeInRightBig" data-wow-delay="0.2s">Сергей Шелестов</h1>
-                      <div class="w-100 d-none d-sm-block">
 			<p class="header-subtitle wow fadeInRightBig" data-wow-delay="0.3s">Отзывы по результатам<br>применения биопродукции<br>
 			Компании «Тяньши»</p>                                       
 			 <div class="header-button-block wow fadeInRightBig" data-wow-delay="0.4s">
 			<a href="https://vk.me/shelestov.sergey" target="_blank" class="header-button">Связаться</a>
 			<small>*Это бесплатно</small>
-			</div></div>
+			</div>
+		<!-- /.col-5 -->
+		</div>
+	<!-- /.row -->
+	</div>
+	<div class="row centered">
+		<div class="col-lg-12 col-md-12 col-sm-12"> 
+			<p class="header-subtitle2 wow fadeInRightBig" data-wow-delay="0.3s">Отзывы по результатам применения биопродукции<br>
+			Компании «Тяньши»</p>                                       
 		<!-- /.col-5 -->
 		</div>
 	<!-- /.row -->
@@ -91,162 +106,206 @@
 	<!-- /.container -->
 </div>
 	</header>
-
+</section_1>
 <section class="portfolio">
 	<div class="container">	
-
-	<div class="portfolio-block wow fadeIn">
+		<div class="portfolio-block1 wow fadeIn">
+		<div class="row">
+		   <div class="col-md-12">
 		<h3 class="portfolio-subtitle">Основная функция биопродуктов «Тяньши»<br>- уход за внутренней средой организма</h3>
-		
-		<ul>    <li>Поддержание уровня pH7,35 - слабощелочной среды организма (слушайте аудио ниже)</li>
+		<div class="layer">
+		<ul>
+			<li>Поддержание уровня pH7,35 - слабощелочной среды организма (слушайте аудио ниже)</li>
 			<li>Устранение побочного действия спортивной фармакологии, лекарств, химиотерапии</li>
 			<li>Предотвращение развития заболеваний на стадии возникновения</li>
-			<li class="block">Активизируют <acronym title="Т- лимфоциты клетки киллеры. Вступая в контакт с «поражёнными» клетками, они их уничтожают. Активность Т-лимфоцитов направлена именно против поражённых клеток собственного организма, а не против того, что их поразило. Все структуры тела, не подлежащие восстановлению, уничтожаются, и этим занимаются Т-лимфоциты.">Т-лимфоциты</acronym> для борьбы с поражёнными клетками</li>
+			<li class="left-block box">Активизируют Т-лимфоциты<input type="checkbox" id="tip-checkbox" class="tip-checkbox">
+<label for="tip-checkbox" class="support"><em>?</em></label>
+<span class="tip-block">
+ <span class="tip-three">Т- лимфоциты клетки киллеры. Вступая в контакт с «поражёнными» клетками, они их уничтожают. Активность Т-лимфоцитов направлена именно против поражённых клеток собственного организма, а не против того, что их поразило. Все структуры тела, не подлежащие восстановлению, уничтожаются, и этим занимаются Т-лимфоциты.
+  <label for="tip-checkbox" class="tip-close">X</label>
+ </span></span>для борьбы с поражёнными клетками</li>
 			<li>Устранение дефицита биологической ценности питания</li>
+			<!--<li class="block">Активизируют <acronym title="Т- лимфоциты клетки киллеры. Вступая в контакт с «поражёнными» клетками, они их уничтожают. Активность Т-лимфоцитов направлена именно против поражённых клеток собственного организма, а не против того, что их поразило. Все структуры тела, не подлежащие восстановлению, уничтожаются, и этим занимаются Т-лимфоциты.">Т-лимфоциты</acronym> для борьбы с поражёнными клетками</li>
+			<li>Устранение дефицита биологической ценности питания</li>-->
 		</ul>
-		<h2 class="portfolio-title">Отзывы по применению продукции «Тяньши»</h2>
-		<div class="row centered">
-			<div class="col-md-6">
-			<div class="portfolio-col-1">
-				
-
-					<!--Видео 1-->
-			<h3>Результаты применения биокорректоров<br>при онкологии<br>толстого кишечника</h3>
-<div class="embed-responsive embed-responsive-16by9">
+	</div>
+	</div></div></div>
+</div>
+	<div class="container">	
+<div class="portfolio-block wow fadeIn">
+<h2 class="portfolio-title">Отзывы по применению продукции «Тяньши»</h2>
+		<div class="row centered">		
+				<div class="container p-5">
+			<div class="row">
+		   <div class="col-md-6">
+		   		<!--Видео 1-->
+					<h3>Результаты применения биокорректоров<br>при онкологии<br>толстого кишечника</h3>
+		   	<div class="embed-responsive embed-responsive-16by9">
   <iframe  class="embed-responsive-item" src="https://www.youtube.com/embed/OYdn6cD54SE?rel=0" frameborder="0" allowfullscreen>
-  	 </iframe>
-</div>		
-	<a href="http://ru.tiens.com/InvitePage?code=iV4rq5TV7W" class="link-button" target="_blank">Заказать продукт</a>		
-
-											<!--Видео 2-->
-				<h3>Результаты<br>Лечения «Кордицепсом»</h3>
-					<div class="embed-responsive embed-responsive-16by9">
-  <iframe  class="embed-responsive-item" src="https://www.youtube.com/embed/dgh3QlF9ukU?rel=0" frameborder="0"  allowfullscreen>
-  	</iframe>
-</div> 			
-				
-				<h3>Подробное ВИДЕО<br>С БИОПРОДУКТОМ «Хитозан»</h3>
-					<div class="embed-responsive embed-responsive-16by9">
- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v40VPLGNr5E?rel=0" frameborder="0"  allowfullscreen></iframe>
-</div>
-				
-				<p class="portfolio-text4">Получите доступ в систему обучения партнёров и клиентов!</p>
-				<p>Обучаясь 1 час в неделю</p>
-				<h2>Вы узнаете, как превращать баллы за продукты в деньги для своих клиентов и партнёров</h2>
-				<a href="http://mlmsystem.su/land1-svshelestov" class="link-button" target="_blank">Доступ в систему обучения</a>
-			<!--Видео 3-->
-				<h3>Видео опыт c бытовым прибором «Озонатор»</h3> 
-<div class="embed-responsive embed-responsive-16by9">
- <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/wKcElcZDnhA?rel=0" frameborder="0" allowfullscreen></iframe>
-</div>
-				<p class="portfolio-text5">Получите доступ в систему обучения партнёров и клиентов!</p>
-				<p>Обучаясь 1 час в неделю</p>
-				<h2>Вы узнаете, как превращать баллы за продукты в деньги для своих клиентов и партнёров</h2>
-				<a href="http://mlmsystem.su/land1-svshelestov" class="link-button" target="_blank">Доступ в систему обучения</a>
-
-			</div>
-					</div>
-
-			<!-- /.col-6 -->
-			<div class="col-md-6">
-				<div class="portfolio-col-2">
-					<!--<img src="img/portfolio-img-2.jpg" alt="Мир">-->
-		<!--Видео 4-->
-
-				<h3>Продукция «Тяньши»<br>под контролем<br>РАМН<br></h3> 
+  	 </iframe></div>	
+  	 
+  	 </div>
+				<div class="col-md-6">
+					<!--Видео 2-->
+				<h3>Продукция «Тяньши»<br>под контролем<br>РАМН</h3> 
 <div class="embed-responsive embed-responsive-16by9">
  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/JwoMS-9rKK0?rel=0" frameborder="0"  allowfullscreen></iframe>
+</div>	
+</div>
 </div>
 
-<h3>Опыты с продукцией</h3> 
+<div class="row">
+<div class="col-md-6">
+	<h3>Результаты<br>Лечения «Кордицепсом»</h3>
+	<div class="embed-responsive embed-responsive-16by9">
+  <iframe  class="embed-responsive-item" src="https://www.youtube.com/embed/dgh3QlF9ukU?rel=0" frameborder="0"  allowfullscreen>
+  	</iframe>
+</div> 
+</div>
+
+
+<div class="col-md-6">
+	<h3>Опыты с продукцией<br><br></h3> 
 <div class="embed-responsive embed-responsive-16by9">
  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/gUEG9Pk8GrI?rel=0" frameborder="0"  allowfullscreen></iframe>
 </div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-6">
+	<h3>Подробное ВИДЕО<br>С БИОПРОДУКТОМ «Хитозан»</h3>
+<div class="embed-responsive embed-responsive-16by9">
+ <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v40VPLGNr5E?rel=0" frameborder="0"  allowfullscreen></iframe>
+</div>
+</div>
 
 
-<h3>Здоровье-<br>мудрых гонорар</h3> 
+<div class="col-md-6">
+	<h3>Здоровье-<br>мудрых гонорар</h3> 
 <div class="embed-responsive embed-responsive-16by9">
  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dCVvAfU3TBA?rel=0" frameborder="0"  allowfullscreen></iframe>
 </div>
+</div>
+</div>
 
+
+<div class="row centered">
+<div class="col-md-6">
+	<!--Видео 3-->
+				<h3>Видео опыт c бытовым прибором «Озонатор»</h3>
+<div class="embed-responsive embed-responsive-16by9">
+ <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/wKcElcZDnhA?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+
+
+				<!--Видео 4-->
+
+
+<div class="col-md-6">
 <h3>ЩЕЛОЧНАЯ СИСТЕМА ОЗДОРОВЛЕНИЯ<br>АУДИОКНИГА Часть 1-3</h3> 
 <div class="embed-responsive embed-responsive-16by9">
  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/_hcUaKFHwTg?rel=0" frameborder="0"  allowfullscreen></iframe>
 </div>
+</div>
+</div>		
+
+
+			
+<div class="row">
+<div class="col-md-6">		
 		
 		<h3>ЩЕЛОЧНАЯ СИСТЕМА ОЗДОРОВЛЕНИЯ<br>АУДИОКНИГА Часть 2-3</h3> 
 <div class="embed-responsive embed-responsive-16by9">
  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rOrDH5sFoCY?rel=0" frameborder="0"  allowfullscreen></iframe>
 </div>
-
+</div>
+<div class="col-md-6">	
 	<h3>ЩЕЛОЧНАЯ СИСТЕМА ОЗДОРОВЛЕНИЯ<br>АУДИОКНИГА Часть 3-3</h3> 
 <div class="embed-responsive embed-responsive-16by9">
  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/mPhvpQwdeYY?rel=0" frameborder="0"  allowfullscreen></iframe>
 </div>
+</div>
+</div>
 				
 				<p class="portfolio-text5">Получите доступ в систему обучения партнёров и клиентов!</p>
-				<p>Обучайтесь 1 час в неделю</p>
-				<h2>Вы узнаете, как превращать баллы за продукты в деньги для своих клиентов и партнёров</h2>
+				<p class="p">Обучайтесь 1 час в неделю</p>
+				<h2>Вы узнаете, как превращать баллы за продукты<br>в деньги для своих клиентов и партнёров!</h2>
 				<a href="http://mlmsystem.su/land1-svshelestov" class="link-button" target="_blank">Доступ в систему обучения</a>
-
-
-<div class="ya-share2 col-sm-12" data-services="vkontakte,facebook,odnoklassniki,gplus,viber,whatsapp,skype,telegram" data-counter=""></div>
-
-
-<script type="text/javascript" src="//vk.com/js/api/openapi.js?154"></script>
-
-<!-- VK Widget -->
-<center>
-<div id="vk_subscribe"></div>
-<script type="text/javascript">
-VK.Widgets.Subscribe("vk_subscribe", {}, 134716510);
-</script>
-</center>
+				<p class="p">Вы можете заказать продукт с доставкой на дом -</p>
+				<a href="http://ru.tiens.com/InvitePage?code=iV4rq5TV7W" class="link-button" target="_blank">Заказать продукт</a>
 
 
 
-<!-- Put this div tag to the place, where the Comments block will be -->
-<div id="vk_comments"></div>
-<script type="text/javascript">
-VK.Widgets.Comments("vk_comments", {limit: 10, attach: "graffiti,photo,audio"});
-</script>
 
-				</div>
-			</div>
 
 			<!-- /.col-6 -->
 			</div>
 		</div>
 	</div>
+</div>
+</section>
+<section class="portfolio">
+<div class="container">	
+	<div class="row">
+	<div class="col-md-6 col-md-offset-6">	
+<div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,gplus,viber,whatsapp,skype,telegram" data-counter=""></div>
+</div></div>
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-6">
+<script type="text/javascript" src="//vk.com/js/api/openapi.js?154"></script>
+
+<!-- VK Widget -->
+<div id="vk_subscribe"></div>
+<script type="text/javascript">
+VK.Widgets.Subscribe("vk_subscribe", {}, 134716510);
+</script>
+</div></div>
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-6">
+<!-- Put this div tag to the place, where the Comments block will be -->
+<div id="vk_comments"></div>
+<script type="text/javascript">
+VK.Widgets.Comments("vk_comments", {limit: 10, attach: "graffiti,photo,audio"});
+</script>
+</div>
+</div>
+</div>
 </section>
 <footer>
 	<div class="container">
-		<div class="row">
+		<div class="row centered">
 			<div class="col-md-4">
 				<h4 class="footer-author">Сергей Шелестов</h4>
 				<p class="footer-text">Бизнес-консультант команды "Прорыв"</p>
 				<p class="footer-text">Tiens Group Co. Ltd</p>
 				<div class="contacts">
-				<p><a class="footertel wow fadeInLeftBig" href="skype:sersv4?call">Позвоните мне с помощью Skype</a></p>
-				
-				<p><span class="autor">WhatsApp:</span><a class="footertel wow fadeInLeftBig" href="https://wa.me/<+79520521710>" target="_blank">+7 (952) 052 17 10</a></p>
-				<p><span class="autor">Viber:</span><a class="footertel wow fadeInLeftBig" href="viber://add?number=79520521710" target="_blank">+7 (952) 052 17 10</a></p>
-				
+					<div class="links">
+				<p class="left"><a class="skype wow fadeInLeftBig" href="skype:sersv4?call">Позвоните мне с помощью Skype</a></p>
+		
+				<p class="left"><span class="autor">W/A:</span><a class="footertel wow fadeInLeftBig" href="https://wa.me/<+79520521710>" target="_blank">+7 (952) 052 17 10</a></p>
+				<p class="left"><span class="autor">Viber:</span><a class="footertel wow fadeInLeftBig" href="viber://add?number=79520521710" target="_blank">+7 (952) 052 17 10</a></p>
+				</div>
 			</div>
 		</div>
 			<div class="col-md-4">
 				<div class="social-block">
-					<p>Следите за мной:</p>      
+					<p class="haunted">Следите за мной:</p>
+					<div class="social-block-links">      
 					<a class="wow bounceInDown" data-wow-delay="0.1s" href="https://www.facebook.com/profile.php?id=100011389429443" target="_blank"><img src="img/socials/facebook-logo-button.png" alt="Facebook"></a>
 					<a class="wow bounceInDown" data-wow-delay="0.2s" href="https://t.me/Sergey4mlm" target="_blank"><img src="img/socials/telegram-symbol.png" alt="Telegram"></a>
 					<a class="wow bounceInDown" data-wow-delay="0.3s" href="https://vk.com/shelestov.sergey" target="_blank"><img src="img/socials/vk-social-logotype.png" alt="Вконтакте"></a>
 					<a class="wow bounceInDown" data-wow-delay="0.4s" href="https://www.youtube.com/channel/UC1LNweMqWIQS7fyIYXwoESQ?view_as=subscriber" target="_blank"><img src="img/socials/youtube-symbol.png" alt="YouTube"></a>
 					<a class="wow bounceInDown" data-wow-delay="0.5s" href="https://www.instagram.com/sergey_kld39/" target="_blank"><img src="img/socials/instagram-symbol.png" alt="Instagram"></a>
+				</div>
                                          
-                                         <p class="support">Вступайте в группу кандидатов:&nbsp;<a class="support" href="https://vk.com/tiensgroupltd">https://vk.com/tiensgroupltd</a></p>
+                                         <p class="support, left">Вступайте в группу кандидатов:&nbsp;<a class="support" href="https://vk.com/tiensgroupltd">https://vk.com/tiensgroupltd</a></p>
        
 					<p class="copyright">2019&nbsp;© Все права защищены.</p>
-					<p class="support">Поддержка:&nbsp;<a class="support" href="mailto:sergey.tns@gmail.com">sergey.tns@gmail.com</a></p>
+					<p class="support, left">Поддержка:<a class="support" href="mailto:sergey.tns@gmail.com">sergey.tns@gmail.com</a></p>
 
 				</div>
 			</div>
@@ -261,11 +320,16 @@ VK.Widgets.Comments("vk_comments", {limit: 10, attach: "graffiti,photo,audio"});
 	</div>
 <!--/.container -->
 </footer>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="js/wow.min.js"></script>
-<script src="js/main.js"></script>	
+<script src="js/main.js"></script>
 <script>
 	new WOW().init();
 </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/parallax.min.js"></script>
 
 </body>
 
