@@ -1,0 +1,109 @@
+
+.links  {
+  margin: auto;
+  width: 80%;
+}
+a {
+  text-decoration: none;
+  position: relative;
+}
+/*
+.center a::before {
+  content: '';
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #FFDD08;
+  transition: 0.2s;
+  transform: scaleX(0);
+}
+.center a:hover:before {
+  transform: scaleX(1);
+}
+
+.container1{
+padding-bottom: 20px;	
+}*/
+
+.left a.top::before {
+  top: 0;
+}
+.left a::before {
+  content: '';
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: #FFDD08;
+  transition: 0.2s;
+}
+.left a:hover:before {
+  width: 100%;
+  left: 0;
+}
+
+.social-block-links{
+ margin: 15px 0 15px; 
+}
+
+.social-block a {
+    display: inline-block;
+    margin-left: 13px;
+    margin-right: 13px;
+  }
+
+  .social-block a{
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .ya-share2 a{
+margin-top: 15px;
+border-bottom: none;
+}
+
+    .portfolio-block a {
+/*color: #072b6f;*/
+color: #fff;
+font-weight: 400;
+text-decoration: none;
+/*display: table; ширина по тексту в заголовке*/
+/*border-bottom: 2px solid #c32017;/*амо подчеркивание*/
+line-height: 21px;/*высота строки, ну и соответственно отступ от подчеркивания*/
+}
+
+a.support{
+color: #FAFAFA;
+font-size: 15px;
+margin-top: 5px;
+text-decoration: none;  
+}
+
+a.support:hover{
+color: #FFC411;
+} 
+
+a{
+  color: #fff;
+  }
+a.skype:hover{
+text-decoration: none;
+color: #FFC411;
+} 
+
+a.header-button:hover{
+text-decoration: none;
+}
+
+a.footertel{
+  margin: 5px;
+  text-decoration: none;
+  /*border-bottom: 2px dotted #fff;*/
+}
+
+a.footertel:hover{
+color: #FFC411
+}
