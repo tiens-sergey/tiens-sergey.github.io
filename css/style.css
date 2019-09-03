@@ -1,4 +1,8 @@
 /* Здесь будут храниться стили нашего сайта */
+*{
+box-sizing: border-box;	
+}
+
 body {
 	margin: 0;
 	font-family: 'Roboto';
@@ -14,11 +18,6 @@ height: 6px;
 background-color: #B34EE9;	
 }
 
-p.hounted{
-margin-top: 0;
-padding-top: 0;	
-}
-
 
 img {
 	max-width: 100%;
@@ -28,16 +27,21 @@ img {
 header {
 	padding-top: 59px ;
 	padding-bottom: 22px;
-	/*background-image: url(img/bg-image3.jpg);*/
 	color: #ffffff;
 }
 
-
-@media (max-width: 576px) {
+@media (max-width: 768px) {
 header{
 background-image: url(../img/bg-image3.jpg);	
 }
 }
+
+@media (max-width: 576px) {
+.portfolio-footer{
+background-color: #0064b4;	
+}
+}
+
 
 
 @media (max-width: 576px) {
@@ -167,6 +171,14 @@ font-weight: bold;
 margin-top: 25px;
 }
 
+p.share{
+font-size: 20px;
+color: #282923;	
+font-weight: bold; 
+margin-top: 25px;	
+text-align: center;
+}
+
 h2{
 color: #c32017;	
 }
@@ -261,10 +273,17 @@ header small {
 	background-color: #dddddd;
 	/*background-image: url(../img/bg-pattern7.jpg);*/
 	padding-top: 44px;
-	padding-bottom: 71px;
+	padding-bottom: 20px;
 }
 
 
+.portfolio-footer {
+background-color: #fff;
+	padding: 15px 10px 20px;
+	box-shadow: 0 6px 10px 2px rgba(0,0,0,0.3);
+	margin-top: 20px;
+
+}
 
 .portfolio-block1 {
 	background-color: #fff;
@@ -276,10 +295,11 @@ header small {
 
 .portfolio-block {
 	background-color: #fff;
-	padding: 29px 29px;
-	padding-bottom: 44px;
+	padding: 29px 29px 44px;
 	box-shadow: 0 6px 10px 2px rgba(0,0,0,0.3);
 }
+
+
 .portfolio-title {
 	text-transform: uppercase;
 	font-size: 30px;
@@ -404,12 +424,17 @@ margin-top: 20px;
 margin-top: 20px;	
 }
 
+.ya-share2{
+padding-bottom: 30px;
+text-align: center;
+}
 
+/*
 .ya-share2__list{
 margin-top: 20px !important;
 }
 
-
+*/
 
 .ya-share2__container_size_m .ya-share2__icon{
 
@@ -542,17 +567,10 @@ margin-top: 0;
 }
 
 @media (max-width: 992px) {
-.header-subtitle{
-display: none;
+.header-title{
+font-size: 35px;
 }
 }
-/*
-@media (max-width: 992px) {
-.header-button-block{
-display: none;
-}
-}
-*/
 
 
 @media (min-width: 1200px) {
@@ -560,18 +578,7 @@ display: none;
 display: none;
 }
 }
-/*
-@media (min-width: 1200px) {
-.header-button-block2{
-display: none;
-}
-}
-*/
-@media (min-width: 992px) {
-.header-button-block2{
-display: none;
-}
-}
+
 
 
 @media (min-width: 992px) {
@@ -596,11 +603,7 @@ display: none;
 	{
 	}
 
-@media (min-width: 992px) {
-.header-button-block2{
-display: none;
-	{
-	}
+
 
 	@media (max-width: 1200px) {
 	.header-pretitle{
@@ -619,12 +622,7 @@ display: none;
 	margin-top: 47px;
 	 }
 	}
-/*
-	@media (min-width: 576px) {
-	.header-title{
-	width: 300px;
-	 }
-	}*/
+
 
 	@media (max-width: 576px) {
 	.ya-share2{
