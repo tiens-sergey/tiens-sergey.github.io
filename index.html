@@ -12,17 +12,18 @@
 		<link rel="icon" href="img/favicon.ico">
 		<!-- Заголовок на вкладке в браузере -->
 		<title>Сергей Шелестов-система обучения</title>
+
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		
 		
 		<!--Шрифты от Google-->
 		<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=cyrillic-ext" rel="stylesheet"> 
 		<!-- Подключаем наш файл со стилями, который находится в папке css-->
-		<link rel="stylesheet" href="css/bootstrap-grid.min.css">
 		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/bootstrap-grid.min.css">
 		<link rel="stylesheet" href="css/parallax.css">
 		<link rel="stylesheet" href="css/animate.css">
-		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/input.css">
 		<link rel="stylesheet" href="css/links.css">
 
 
@@ -60,7 +61,7 @@
 <script type="text/javascript" src="https://vk.com/js/api/openapi.js?162"></script>
 
 <script type="text/javascript">
-  VK.init({apiId: 7122848, onlyWidgets: true});
+  VK.init({apiId: 6153795, onlyWidgets: true});
 </script>
 
 	
@@ -73,7 +74,7 @@
 	<script src="//yastatic.net/share2/share.js"></script>
     <script src="js/nav.js"></script>
 	
-<section_1 class="parallax-window" data-speed="0.5" data-parallax="scroll" data-image-src="img/bg-image3.jpg">
+<section class="parallax-window" data-speed="0.5" data-parallax="scroll" data-image-src="img/bg-image3.jpg">
 <header>
 	
       <div class="container">
@@ -95,40 +96,57 @@
 		</div>
 	<!-- /.row -->
 	</div>
-	<div class="row centered">
+
+	<section  id="subtitle2">
+	<div class="container">
+	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12"> 
-			<p class="header-subtitle2 wow fadeInRightBig" data-wow-delay="0.3s">Отзывы по результатам применения биопродукции<br>
+			<p class="subtitle2 header-subtitle2 wow fadeInRightBig" data-wow-delay="0.3s">Отзывы по результатам применения биопродукции<br>
 			Компании «Тяньши»</p>                                       
 		<!-- /.col-5 -->
 		</div>
 	<!-- /.row -->
 	</div>
-	<!-- /.container -->
+	
 </div>
+<!-- /.container -->
+</section>
+</section>
 	</header>
-</section_1>
+
 <section class="portfolio">
 	<div class="container">	
 		<div class="portfolio-block1 wow fadeIn">
 		<div class="row">
-		   <div class="col-md-12">
-		<h3 class="portfolio-subtitle">Основная функция биопродуктов «Тяньши»<br>- уход за внутренней средой организма</h3>
+		   <div class="col-md-10 col-md-offset-1 col-sm-12 col-12">
+		   	<div class="row">
+		   		<div class="col-xl-10 col-xl-offset-1 col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-12">
 		<div class="layer">
+			<h3 class="portfolio-subtitle">Основная функция биопродуктов «Тяньши»<br>- уход за внутренней средой организма</h3>
+			
 		<ul>
-			<li>Поддержание уровня pH7,35 - слабощелочной среды организма (слушайте аудио ниже)</li>
-			<li>Устранение побочного действия спортивной фармакологии, лекарств, химиотерапии</li>
-			<li>Предотвращение развития заболеваний на стадии возникновения</li>
-			<li class="left-block box">Активизируют Т-лимфоциты<input type="checkbox" id="tip-checkbox" class="tip-checkbox">
-<label for="tip-checkbox" class="support"><em>?</em></label>
-<span class="tip-block">
- <span class="tip-three" data-toggle="tooltip" data-placement="top">Т- лимфоциты клетки киллеры. Вступая в контакт с «поражёнными» клетками, они их уничтожают. Активность Т-лимфоцитов направлена именно против поражённых клеток собственного организма, а не против того, что их поразило. Все структуры тела, не подлежащие восстановлению, уничтожаются, и этим занимаются Т-лимфоциты.
-  <label for="tip-checkbox" class="tip-close">X</label>
- </span></span>для борьбы с поражёнными клетками</li>
-			<li>Устранение дефицита биологической ценности питания</li>
-		</ul>
+			<li><span  class="glyphicon glyphicon-ok" aria-hidden="true"></span> Поддержание уровня pH7,35 - слабощелочной среды организма (слушайте аудио ниже)</li>
+			<li><span  class="glyphicon glyphicon-ok" aria-hidden="true"></span> Устранение побочного действия спортивной фармакологии, лекарств, химиотерапии</li>
+			<li><span  class="glyphicon glyphicon-ok" aria-hidden="true"></span> Предотвращение развития заболеваний на стадии возникновения</li>
+			<li><span  class="glyphicon glyphicon-ok" aria-hidden="true"></span> Активизируют Т-лимфоциты 
+				
+				<span class="tip-block">
+				<span class="glyphicon glyphicon-question-sign" aria-hidden="true" id="infoIcon"></span>
+<span data-toggle="tooltip" data-placement="top" id="txtName"  title="Т- лимфоциты клетки киллеры. Вступая в контакт с «поражёнными» клетками, 
+они их уничтожают. Активность Т-лимфоцитов направлена именно против поражённых клеток собственного организма, 
+а не против того, что их поразило. Все структуры тела, не подлежащие восстановлению, уничтожаются, 
+и этим занимаются Т-лимфоциты."></span>
+ </span>для борьбы с поражёнными клетками</li>
+			<li><span  class="glyphicon glyphicon-ok" aria-hidden="true"></span> Устранение дефицита биологической ценности питания</li></ul>
+		</div>
+		</div>
 	</div>
-	</div></div></div>
+	  </div>
 </div>
+</div>
+</div>
+</section>
+<section class="portfolio2">
 	<div class="container">	
 <div class="portfolio-block wow fadeIn">
 <h2 class="portfolio-title">Отзывы по применению продукции «Тяньши»</h2>
@@ -226,34 +244,58 @@
 </div>
 </div>
 </div>
-				
-				<p class="portfolio-text5">Получите доступ в систему обучения партнёров и клиентов!</p>
-				<p class="p">Обучайтесь 1 час в неделю</p>
-				<h2>Вы узнаете, как превращать баллы за продукты<br>в деньги для своих клиентов и партнёров!</h2>
-				<a href="http://mlmsystem.su/land1-svshelestov" class="link-button" target="_blank">Доступ в систему обучения</a>
-				<p class="p">Вы можете заказать продукт с доставкой на дом -</p>
-				<a href="http://ru.tiens.com/InvitePage?code=iV4rq5TV7W" class="link-button" target="_blank">Заказать продукт</a>
 
-
-
-
-
-			<!-- /.col-6 -->
+<!-- /.col-6 -->
 			</div>
 		</div>
 	</div>
 </div>
+
+<!--section-->
 </section>
-<section class="portfolio">
-<div class="container">	
-	<div class="row">
-	<div class="col-md-6 col-md-offset-6">
+
+<section class="portfolio2">
+	<div class="container">	
+<div class="portfolio-block wow fadeIn">
+		<div class="row">		
+				<div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-12">
+						<div class="row">
+					<div class="col-xl-10 col-xl-offset-1 col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-12"> 				
+				<p class="portfolio-text5">Получите доступ в систему обучения партнёров и клиентов!</p>
+				<p class="txtpart">Обучайтесь 1 час в неделю</p>
+				<h2>Вы узнаете, как превращать баллы за продукты<br>в деньги для своих клиентов и партнёров!</h2>
+				<p class="links3"><a href="http://mlmsystem.su/land1-svshelestov" class="link-button" target="_blank">Доступ в систему обучения</a></p>
+				<p class="links3">Вы можете заказать продукт с доставкой на дом</p>
+				<p class="links3"><a href="http://ru.tiens.com/InvitePage?code=iV4rq5TV7W" class="link-button" target="_blank">Заказать продукт</a></p>
+				</div>
+		</div>
+	</div>
+</div>
+	</div>
+		</div>
+</section>
+
+
+
+
+
+
+				<!-- Обратная связь -->
+
+<div class="portfolio3">
+<div class="container">		
+	<div class="portfolio-footer wow fadeIn">
+			<div class="row">
+		   <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-12">
+<div class="row">
+	<div class="col-xl-6 col-xl-offset-6 col-lg-6 col-lg-offset-6 col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-12">
 		<p class="share">Поделитесь с друзьями</p>
 <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,gplus,viber,whatsapp,skype,telegram" data-counter=""></div>
-</div></div>
+</div>
+</div>
 
 <div class="row">
-	<div class="col-md-6 col-md-offset-6">
+	<div class="col-xl-6 col-xl-offset-6 col-lg-6 col-lg-offset-6 col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-10 col-offset-1">
 <script type="text/javascript" src="//vk.com/js/api/openapi.js?154"></script>
 
 <!-- VK Widget -->
@@ -264,16 +306,26 @@ VK.Widgets.Subscribe("vk_subscribe", {}, 134716510);
 </div></div>
 
 <div class="row">
-	<div class="col-md-6 col-md-offset-6">
+	<div class="col-xl-6 col-xl-offset-6 col-lg-6 col-lg-offset-6 col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-10 col-offset-1">
 <!-- Put this div tag to the place, where the Comments block will be -->
 <div id="vk_comments"></div>
 <script type="text/javascript">
 VK.Widgets.Comments("vk_comments", {limit: 10, attach: false});
 </script>
 </div>
+	</div>
 </div>
+	</div>
+    <!--col-md-6-->
+		</div>
+	<!--row-->
+	</div>
 </div>
-</section>
+	
+<!--portfolio-footer-->
+
+		
+
 <footer>
 	<div class="container">
 		<div class="row centered">
@@ -282,8 +334,8 @@ VK.Widgets.Comments("vk_comments", {limit: 10, attach: false});
 				<p class="footer-text">Бизнес-консультант команды "Прорыв"</p>
 				<p class="footer-text">Tiens Group Co. Ltd</p>
 				<div class="contacts">
-					<div class="links">
-				<p class="left"><a class="skype wow fadeInLeftBig" href="skype:sersv4?call">Позвоните мне с помощью Skype</a></p>
+					<div class="links2">
+				<p class="center"><a class="skype wow fadeInLeftBig" href="skype:sersv4?call">Позвоните мне с помощью Skype</a></p>
 		
 				<p class="left"><span class="autor">W/A:</span><a class="footertel wow fadeInLeftBig" href="https://wa.me/<+79520521710>" target="_blank">+7 (952) 052 17 10</a></p>
 				<p class="left"><span class="autor">Viber:</span><a class="footertel wow fadeInLeftBig" href="viber://add?number=79520521710" target="_blank">+7 (952) 052 17 10</a></p>
@@ -291,9 +343,9 @@ VK.Widgets.Comments("vk_comments", {limit: 10, attach: false});
 			</div>
 		</div>
 			<div class="col-md-4">
-				<div class="social-block"> 
+				<div class="social-block">
 					<p class="haunted">Следите за мной:</p>
-					<div class="social-block-links">      
+					<div class="social-block-links1">      
 					<a class="wow bounceInDown" data-wow-delay="0.1s" href="https://www.facebook.com/profile.php?id=100011389429443" target="_blank"><img src="img/socials/facebook-logo-button.png" alt="Facebook"></a>
 					<a class="wow bounceInDown" data-wow-delay="0.2s" href="https://t.me/Sergey4mlm" target="_blank"><img src="img/socials/telegram-symbol.png" alt="Telegram"></a>
 					<a class="wow bounceInDown" data-wow-delay="0.3s" href="https://vk.com/shelestov.sergey" target="_blank"><img src="img/socials/vk-social-logotype.png" alt="Вконтакте"></a>
@@ -301,10 +353,10 @@ VK.Widgets.Comments("vk_comments", {limit: 10, attach: false});
 					<a class="wow bounceInDown" data-wow-delay="0.5s" href="https://www.instagram.com/sergey_kld39/" target="_blank"><img src="img/socials/instagram-symbol.png" alt="Instagram"></a>
 				</div>
                                          
-                                         <p class="support, left">Вступайте в группу кандидатов:&nbsp;<a class="support" href="https://vk.com/tiensgroupltd/" target="_blank">https://vk.com/tiensgroupltd</a></p>
+                                         <p class="support2 center">Вступайте в группу кандидатов:&nbsp;<a class="support2" href="https://vk.com/tiensgroupltd/" target="_blank">https://vk.com/tiensgroupltd</a></p>
        
 					<p class="copyright">2019&nbsp;© Все права защищены.</p>
-					<p class="support, left">Поддержка:<a class="support" href="mailto:sergey.tns@gmail.com/" target="_blank">sergey.tns@gmail.com</a></p>
+					<p class="support2 center">Поддержка:<a class="support2" href="mailto:sergey.tns@gmail.com" target="_blank">sergey.tns@gmail.com</a></p>
 
 				</div>
 			</div>
@@ -319,21 +371,35 @@ VK.Widgets.Comments("vk_comments", {limit: 10, attach: false});
 	</div>
 <!--/.container -->
 </footer>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="js/popper.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/bootstrap.js"></script>
+<script src="js/popper.min.js"></script>
 <script src="js/wow.min.js"></script>
 <script src="js/main.js"></script>
 <script>
 	new WOW().init();
 </script>
-	<script type="text/javascript">
+
+
+<script src="js/parallax.min.js"></script>
+
+<script type="text/javascript">
 	$(document).ready (function (){
 		$('[data-toggle="tooltip"]').tooltip ();
 	});
 
+ $(document).ready(function () {
+$('txtName').tooltip({
+    trigger :'manual'
+});
 
-<script src="js/parallax.min.js"></script>
+$('#infoIcon').click(function () {
+$('#txtName').tooltip('toggle');
+});
+});
+
+	
+</script>
 
 </body>
 
