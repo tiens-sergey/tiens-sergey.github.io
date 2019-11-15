@@ -128,7 +128,13 @@ z-index: 1;}
 	border-radius: 50px;
 }*/
 
+.tooltip-inner{
+margin-left: -10px;
+}
 
+tooltip.top .tooltip-arrow {
+    margin-left: -15px;
+}
 
 p.share{
 font-size: 20px;
