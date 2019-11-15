@@ -1,5 +1,75 @@
+/*******************Tooltip*********************/
 
-.links  {
+.tooltip-inner {         /*******Текстовая область*******/
+    max-width: 250px;
+    padding: 10px 10px;
+    color: #fff;
+    text-align: center;
+    background-color: #000;
+    border-radius: 4px;
+    left: -15px;
+    top:-5px;
+    position: relative;
+}
+
+@media (max-width: 576px) {
+.tooltip-inner{
+ max-width: 200px;
+   }
+  }
+
+  @media (max-width: 768px) {
+.tooltip-inner{
+ max-width: 250px;
+   }
+  }
+
+
+
+.tooltip {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: left;
+    text-align: start;
+    text-shadow: none;
+    text-transform: none;
+    letter-spacing: normal;
+    word-break: normal;
+    word-spacing: normal;
+    word-wrap: normal;
+    white-space: normal;
+    line-break: auto;
+    position: absolute;
+}
+
+.tooltip.top .tooltip-arrow {     /*******Треугольник текстовой области*******/
+
+    bottom: 0;
+    left: 48%;
+    bottom: 5px;
+    margin-left: -24px;
+    border-width: 5px 5px 0;
+    border-top-color: #000;
+
+}
+
+.glyphicon{
+top: -5px;
+left: -5px; 
+}
+
+
+#infoIcon:hover{
+color: #C6001E;
+}
+
+/*******************End Tooltip************************/
+
+
+.links2  {
   margin: auto;
   width: 80%;
 }
@@ -7,6 +77,7 @@ a {
   text-decoration: none;
   position: relative;
 }
+
 
 .center a::before {
   content: '';
@@ -66,13 +137,18 @@ border-bottom: none;
 }
 
     .portfolio-block a {
-/*color: #072b6f;*/
-color: #fff;
+/*color: #072b6f;
+color: #fff;*/
 font-weight: 400;
 text-decoration: none;
 /*display: table; ширина по тексту в заголовке*/
 /*border-bottom: 2px solid #c32017;/*амо подчеркивание*/
 line-height: 21px;/*высота строки, ну и соответственно отступ от подчеркивания*/
+}
+
+p.links3{
+display: flex;
+justify-content: center;
 }
 
 a.support{
@@ -106,4 +182,21 @@ a.footertel{
 
 a.footertel:hover{
 color: #FFC411
+}
+
+
+p.links{
+padding-top: 20px;
+color: #333333; 
+} 
+
+a.links2{ 
+color: #6C2192;
+font-size: 21px;
+font-weight: bold;  
+}
+
+a.links2:hover {  
+color: #0C910C;
+text-decoration: none;  
 }
