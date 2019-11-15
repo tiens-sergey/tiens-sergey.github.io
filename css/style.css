@@ -129,11 +129,11 @@ z-index: 1;}
 }*/
 
 .tooltip-inner{
-margin-left: -10px;
+margin-left: -10px !important;
 }
 
 tooltip.top .tooltip-arrow {
-    margin-left: -15px;
+    margin-left: -15px !important;
 }
 
 p.share{
