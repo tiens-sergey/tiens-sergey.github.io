@@ -8,7 +8,6 @@ function progressBar(e) {
 
 	progress.style.width = per + '%';
 }
-```javascript
 /* =========================================================
    TOOLTIP — Т-ЛИМФОЦИТЫ
    ========================================================= */
@@ -149,4 +148,3 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 
 });
-```
