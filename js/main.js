@@ -8,6 +8,7 @@ function progressBar(e) {
 
 	progress.style.width = per + '%';
 }
+
 /* =========================================================
    TOOLTIP — Т-ЛИМФОЦИТЫ
    ========================================================= */
@@ -19,13 +20,15 @@ document.addEventListener('DOMContentLoaded', function () {
 	tooltips.forEach(function (tooltip) {
 
 		const trigger = tooltip.querySelector('.ts-tooltip-trigger');
-		const tooltipText = tooltip.querySelector('.ts-tooltip-text');
 		const closeButton = tooltip.querySelector('.ts-tooltip-close');
 
 		let closeTimer = null;
 
 
-		/* Открытие подсказки */
+		/* =====================================================
+		   ОТКРЫТЬ
+		   ===================================================== */
+
 		function openTooltip() {
 
 			clearTimeout(closeTimer);
@@ -36,7 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 
 
-		/* Закрытие подсказки */
+		/* =====================================================
+		   ЗАКРЫТЬ
+		   ===================================================== */
+
 		function closeTooltip() {
 
 			clearTimeout(closeTimer);
@@ -47,40 +53,43 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 
 
-		/* =========================================
-		   НАВЕДЕНИЕ НА ?
-		   ========================================= */
+		/* =====================================================
+		   НАВЕДЕНИЕ НА ВСЮ ОБЛАСТЬ ТУЛТИПА
+		   
+		   Это главное изменение.
+		   Пока курсор находится либо на ?,
+		   либо на окне — тултип остаётся открытым.
+		   ===================================================== */
 
-		trigger.addEventListener('mouseenter', function () {
+		tooltip.addEventListener('mouseenter', function () {
 
 			openTooltip();
 
 		});
 
 
-		/* =========================================
-		   КУРСОР УШЁЛ С ?
-		   ========================================= */
+		/* =====================================================
+		   КУРСОР УШЁЛ ИЗ ВСЕЙ ОБЛАСТИ ТУЛТИПА
+		   ===================================================== */
 
-		trigger.addEventListener('mouseleave', function () {
+		tooltip.addEventListener('mouseleave', function () {
 
 			closeTimer = setTimeout(function () {
 
-				if (!tooltip.matches(':hover')) {
-					closeTooltip();
-				}
+				closeTooltip();
 
-			}, 150);
+			}, 100);
 
 		});
 
 
-		/* =========================================
+		/* =====================================================
 		   КЛИК ПО ?
-		   ========================================= */
+		   ===================================================== */
 
 		trigger.addEventListener('click', function (event) {
 
+			event.preventDefault();
 			event.stopPropagation();
 
 			openTooltip();
@@ -88,42 +97,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 
 
-		/* =========================================
-		   КУРСОР ВОШЁЛ В ПОДСКАЗКУ
-		   ========================================= */
-
-		tooltipText.addEventListener('mouseenter', function () {
-
-			clearTimeout(closeTimer);
-
-			openTooltip();
-
-		});
-
-
-		/* =========================================
-		   КУРСОР УШЁЛ ИЗ ПОДСКАЗКИ
-		   ========================================= */
-
-		tooltipText.addEventListener('mouseleave', function () {
-
-			closeTimer = setTimeout(function () {
-
-				if (!tooltip.matches(':hover')) {
-					closeTooltip();
-				}
-
-			}, 150);
-
-		});
-
-
-		/* =========================================
+		/* =====================================================
 		   КЛИК ПО КРЕСТИКУ
-		   ========================================= */
+		   ===================================================== */
 
 		closeButton.addEventListener('click', function (event) {
 
+			event.preventDefault();
 			event.stopPropagation();
 
 			closeTooltip();
@@ -131,9 +111,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 
 
-		/* =========================================
+		/* =====================================================
 		   КЛИК ВНЕ ТУЛТИПА
-		   ========================================= */
+		   ===================================================== */
 
 		document.addEventListener('click', function (event) {
 
