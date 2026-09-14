@@ -606,7 +606,7 @@ text-align: center;
     height: 17px;
 
     padding: 0;
-    margin-left: 2px;
+    margin-left: -1px;
 
     position: relative;
     top: -6px;
