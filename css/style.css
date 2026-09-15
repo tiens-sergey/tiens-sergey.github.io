@@ -919,7 +919,6 @@ text-align: center;
     .ts-tooltip-text {
         width: 300px;
         max-width: calc(100vw - 30px);
-
         font-size: 15px;
         line-height: 1.45;
     }
