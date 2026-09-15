@@ -754,7 +754,8 @@ text-align: center;
 }
 
 /* =========================================================
-   SVG НЕОНОВАЯ РАМКА
+   СТАТИЧНАЯ НЕОНОВАЯ РАМКА
+   ПЛАВНОЕ МЕРЦАНИЕ
    ========================================================= */
 
 .ts-tooltip-neon {
@@ -776,77 +777,77 @@ text-align: center;
 
 
 /* =========================================================
-   НЕПОДВИЖНАЯ РАМКА
+   НЕОНОВЫЙ КОНТУР
    ========================================================= */
 
-.ts-neon-frame {
+.ts-tooltip-neon rect {
 
     fill: none;
 
-    stroke: rgba(197, 108, 255, 0.25);
+    stroke: #c56cff;
 
     stroke-width: 2;
 
-    vector-effect: non-scaling-stroke;
-}
-
-
-/* =========================================================
-   ДВИЖУЩИЙСЯ НЕОНОВЫЙ УЧАСТОК
-   ========================================================= */
-
-.ts-neon-glow {
-
-    fill: none;
-
-    stroke: url(#ts-neon-gradient);
-
-    stroke-width: 2;
-
-    stroke-linecap: round;
-
-    vector-effect: non-scaling-stroke;
+    stroke-linejoin: round;
 
     /*
-       Длина светящегося участка.
+       Плавное неоновое свечение.
     */
-    stroke-dasharray: 0.14 0.86;
-
-    stroke-dashoffset: 0;
-
     filter:
         drop-shadow(0 0 2px #c56cff)
         drop-shadow(0 0 5px rgba(197, 108, 255, 0.8))
-        drop-shadow(0 0 9px rgba(197, 108, 255, 0.45));
+        drop-shadow(0 0 10px rgba(197, 108, 255, 0.45));
 
-    animation:
-        ts-neon-run 3.5s linear infinite;
+    /*
+       Мерцание яркости.
+    */
+    animation: ts-neon-twinkle 2.8s ease-in-out infinite;
 }
 
 
 /* =========================================================
-   ДВИЖЕНИЕ ПО ЧАСОВОЙ СТРЕЛКЕ
+   МЕРЦАНИЕ
    ========================================================= */
 
-@keyframes ts-neon-run {
+@keyframes ts-neon-twinkle {
 
-    from {
-        stroke-dashoffset: 0;
+    0% {
+        opacity: 0.45;
+
+        filter:
+            drop-shadow(0 0 2px #c56cff)
+            drop-shadow(0 0 4px rgba(197, 108, 255, 0.45))
+            drop-shadow(0 0 7px rgba(197, 108, 255, 0.25));
     }
 
-    to {
-        stroke-dashoffset: -1;
+    50% {
+        opacity: 1;
+
+        filter:
+            drop-shadow(0 0 3px #d98cff)
+            drop-shadow(0 0 7px rgba(197, 108, 255, 0.9))
+            drop-shadow(0 0 14px rgba(197, 108, 255, 0.65));
+    }
+
+    100% {
+        opacity: 0.45;
+
+        filter:
+            drop-shadow(0 0 2px #c56cff)
+            drop-shadow(0 0 4px rgba(197, 108, 255, 0.45))
+            drop-shadow(0 0 7px rgba(197, 108, 255, 0.25));
     }
 }
 
 
 /* =========================================================
-   КРЕСТИК ПОВЕРХ НЕОНА
+   КРЕСТИК ПОВЕРХ РАМКИ
    ========================================================= */
 
 .ts-tooltip-close {
     z-index: 2;
 }
+
 /* =========================================================
    СТРЕЛКА
    ========================================================= */
