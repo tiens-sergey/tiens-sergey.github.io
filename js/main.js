@@ -13,7 +13,9 @@ function progressBar() {
 
     let per = windowScroll / windowHeight * 100;
 
-    progress.style.width = per + '%';
+    if (progress) {
+        progress.style.width = per + '%';
+    }
 }
 
 
@@ -32,6 +34,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const closeButton =
             tooltip.querySelector('.ts-tooltip-close');
+
+        if (!trigger) {
+            return;
+        }
 
         let closeTimer = null;
 
@@ -63,9 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
         /* НАВЕДЕНИЕ НА ? */
 
         trigger.addEventListener('mouseenter', function () {
-
             openTooltip();
-
         });
 
 
@@ -74,9 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
         trigger.addEventListener('mouseleave', function () {
 
             closeTimer = setTimeout(function () {
-
                 closeTooltip();
-
             }, 150);
 
         });
@@ -92,13 +94,9 @@ document.addEventListener('DOMContentLoaded', function () {
             clearTimeout(closeTimer);
 
             if (tooltip.classList.contains('ts-tooltip-open')) {
-
                 closeTooltip();
-
             } else {
-
                 openTooltip();
-
             }
 
         });
@@ -107,9 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
         /* НАВЕДЕНИЕ НА ОКНО */
 
         tooltip.addEventListener('mouseenter', function () {
-
             clearTimeout(closeTimer);
-
         });
 
 
@@ -118,9 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
         tooltip.addEventListener('mouseleave', function () {
 
             closeTimer = setTimeout(function () {
-
                 closeTooltip();
-
             }, 150);
 
         });
@@ -128,14 +122,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         /* КНОПКА × */
 
-        closeButton.addEventListener('click', function (event) {
+        if (closeButton) {
 
-            event.preventDefault();
-            event.stopPropagation();
+            closeButton.addEventListener('click', function (event) {
 
-            closeTooltip();
+                event.preventDefault();
+                event.stopPropagation();
 
-        });
+                closeTooltip();
+
+            });
+
+        }
 
 
         /* КЛИК ВНЕ ТУЛТИПА */
@@ -143,9 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.addEventListener('click', function (event) {
 
             if (!tooltip.contains(event.target)) {
-
                 closeTooltip();
-
             }
 
         });
