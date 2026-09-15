@@ -66,63 +66,55 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        /* НАВЕДЕНИЕ НА ? */
-
-trigger.addEventListener('mouseenter', function () {
-    clearTimeout(closeTimer);
-});
-
-
-/* УХОД С ? */
-
-trigger.addEventListener('mouseleave', function () {
-    closeTimer = setTimeout(function () {
-        closeTooltip();
-    }, 150);
-});
-
-
-/* КЛИК ПО ? */
-
-trigger.addEventListener('click', function (event) {
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    clearTimeout(closeTimer);
-
-    if (tooltip.classList.contains('ts-tooltip-open')) {
-
-        closeTooltip();
-
-    } else {
-
-        openTooltip();
-
-    }
-
-});
-
-
-        /* НАВЕДЕНИЕ НА ОКНО */
+        /* НАВЕДЕНИЕ */
 
         tooltip.addEventListener('mouseenter', function () {
-            clearTimeout(closeTimer);
+
+            openTooltip();
+
         });
 
 
-        /* УХОД С ОКНА */
+        /* УХОД МЫШИ */
 
         tooltip.addEventListener('mouseleave', function () {
 
             closeTimer = setTimeout(function () {
+
                 closeTooltip();
+
             }, 150);
 
         });
 
 
-        /* КНОПКА × */
+        /* =================================================
+           КЛИК ПО ?
+           Первый клик  → ОТКРЫТЬ
+           Второй клик → ЗАКРЫТЬ
+           ================================================= */
+
+        trigger.addEventListener('click', function (event) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            clearTimeout(closeTimer);
+
+            if (tooltip.classList.contains('ts-tooltip-open')) {
+
+                closeTooltip();
+
+            } else {
+
+                openTooltip();
+
+            }
+
+        });
+
+
+        /* КЛИК ПО КРЕСТИКУ */
 
         if (closeButton) {
 
@@ -143,7 +135,9 @@ trigger.addEventListener('click', function (event) {
         document.addEventListener('click', function (event) {
 
             if (!tooltip.contains(event.target)) {
+
                 closeTooltip();
+
             }
 
         });
