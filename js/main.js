@@ -3,17 +3,16 @@ const progress = document.querySelector('.progress');
 window.addEventListener('scroll', progressBar);
 
 function progressBar() {
-    let windowScroll =
+    const windowScroll =
         document.body.scrollTop ||
         document.documentElement.scrollTop;
 
-    let windowHeight =
+    const windowHeight =
         document.documentElement.scrollHeight -
         document.documentElement.clientHeight;
 
-    let per = windowScroll / windowHeight * 100;
-
-    if (progress) {
+    if (progress && windowHeight > 0) {
+        const per = windowScroll / windowHeight * 100;
         progress.style.width = per + '%';
     }
 }
@@ -42,7 +41,9 @@ document.addEventListener('DOMContentLoaded', function () {
         let closeTimer = null;
 
 
-        /* ОТКРЫТЬ */
+        /* =================================================
+           ОТКРЫТЬ
+           ================================================= */
 
         function openTooltip() {
 
@@ -55,7 +56,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        /* ЗАКРЫТЬ */
+        /* =================================================
+           ЗАКРЫТЬ
+           ================================================= */
 
         function closeTooltip() {
 
@@ -68,27 +71,36 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        /* НАВЕДЕНИЕ НА ? */
+        /* =================================================
+           НАВЕДЕНИЕ НА ТУЛТИП
+           ================================================= */
 
-        trigger.addEventListener('mouseenter', function () {
+        tooltip.addEventListener('mouseenter', function () {
 
             clearTimeout(closeTimer);
 
+            openTooltip();
         });
 
 
-        /* УХОД С ? */
+        /* =================================================
+           УХОД С ТУЛТИПА
+           ================================================= */
 
-        trigger.addEventListener('mouseleave', function () {
+        tooltip.addEventListener('mouseleave', function () {
 
             closeTimer = setTimeout(function () {
                 closeTooltip();
             }, 150);
-
         });
 
 
-        /* КЛИК ПО ? */
+        /* =================================================
+           КЛИК ПО ?
+           
+           Первый клик  → открыть
+           Второй клик → закрыть
+           ================================================= */
 
         trigger.addEventListener('click', function (event) {
 
@@ -104,33 +116,13 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
 
                 openTooltip();
-
             }
-
         });
 
 
-        /* НАВЕДЕНИЕ НА ОКНО */
-
-        tooltip.addEventListener('mouseenter', function () {
-
-            clearTimeout(closeTimer);
-
-        });
-
-
-        /* УХОД С ОКНА */
-
-        tooltip.addEventListener('mouseleave', function () {
-
-            closeTimer = setTimeout(function () {
-                closeTooltip();
-            }, 150);
-
-        });
-
-
-        /* КНОПКА × */
+        /* =================================================
+           КЛИК ПО КРЕСТИКУ ×
+           ================================================= */
 
         if (closeButton) {
 
@@ -140,22 +132,33 @@ document.addEventListener('DOMContentLoaded', function () {
                 event.stopPropagation();
 
                 closeTooltip();
-
             });
-
         }
 
 
-        /* КЛИК ВНЕ ТУЛТИПА */
+        /* =================================================
+           КЛИК ВНУТРИ ТУЛТИПА
+           
+           Ничего не закрывает.
+           ================================================= */
+
+        tooltip.addEventListener('click', function (event) {
+
+            event.stopPropagation();
+        });
+
+
+        /* =================================================
+           КЛИК ВНЕ ТУЛТИПА
+           
+           Закрывает подсказку.
+           ================================================= */
 
         document.addEventListener('click', function (event) {
 
             if (!tooltip.contains(event.target)) {
-
                 closeTooltip();
-
             }
-
         });
 
     });
