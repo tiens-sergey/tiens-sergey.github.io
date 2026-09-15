@@ -727,7 +727,7 @@ text-align: center;
        Возвращаем окно в исходную позицию.
        Получается плавное движение снизу вверх.
     */
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(8px);
 
     transition:
         opacity 0.25s ease,
