@@ -590,14 +590,12 @@ text-align: center;
    TOOLTIP — Т-ЛИМФОЦИТЫ
    ========================================================= */
 
-
 /* =========================================================
    КОНТЕЙНЕР
    ========================================================= */
 
 .ts-tooltip {
     position: relative;
-
     display: inline-block;
 
     width: 14px;
@@ -675,7 +673,6 @@ text-align: center;
 
 /* =========================================================
    FOCUS
-   Не меняет цвет и форму.
    ========================================================= */
 
 .ts-tooltip-trigger:focus {
@@ -712,10 +709,6 @@ text-align: center;
 
     z-index: 1000;
 
-    /*
-       Закрытое состояние.
-    */
-
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -728,6 +721,17 @@ text-align: center;
         opacity 0.25s ease,
         transform 0.25s ease,
         visibility 0s linear 0.25s;
+
+    /*
+       Важно:
+       не обрезаем стрелку.
+    */
+    overflow: visible;
+
+    /*
+       Создаём отдельный stacking context.
+    */
+    isolation: isolate;
 }
 
 
@@ -736,7 +740,6 @@ text-align: center;
    ========================================================= */
 
 .ts-tooltip.ts-tooltip-open .ts-tooltip-text {
-
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -751,13 +754,12 @@ text-align: center;
         visibility 0s linear 0s;
 }
 
+
 /* =========================================================
-   СТАТИЧНАЯ НЕОНОВАЯ РАМКА
-   ПЛАВНОЕ МЕРЦАНИЕ
+   НЕОНОВАЯ РАМКА
    ========================================================= */
 
 .ts-tooltip-neon {
-
     position: absolute;
 
     top: 0;
@@ -770,7 +772,10 @@ text-align: center;
 
     overflow: visible;
 
-    z-index: 1;
+    /*
+       Рамка находится ПОД содержимым.
+    */
+    z-index: 0;
 }
 
 
@@ -779,26 +784,17 @@ text-align: center;
    ========================================================= */
 
 .ts-tooltip-neon rect {
-
     fill: none;
 
     stroke: #c56cff;
-
     stroke-width: 2;
-
     stroke-linejoin: round;
 
-    /*
-       Плавное неоновое свечение.
-    */
     filter:
         drop-shadow(0 0 2px #c56cff)
         drop-shadow(0 0 5px rgba(197, 108, 255, 0.8))
         drop-shadow(0 0 10px rgba(197, 108, 255, 0.45));
 
-    /*
-       Мерцание яркости.
-    */
     animation: ts-neon-twinkle 2.8s ease-in-out infinite;
 }
 
@@ -839,43 +835,10 @@ text-align: center;
 
 
 /* =========================================================
-   КРЕСТИК ПОВЕРХ РАМКИ
+   КРЕСТИК
    ========================================================= */
 
 .ts-tooltip-close {
-    z-index: 2;
-}
-
-/* =========================================================
-   СТРЕЛКА
-   ========================================================= */
-
-.ts-tooltip-text::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 50%;
-    bottom: -8px;
-
-    width: 0;
-    height: 0;
-
-    transform: translateX(-50%);
-
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid #333;
-}
-
-
-/* =========================================================
-   КНОПКА ×
-   ========================================================= */
-
-.ts-tooltip-close {
-
     appearance: none;
     -webkit-appearance: none;
 
@@ -906,31 +869,55 @@ text-align: center;
     cursor: pointer;
 
     outline: none;
+
+    z-index: 2;
 }
 
 
 .ts-tooltip-close:hover,
 .ts-tooltip-close:focus {
-
     background: transparent;
     color: #fff;
 
     outline: none;
 
     z-index: 2;
-	
 }
+
+
+/* =========================================================
+   СТРЕЛКА
+   ========================================================= */
+
+.ts-tooltip-text::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: -8px;
+
+    width: 0;
+    height: 0;
+
+    transform: translateX(-50%);
+
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #333;
+
+    z-index: 2;
+}
+
 
 /* =========================================================
    МОБИЛЬНАЯ ВЕРСИЯ
    ========================================================= */
 
-@media (max-width: 576px)
+@media (max-width: 576px) {
 
     .ts-tooltip-text {
-
         width: 300px;
-
         max-width: calc(100vw - 30px);
 
         font-size: 15px;
