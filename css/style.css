@@ -594,12 +594,21 @@ text-align: center;
 .ts-tooltip {
     position: relative;
     display: inline-block;
+
+    width: 14px;
+    height: 14px;
+
+    margin-left: -4px;
+
+    vertical-align: baseline;
 }
 
 
 /* Знак вопроса */
+
 .ts-tooltip-trigger {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
@@ -607,7 +616,7 @@ text-align: center;
     height: 14px;
 
     padding: 0;
-    margin-left: -4px;
+    margin: 0;
 
     position: relative;
     top: -6px;
@@ -624,7 +633,6 @@ text-align: center;
     line-height: 1;
 
     cursor: pointer;
-    vertical-align: middle;
 
     transition:
         background-color 0.2s ease,
@@ -642,15 +650,17 @@ text-align: center;
 }
 
 
-/* ОКНО ПОДСКАЗКИ */
+/* ОКНО */
+
 .ts-tooltip-text {
     position: absolute;
 
-    /* Окно находится над знаком ? */
-    bottom: calc(100% + 12px);
+    /* Нижний край окна находится над ? */
+    bottom: 22px;
 
     /* Центр окна совпадает с центром ? */
     left: 50%;
+
     transform: translateX(-50%);
 
     width: 260px;
@@ -675,6 +685,7 @@ text-align: center;
 
     opacity: 0;
     visibility: hidden;
+
     pointer-events: none;
 
     transition:
@@ -683,7 +694,8 @@ text-align: center;
 }
 
 
-/* Открытое окно */
+/* Открытие */
+
 .ts-tooltip.ts-tooltip-open .ts-tooltip-text {
     opacity: 1;
     visibility: visible;
@@ -691,31 +703,15 @@ text-align: center;
 }
 
 
-/* Мостик между окном и знаком ? */
-.ts-tooltip-text::before {
-    content: "";
-
-    position: absolute;
-
-    left: 50%;
-    bottom: -12px;
-
-    transform: translateX(-50%);
-
-    width: 24px;
-    height: 12px;
-
-    background: transparent;
-}
-
-
 /* Стрелка */
+
 .ts-tooltip-text::after {
     content: "";
 
     position: absolute;
 
     left: 50%;
+
     bottom: -8px;
 
     transform: translateX(-50%);
@@ -730,6 +726,7 @@ text-align: center;
 
 
 /* Крестик */
+
 .ts-tooltip-close {
     position: absolute;
 
@@ -742,6 +739,7 @@ text-align: center;
     padding: 0;
 
     border: 0;
+
     background: transparent;
 
     color: #aaa;
@@ -751,27 +749,9 @@ text-align: center;
     line-height: 25px;
 
     cursor: pointer;
-    z-index: 2;
 }
 
 
 .ts-tooltip-close:hover {
     color: #fff;
 }
-
-
-/* Мобильная версия */
-@media (max-width: 576px) {
-
-    .ts-tooltip-text {
-        width: 300px;
-        max-width: calc(100vw - 25px);
-
-        min-height: 350px;
-
-        font-size: 14px;
-        line-height: 1.5;
-
-        padding: 30px 16px 17px;
-    }
-		}
