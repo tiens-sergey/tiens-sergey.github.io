@@ -52,72 +52,75 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 		/* =====================================================
-		   НАВЕДЕНИЕ НА ВСЮ ОБЛАСТЬ ТУЛТИПА
-		   
-		   Это главное изменение.
-		   Пока курсор находится либо на ?,
-		   либо на окне — тултип остаётся открытым.
-		   ===================================================== */
+   НАВЕДЕНИЕ
+   ===================================================== */
 
-		tooltip.addEventListener('mouseenter', function () {
-
-			openTooltip();
-
-		});
+tooltip.addEventListener('mouseenter', function () {
+    openTooltip();
+});
 
 
-		/* =====================================================
-		   КУРСОР УШЁЛ ИЗ ВСЕЙ ОБЛАСТИ ТУЛТИПА
-		   ===================================================== */
-
-		tooltip.addEventListener('mouseleave', function () {
-
-			closeTimer = setTimeout(function () {
-
-				closeTooltip();
-
-			}, 100);
-
-		});
+tooltip.addEventListener('mouseleave', function () {
+    closeTimer = setTimeout(function () {
+        closeTooltip();
+    }, 150);
+});
 
 
-		/* =====================================================
-		   КЛИК ПО ?
-		   ===================================================== */
+/* =====================================================
+   КЛИК ПО ?
+   первый клик  → открыть
+   второй клик → закрыть
+   ===================================================== */
 
-		trigger.addEventListener('click', function (event) {
+trigger.addEventListener('click', function (event) {
 
-			event.preventDefault();
-			event.stopPropagation();
-			
-			trigger.addEventListener('click', function (e) {
-    e.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
 
-    const isOpen = tooltip.classList.contains('ts-tooltip-open');
+    clearTimeout(closeTimer);
 
-    // Переключаем состояние
-    if (isOpen) {
-        tooltip.classList.remove('ts-tooltip-open');
-        trigger.setAttribute('aria-expanded', 'false');
+    if (tooltip.classList.contains('ts-tooltip-open')) {
+
+        closeTooltip();
+
     } else {
-        tooltip.classList.add('ts-tooltip-open');
-        trigger.setAttribute('aria-expanded', 'true');
+
+        openTooltip();
+
     }
 });
 
 
-		/* =====================================================
-		   КЛИК ПО КРЕСТИКУ
-		   ===================================================== */
+/* =====================================================
+   КЛИК ПО КРЕСТИКУ
+   ===================================================== */
 
-		closeButton.addEventListener('click', function (event) {
+closeButton.addEventListener('click', function (event) {
 
-			event.preventDefault();
-			event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
 
-			closeTooltip();
+    closeTooltip();
 
-		});
+});
+
+
+/* =====================================================
+   КЛИК ВНЕ ТУЛТИПА
+   ===================================================== */
+
+document.addEventListener('click', function (event) {
+
+    if (!tooltip.contains(event.target)) {
+
+        closeTooltip();
+
+    }
+
+});
+
+		
 
 
 		/* =====================================================
