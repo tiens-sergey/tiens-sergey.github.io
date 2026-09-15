@@ -892,6 +892,9 @@ text-align: center;
     color: #fff;
 
     outline: none;
+
+    z-index: 2;
+	
 }
 
 /* =========================================================
