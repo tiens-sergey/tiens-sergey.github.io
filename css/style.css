@@ -694,7 +694,7 @@ text-align: center;
     bottom: calc(100% + 10px);
 
     width: 260px;
-    min-height: 380px;
+   /* min-height: 380px;*/
 
     padding: 30px 18px 20px;
 
@@ -827,12 +827,11 @@ text-align: center;
     outline: none;
 }
 
-
 /* =========================================================
    МОБИЛЬНАЯ ВЕРСИЯ
    ========================================================= */
 
-@media (max-width: 576px) {
+@media (max-width: 576px)
 
     .ts-tooltip-text {
 
@@ -843,4 +842,3 @@ text-align: center;
         font-size: 15px;
         line-height: 1.45;
     }
-}
