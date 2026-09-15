@@ -923,3 +923,203 @@ text-align: center;
         line-height: 1.45;
     }
 }
+
+
+/* =====================================================
+   ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР ВИДЕО С PARALLAX
+   ===================================================== */
+
+.video-parallax-slider {
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background: #000;
+
+    touch-action: pan-y;
+
+    user-select: none;
+}
+
+
+/* Горизонтальная лента */
+
+.video-parallax-track {
+    display: flex;
+
+    width: max-content;
+    height: 100%;
+
+    transform: translate3d(0, 0, 0);
+
+    will-change: transform;
+
+    transition:
+        transform 0.8s cubic-bezier(.16, 1, .3, 1);
+}
+
+
+/* Один экран */
+
+.video-parallax-slide {
+    width: 100vw;
+    height: 100%;
+
+    flex-shrink: 0;
+
+    position: relative;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Контент внутри слайда */
+
+.video-parallax-content {
+    width: 90%;
+    max-width: 1000px;
+
+    position: relative;
+
+    z-index: 2;
+
+    text-align: center;
+
+    transition:
+        transform 0.8s cubic-bezier(.16, 1, .3, 1);
+
+    will-change: transform;
+}
+
+
+/* Заголовок */
+
+.video-parallax-content h3 {
+    color: #fff;
+
+    margin: 0 0 25px 0;
+
+    font-size: 26px;
+
+    line-height: 1.3;
+
+    font-weight: 500;
+}
+
+
+/* Видео */
+
+.video-frame {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    overflow: hidden;
+
+    background: #000;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.35);
+}
+
+
+/* IFRAME */
+
+.video-frame iframe {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+}
+
+
+/* =====================================================
+   PARALLAX
+   ===================================================== */
+
+.video-parallax-slide {
+    perspective: 1000px;
+}
+
+
+.video-parallax-slide .video-parallax-content {
+    transform:
+        translate3d(8%, 0, 0)
+        scale(.96);
+}
+
+
+/* Активное видео */
+
+.video-parallax-slide.active
+.video-parallax-content {
+    transform:
+        translate3d(0, 0, 0)
+        scale(1);
+}
+
+
+/* =====================================================
+   СЧЁТЧИК
+   ===================================================== */
+
+.video-parallax-counter {
+    position: absolute;
+
+    right: 30px;
+    bottom: 25px;
+
+    z-index: 20;
+
+    color: #fff;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    letter-spacing: 3px;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   МОБИЛЬНАЯ ВЕРСИЯ
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    .video-parallax-content {
+        width: 92%;
+    }
+
+    .video-parallax-content h3 {
+        font-size: 19px;
+
+        margin-bottom: 18px;
+    }
+
+    .video-parallax-counter {
+        right: 15px;
+        bottom: 15px;
+
+        font-size: 12px;
+    }
+
+}
