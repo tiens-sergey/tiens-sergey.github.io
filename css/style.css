@@ -606,6 +606,12 @@ text-align: center;
 
 /* Знак вопроса */
 
+.ts-tooltip-trigger.ts-tooltip-active {
+    background-color: #333;
+    border-color: #333;
+    color: #fff;
+}
+
 .ts-tooltip-trigger {
     display: inline-flex;
 
@@ -624,9 +630,16 @@ text-align: center;
     border: 1.5px solid #555;
     border-radius: 50%;
 
-    background: transparent;
+/*    background: transparent;
     color: #555;
+*/
 
+	background-color: #fff;
+    color: #555;
+    border-color: #555;
+	
+	bottom: calc(100% + 10px);
+	
     font-family: 'Roboto', sans-serif;
     font-size: 9px;
     font-weight: 700;
