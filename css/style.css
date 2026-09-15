@@ -586,13 +586,14 @@ padding: 8px 35px;
 text-align: center;
 }
 
+
 /* =========================================================
    TOOLTIP — Т-ЛИМФОЦИТЫ
    ========================================================= */
 
 .ts-tooltip {
-	position: relative;
-	display: inline;
+    position: relative;
+    display: inline-block;
 }
 
 
@@ -632,37 +633,39 @@ text-align: center;
 }
 
 
-/* При наведении */
 .ts-tooltip-trigger:hover,
 .ts-tooltip-trigger:focus {
-	background-color: #333;
-	border-color: #333;
-	color: #fff;
-	outline: none;
+    background-color: #333;
+    border-color: #333;
+    color: #fff;
+    outline: none;
 }
+
 
 /* ОКНО ПОДСКАЗКИ */
 .ts-tooltip-text {
     position: absolute;
 
-    /* Подсказка располагается над знаком ? */
-    bottom: calc(100% + 14px);
-    right: 0;
+    /* Окно находится над знаком ? */
+    bottom: calc(100% + 12px);
+
+    /* Центр окна совпадает с центром ? */
+    left: 50%;
     transform: translateX(-50%);
 
-    /* Портретная ориентация */
-    width: 390px;
-    max-width: calc(100vw - 30px);
+    width: 260px;
+    min-height: 380px;
 
-    padding: 30px 20px 20px 20px;
+    padding: 30px 18px 20px;
 
     box-sizing: border-box;
 
-    background: #292929;
-    color: #f5f5f5;
+    background: #333;
+    color: #fff;
 
-    border-radius: 10px;
+    border-radius: 8px;
 
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
     line-height: 1.5;
 
@@ -672,6 +675,7 @@ text-align: center;
 
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
 
     transition:
         opacity 0.2s ease,
@@ -681,89 +685,93 @@ text-align: center;
 
 /* Открытое окно */
 .ts-tooltip.ts-tooltip-open .ts-tooltip-text {
-	opacity: 1;
-	visibility: visible;
-	pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 
-/* Невидимый мостик между ? и окном */
+/* Мостик между окном и знаком ? */
 .ts-tooltip-text::before {
-	content: "";
+    content: "";
 
-	position: absolute;
+    position: absolute;
 
-	left: 0;
-	right: 0;
+    left: 50%;
+    bottom: -12px;
 
-	bottom: -12px;
+    transform: translateX(-50%);
 
-	height: 12px;
+    width: 24px;
+    height: 12px;
+
+    background: transparent;
 }
 
 
-/* Треугольник */
+/* Стрелка */
 .ts-tooltip-text::after {
-	content: "";
+    content: "";
 
-	position: absolute;
+    position: absolute;
 
-	right: 0;
-    bottom: -9px;
+    left: 50%;
+    bottom: -8px;
 
-	transform: translateX(-2px);
+    transform: translateX(-50%);
 
-	width: 0;
+    width: 0;
     height: 0;
 
-	border-left: 9px solid transparent;
-    border-right: 9px solid transparent;
-    border-top: 9px solid #292929;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #333;
 }
 
 
 /* Крестик */
 .ts-tooltip-close {
-	position: absolute;
+    position: absolute;
 
-	top: 5px;
-	right: 8px;
+    top: 5px;
+    right: 8px;
 
-	width: 25px;
-	height: 25px;
+    width: 25px;
+    height: 25px;
 
-	padding: 0;
+    padding: 0;
 
-	border: 0;
-	background: transparent;
+    border: 0;
+    background: transparent;
 
-	color: #aaa;
+    color: #aaa;
 
-	font-family: Arial, sans-serif;
-	font-size: 23px;
-	line-height: 25px;
+    font-family: Arial, sans-serif;
+    font-size: 23px;
+    line-height: 25px;
 
-	cursor: pointer;
-
-	z-index: 2;
+    cursor: pointer;
+    z-index: 2;
 }
 
 
 .ts-tooltip-close:hover {
-	color: #fff;
+    color: #fff;
 }
 
 
 /* Мобильная версия */
 @media (max-width: 576px) {
 
-	.ts-tooltip-text {
-		width: 300px;
-		max-width: calc(100vw - 25px);
+    .ts-tooltip-text {
+        width: 300px;
+        max-width: calc(100vw - 25px);
 
-		font-size: 14px;
-		line-height: 1.5;
+        min-height: 350px;
 
-		padding: 30px 16px 17px;
-	}
-}
+        font-size: 14px;
+        line-height: 1.5;
+
+        padding: 30px 16px 17px;
+    }
+		}
