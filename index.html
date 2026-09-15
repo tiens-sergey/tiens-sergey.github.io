@@ -415,7 +415,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateParallax(dragX) {
 
-        const width = window.innerWidth;
+        const width =
+    slides[0].getBoundingClientRect().width +
+    parseFloat(
+        getComputedStyle(slides[0]).marginLeft
+    ) +
+    parseFloat(
+        getComputedStyle(slides[0]).marginRight
+    );
 
 
         slides.forEach(function(slide, index) {
