@@ -141,15 +141,39 @@
 
         <span class="ts-tooltip-text">
 			<svg class="ts-tooltip-neon" aria-hidden="true">
+    <defs>
+        <linearGradient
+            id="ts-neon-gradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="0%">
+
+            <stop offset="0%" stop-color="#8b3dcc"/>
+            <stop offset="35%" stop-color="#c56cff"/>
+            <stop offset="50%" stop-color="#f0c7ff"/>
+            <stop offset="65%" stop-color="#c56cff"/>
+            <stop offset="100%" stop-color="#8b3dcc"/>
+
+            <animateTransform
+                attributeName="gradientTransform"
+                type="rotate"
+                from="0 0.5 0.5"
+                to="360 0.5 0.5"
+                dur="4s"
+                repeatCount="indefinite"/>
+        </linearGradient>
+    </defs>
+
     <rect
         x="1"
         y="1"
         width="calc(100% - 2px)"
         height="calc(100% - 2px)"
         rx="7"
-        ry="7">
-    </rect>
-			</svg>
+        ry="7"
+        pathLength="1"/>
+</svg>
  <button
                 class="ts-tooltip-close"
                 type="button"
