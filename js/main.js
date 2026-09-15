@@ -2,12 +2,14 @@ const progress = document.querySelector('.progress');
 
 window.addEventListener('scroll', progressBar);
 
-function progressBar(e) {
-    let windowScroll = document.body.scrollTop ||
-                       document.documentElement.scrollTop;
+function progressBar() {
+    let windowScroll =
+        document.body.scrollTop ||
+        document.documentElement.scrollTop;
 
-    let windowHeight = document.documentElement.scrollHeight -
-                       document.documentElement.clientHeight;
+    let windowHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
 
     let per = windowScroll / windowHeight * 100;
 
@@ -25,15 +27,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     tooltips.forEach(function (tooltip) {
 
-        const trigger = tooltip.querySelector('.ts-tooltip-trigger');
-        const closeButton = tooltip.querySelector('.ts-tooltip-close');
+        const trigger =
+            tooltip.querySelector('.ts-tooltip-trigger');
+
+        const closeButton =
+            tooltip.querySelector('.ts-tooltip-close');
 
         let closeTimer = null;
 
 
-        /* =====================================================
-           ОТКРЫТЬ
-           ===================================================== */
+        /* ОТКРЫТЬ */
 
         function openTooltip() {
 
@@ -45,9 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        /* =====================================================
-           ЗАКРЫТЬ
-           ===================================================== */
+        /* ЗАКРЫТЬ */
 
         function closeTooltip() {
 
@@ -59,18 +60,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        /* =====================================================
-           НАВЕДЕНИЕ
-           ===================================================== */
+        /* НАВЕДЕНИЕ НА ? */
 
-        tooltip.addEventListener('mouseenter', function () {
+        trigger.addEventListener('mouseenter', function () {
 
             openTooltip();
 
         });
 
 
-        tooltip.addEventListener('mouseleave', function () {
+        /* УХОД С ? */
+
+        trigger.addEventListener('mouseleave', function () {
 
             closeTimer = setTimeout(function () {
 
@@ -81,12 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-        /* =====================================================
-           КЛИК ПО ?
-           
-           первый клик  → открыть
-           второй клик → закрыть
-           ===================================================== */
+        /* КЛИК ПО ? */
 
         trigger.addEventListener('click', function (event) {
 
@@ -108,9 +104,29 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-        /* =====================================================
-           КЛИК ПО КРЕСТИКУ
-           ===================================================== */
+        /* НАВЕДЕНИЕ НА ОКНО */
+
+        tooltip.addEventListener('mouseenter', function () {
+
+            clearTimeout(closeTimer);
+
+        });
+
+
+        /* УХОД С ОКНА */
+
+        tooltip.addEventListener('mouseleave', function () {
+
+            closeTimer = setTimeout(function () {
+
+                closeTooltip();
+
+            }, 150);
+
+        });
+
+
+        /* КНОПКА × */
 
         closeButton.addEventListener('click', function (event) {
 
@@ -122,9 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-        /* =====================================================
-           КЛИК ВНЕ ТУЛТИПА
-           ===================================================== */
+        /* КЛИК ВНЕ ТУЛТИПА */
 
         document.addEventListener('click', function (event) {
 
@@ -137,110 +151,5 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     });
-
-});		}
-
-
-		/* =====================================================
-		   ЗАКРЫТЬ
-		   ===================================================== */
-
-		function closeTooltip() {
-
-			clearTimeout(closeTimer);
-
-			tooltip.classList.remove('ts-tooltip-open');
-
-			trigger.setAttribute('aria-expanded', 'false');
-		}
-
-
-		/* =====================================================
-   НАВЕДЕНИЕ
-   ===================================================== */
-
-tooltip.addEventListener('mouseenter', function () {
-    openTooltip();
-});
-
-
-tooltip.addEventListener('mouseleave', function () {
-    closeTimer = setTimeout(function () {
-        closeTooltip();
-    }, 150);
-});
-
-
-/* =====================================================
-   КЛИК ПО ?
-   первый клик  → открыть
-   второй клик → закрыть
-   ===================================================== */
-
-trigger.addEventListener('click', function (event) {
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    clearTimeout(closeTimer);
-
-    if (tooltip.classList.contains('ts-tooltip-open')) {
-
-        closeTooltip();
-
-    } else {
-
-        openTooltip();
-
-    }
-});
-
-
-/* =====================================================
-   КЛИК ПО КРЕСТИКУ
-   ===================================================== */
-
-closeButton.addEventListener('click', function (event) {
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    closeTooltip();
-
-});
-
-
-/* =====================================================
-   КЛИК ВНЕ ТУЛТИПА
-   ===================================================== */
-
-document.addEventListener('click', function (event) {
-
-    if (!tooltip.contains(event.target)) {
-
-        closeTooltip();
-
-    }
-
-});
-
-		
-
-
-		/* =====================================================
-		   КЛИК ВНЕ ТУЛТИПА
-		   ===================================================== */
-
-		document.addEventListener('click', function (event) {
-
-			if (!tooltip.contains(event.target)) {
-
-				closeTooltip();
-
-			}
-
-		});
-
-	});
 
 });
