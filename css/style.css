@@ -597,6 +597,7 @@ text-align: center;
 
 .ts-tooltip {
     position: relative;
+
     display: inline-block;
 
     width: 14px;
@@ -639,8 +640,6 @@ text-align: center;
     border-radius: 50%;
 
     background: #fff;
-    background-color: #fff;
-
     color: #555;
 
     font-family: 'Roboto', sans-serif;
@@ -664,22 +663,19 @@ text-align: center;
 
 
 /* =========================================================
-   ? — ОТКРЫТО
+   АКТИВНОЕ СОСТОЯНИЕ ?
    ========================================================= */
 
 .ts-tooltip-trigger.ts-tooltip-active {
     background: #333;
-    background-color: #333;
-
     border-color: #333;
-
     color: #fff;
 }
 
 
 /* =========================================================
-   ? — FOCUS
-   Не меняем форму и цвет.
+   FOCUS
+   Не меняет цвет и форму.
    ========================================================= */
 
 .ts-tooltip-trigger:focus {
@@ -718,16 +714,16 @@ text-align: center;
     z-index: 1000;
 
     /*
-       Скрыто.
+       Закрытое состояние.
     */
+
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 
-    /*
-       Начальная позиция для анимации.
-    */
-    transform: translateX(-50%) translateY(8px);
+    transform:
+        translateX(-50%)
+        translateY(8px);
 
     transition:
         opacity 0.25s ease,
@@ -737,16 +733,20 @@ text-align: center;
 
 
 /* =========================================================
-   ОКНО ОТКРЫТО
-   Только класс, который добавляет JavaScript.
+   ОТКРЫТОЕ СОСТОЯНИЕ
    ========================================================= */
 
 .ts-tooltip.ts-tooltip-open .ts-tooltip-text {
+
     opacity: 1;
+
     visibility: visible;
+
     pointer-events: auto;
 
-    transform: translateX(-50%) translateY(0);
+    transform:
+        translateX(-50%)
+        translateY(0);
 
     transition:
         opacity 0.25s ease,
@@ -760,6 +760,7 @@ text-align: center;
    ========================================================= */
 
 .ts-tooltip-text::after {
+
     content: "";
 
     position: absolute;
@@ -783,6 +784,7 @@ text-align: center;
    ========================================================= */
 
 .ts-tooltip-close {
+
     appearance: none;
     -webkit-appearance: none;
 
@@ -801,7 +803,6 @@ text-align: center;
     border-radius: 0;
 
     background: transparent;
-
     color: #aaa;
 
     font-family: Arial, sans-serif;
@@ -819,6 +820,7 @@ text-align: center;
 
 .ts-tooltip-close:hover,
 .ts-tooltip-close:focus {
+
     background: transparent;
     color: #fff;
 
@@ -833,7 +835,9 @@ text-align: center;
 @media (max-width: 576px) {
 
     .ts-tooltip-text {
+
         width: 300px;
+
         max-width: calc(100vw - 30px);
 
         min-height: 360px;
@@ -841,6 +845,4 @@ text-align: center;
         font-size: 15px;
         line-height: 1.45;
     }
-
-}
 }
