@@ -586,7 +586,7 @@ padding: 8px 35px;
 text-align: center;
 }
 
-
+ 
 /* =========================================================
    TOOLTIP — Т-ЛИМФОЦИТЫ
    ========================================================= */
@@ -610,13 +610,12 @@ text-align: center;
 
 .ts-tooltip-trigger.ts-tooltip-active {
     display: inline-flex;
-
-	/* ? открыто */
+	
+/* ? открыто */
     background-color: #333;
     border-color: #333;
     color: #fff;
-
-
+	
     align-items: center;
     justify-content: center;
 
@@ -647,7 +646,6 @@ text-align: center;
         border-color 0.2s ease,
         color 0.2s ease;
 }
-
 
 /* Убираем изменение цвета только из-за hover/focus */
 
@@ -727,7 +725,7 @@ text-align: center;
        Возвращаем окно в исходную позицию.
        Получается плавное движение снизу вверх.
     */
-    transform: translateX(-50%) translateY(8px);
+    transform: translateX(-50%) translateY(0);
 
     transition:
         opacity 0.25s ease,
