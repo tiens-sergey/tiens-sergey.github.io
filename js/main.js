@@ -34,14 +34,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const closeButton =
             tooltip.querySelector('.ts-tooltip-close');
 
-        const tooltipText =
-            tooltip.querySelector('.ts-tooltip-text');
-
         if (!trigger) {
             return;
         }
-
-        let closeTimer = null;
 
 
         /* =================================================
@@ -50,9 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function openTooltip() {
 
-            clearTimeout(closeTimer);
-
             tooltip.classList.add('ts-tooltip-open');
+
             trigger.classList.add('ts-tooltip-active');
 
             trigger.setAttribute('aria-expanded', 'true');
@@ -65,9 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function closeTooltip() {
 
-            clearTimeout(closeTimer);
-
             tooltip.classList.remove('ts-tooltip-open');
+
             trigger.classList.remove('ts-tooltip-active');
 
             trigger.setAttribute('aria-expanded', 'false');
@@ -86,18 +79,20 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
             event.stopPropagation();
 
-            clearTimeout(closeTimer);
-
             if (tooltip.classList.contains('ts-tooltip-open')) {
+
                 closeTooltip();
+
             } else {
+
                 openTooltip();
+
             }
         });
 
 
         /* =================================================
-           КЛИК ПО КРЕСТИКУ ×
+           КЛИК ПО ×
            ================================================= */
 
         if (closeButton) {
@@ -113,24 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         /* =================================================
-           КЛИК ВНУТРИ ТЕКСТА ПОДСКАЗКИ
+           КЛИК ВНУТРИ ТУЛТИПА
            
-           НИКОГДА не закрывает подсказку.
-           ================================================= */
-
-        if (tooltipText) {
-
-            tooltipText.addEventListener('click', function (event) {
-
-                event.stopPropagation();
-            });
-        }
-
-
-        /* =================================================
-           КЛИК ВНУТРИ ВСЕЙ ОБЛАСТИ ТУЛТИПА
-           
-           НИКОГДА не закрывает подсказку.
+           Ничего не закрывает.
            ================================================= */
 
         tooltip.addEventListener('click', function (event) {
@@ -148,6 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.addEventListener('click', function (event) {
 
             if (!tooltip.contains(event.target)) {
+
                 closeTooltip();
             }
         });
