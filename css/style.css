@@ -653,7 +653,7 @@ text-align: center;
 
     outline: none;
 
-    overflow: hidden;
+    overflow: visible;
 
     transition:
         background-color 0.2s ease,
