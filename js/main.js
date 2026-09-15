@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const closeButton =
             tooltip.querySelector('.ts-tooltip-close');
 
+        const tooltipText =
+            tooltip.querySelector('.ts-tooltip-text');
+
         if (!trigger) {
             return;
         }
@@ -110,11 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
             clearTimeout(closeTimer);
 
             if (tooltip.classList.contains('ts-tooltip-open')) {
-
                 closeTooltip();
-
             } else {
-
                 openTooltip();
             }
         });
@@ -137,9 +137,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         /* =================================================
-           КЛИК ВНУТРИ ТУЛТИПА
+           КЛИК ВНУТРИ ТЕКСТА ПОДСКАЗКИ
            
-           Ничего не закрывает.
+           НИКОГДА не закрывает подсказку.
+           ================================================= */
+
+        if (tooltipText) {
+
+            tooltipText.addEventListener('click', function (event) {
+
+                event.stopPropagation();
+            });
+        }
+
+
+        /* =================================================
+           КЛИК ВНУТРИ ВСЕЙ ОБЛАСТИ ТУЛТИПА
+           
+           НИКОГДА не закрывает подсказку.
            ================================================= */
 
         tooltip.addEventListener('click', function (event) {
