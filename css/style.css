@@ -710,8 +710,9 @@ text-align: center;
     pointer-events: none;
 
     transition:
-        opacity 0.2s ease,
-        visibility 0.2s ease;
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        visibility 0s linear 0.25s;
 }
 
 
