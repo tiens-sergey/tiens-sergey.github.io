@@ -604,13 +604,9 @@ text-align: center;
 }
 
 
-/* Знак вопроса */
-
-.ts-tooltip-trigger.ts-tooltip-active {
-    background-color: #333;
-    border-color: #333;
-    color: #fff;
-}
+/* =========================================================
+   ЗНАК ?
+   ========================================================= */
 
 .ts-tooltip-trigger {
     display: inline-flex;
@@ -630,16 +626,9 @@ text-align: center;
     border: 1.5px solid #555;
     border-radius: 50%;
 
-/*    background: transparent;
+    background-color: #fff;
     color: #555;
-*/
 
-	background-color: #fff;
-    color: #555;
-    border-color: #555;
-	
-	bottom: calc(100% + 10px);
-	
     font-family: 'Roboto', sans-serif;
     font-size: 9px;
     font-weight: 700;
@@ -671,18 +660,28 @@ text-align: center;
 }
 
 
-/* ОКНО */
+/* =========================================================
+   ОКНО ПОДСКАЗКИ
+   ========================================================= */
 
 .ts-tooltip-text {
     position: absolute;
 
-    /* Нижний край окна находится над ? */
+    /*
+       Небольшой отступ между ? и подсказкой.
+    */
     bottom: calc(100% + 10px);
 
-    /* Центр окна совпадает с центром ? */
+    /*
+       Центр окна совпадает с центром ?.
+    */
     left: 50%;
 
-    transform: translateX(-50%);
+    /*
+       Начальное положение:
+       немного ниже + прозрачное.
+    */
+    transform: translateX(-50%) translateY(8px);
 
     width: 260px;
     min-height: 380px;
@@ -706,9 +705,11 @@ text-align: center;
 
     opacity: 0;
     visibility: hidden;
-
     pointer-events: none;
 
+    /*
+       Плавное появление и исчезновение.
+    */
     transition:
         opacity 0.25s ease,
         transform 0.25s ease,
@@ -716,16 +717,31 @@ text-align: center;
 }
 
 
-/* Открытие */
+/* =========================================================
+   ОТКРЫТОЕ ОКНО
+   ========================================================= */
 
 .ts-tooltip.ts-tooltip-open .ts-tooltip-text {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+
+    /*
+       Возвращаем окно в исходную позицию.
+       Получается плавное движение снизу вверх.
+    */
+    transform: translateX(-50%) translateY(0);
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        visibility 0s linear 0s;
 }
 
 
-/* Стрелка */
+/* =========================================================
+   СТРЕЛКА
+   ========================================================= */
 
 .ts-tooltip-text::after {
     content: "";
@@ -733,7 +749,6 @@ text-align: center;
     position: absolute;
 
     left: 50%;
-
     bottom: -8px;
 
     transform: translateX(-50%);
@@ -747,7 +762,9 @@ text-align: center;
 }
 
 
-/* Крестик */
+/* =========================================================
+   КРЕСТИК ×
+   ========================================================= */
 
 .ts-tooltip-close {
     position: absolute;
@@ -761,7 +778,6 @@ text-align: center;
     padding: 0;
 
     border: 0;
-
     background: transparent;
 
     color: #aaa;
