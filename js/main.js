@@ -68,38 +68,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
         /* НАВЕДЕНИЕ НА ? */
 
-        trigger.addEventListener('mouseenter', function () {
-            openTooltip();
-        });
+trigger.addEventListener('mouseenter', function () {
+    clearTimeout(closeTimer);
+});
 
 
-        /* УХОД С ? */
+/* УХОД С ? */
 
-        trigger.addEventListener('mouseleave', function () {
-
-            closeTimer = setTimeout(function () {
-                closeTooltip();
-            }, 150);
-
-        });
+trigger.addEventListener('mouseleave', function () {
+    closeTimer = setTimeout(function () {
+        closeTooltip();
+    }, 150);
+});
 
 
-        /* КЛИК ПО ? */
+/* КЛИК ПО ? */
 
-        trigger.addEventListener('click', function (event) {
+trigger.addEventListener('click', function (event) {
 
-            event.preventDefault();
-            event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
 
-            clearTimeout(closeTimer);
+    clearTimeout(closeTimer);
 
-            if (tooltip.classList.contains('ts-tooltip-open')) {
-                closeTooltip();
-            } else {
-                openTooltip();
-            }
+    if (tooltip.classList.contains('ts-tooltip-open')) {
 
-        });
+        closeTooltip();
+
+    } else {
+
+        openTooltip();
+
+    }
+
+});
 
 
         /* НАВЕДЕНИЕ НА ОКНО */
