@@ -385,6 +385,337 @@ $('#txtName').tooltip('toggle');
 	
 </script>
 
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const slider =
+        document.querySelector('.video-parallax-slider');
+
+    const track =
+        document.querySelector('.video-parallax-track');
+
+    const slides =
+        document.querySelectorAll('.video-parallax-slide');
+
+    const currentNumber =
+        document.getElementById('videoCurrent');
+
+
+    let current = 0;
+
+    let startX = 0;
+    let currentX = 0;
+
+    let isDragging = false;
+
+
+    /* -----------------------------------------
+       PARALLAX
+       ----------------------------------------- */
+
+    function updateParallax(dragX) {
+
+        const width = window.innerWidth;
+
+
+        slides.forEach(function(slide, index) {
+
+            const content =
+                slide.querySelector(
+                    '.video-parallax-content'
+                );
+
+
+            /*
+             * Расстояние от текущего положения.
+             *
+             * 0.18 = сила параллакса.
+             */
+
+            const distance =
+                (index - current) * width + dragX;
+
+
+            const parallax =
+                distance * 0.18;
+
+
+            content.style.transform =
+                'translate3d(' +
+                (-parallax) +
+                'px, 0, 0) scale(1)';
+
+        });
+
+    }
+
+
+    /* -----------------------------------------
+       ПЕРЕХОД К СЛАЙДУ
+       ----------------------------------------- */
+
+    function goToSlide(index) {
+
+        /*
+         * Не даём уйти левее первого
+         * или правее последнего.
+         */
+
+        if (index < 0) {
+            index = 0;
+        }
+
+        if (index >= slides.length) {
+            index = slides.length - 1;
+        }
+
+
+        current = index;
+
+
+        /*
+         * Двигаем всю горизонтальную ленту.
+         */
+
+        track.style.transition =
+            'transform .8s cubic-bezier(.16,1,.3,1)';
+
+
+        track.style.transform =
+            'translate3d(' +
+            (-current * window.innerWidth) +
+            'px, 0, 0)';
+
+
+        /*
+         * Активный слайд.
+         */
+
+        slides.forEach(function(slide, i) {
+
+            if (i === current) {
+
+                slide.classList.add('active');
+
+            } else {
+
+                slide.classList.remove('active');
+
+            }
+
+        });
+
+
+        /*
+         * Счётчик.
+         */
+
+        currentNumber.textContent =
+            String(current + 1).padStart(2, '0');
+
+
+        updateParallax(0);
+
+    }
+
+
+    /* -----------------------------------------
+       НАЧАЛО СВАЙПА
+       ----------------------------------------- */
+
+    slider.addEventListener(
+        'touchstart',
+        function(e) {
+
+            startX =
+                e.touches[0].clientX;
+
+            currentX =
+                startX;
+
+            isDragging = true;
+
+
+            track.style.transition = 'none';
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    /* -----------------------------------------
+       ДВИЖЕНИЕ ПАЛЬЦА
+       ----------------------------------------- */
+
+    slider.addEventListener(
+        'touchmove',
+        function(e) {
+
+            if (!isDragging) {
+                return;
+            }
+
+
+            currentX =
+                e.touches[0].clientX;
+
+
+            const dragX =
+                currentX - startX;
+
+
+            /*
+             * Основное движение.
+             */
+
+            const position =
+                (-current * window.innerWidth)
+                + dragX;
+
+
+            track.style.transform =
+                'translate3d(' +
+                position +
+                'px, 0, 0)';
+
+
+            /*
+             * Параллакс движется
+             * медленнее основного слайда.
+             */
+
+            updateParallax(dragX);
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    /* -----------------------------------------
+       ЗАКОНЧИЛИ СВАЙП
+       ----------------------------------------- */
+
+    slider.addEventListener(
+        'touchend',
+        function() {
+
+            if (!isDragging) {
+                return;
+            }
+
+
+            isDragging = false;
+
+
+            const dragX =
+                currentX - startX;
+
+
+            /*
+             * Минимальный свайп —
+             * 15% ширины экрана.
+             */
+
+            const threshold =
+                window.innerWidth * 0.15;
+
+
+            if (Math.abs(dragX) > threshold) {
+
+
+                /*
+                 * Свайп влево.
+                 */
+
+                if (dragX < 0) {
+
+                    goToSlide(current + 1);
+
+                }
+
+
+                /*
+                 * Свайп вправо.
+                 */
+
+                else {
+
+                    goToSlide(current - 1);
+
+                }
+
+            }
+
+
+            /*
+             * Если свайп слишком маленький —
+             * возвращаемся на текущий слайд.
+             */
+
+            else {
+
+                goToSlide(current);
+
+            }
+
+        }
+    );
+
+
+    /* -----------------------------------------
+       ПЕРВЫЙ СЛАЙД
+       ----------------------------------------- */
+
+    goToSlide(0);
+
+
+    /* -----------------------------------------
+       RESIZE
+       ----------------------------------------- */
+
+    window.addEventListener(
+        'resize',
+        function() {
+
+            goToSlide(current);
+
+        }
+    );
+
+
+    /* -----------------------------------------
+       КЛАВИАТУРА
+       ----------------------------------------- */
+
+    document.addEventListener(
+        'keydown',
+        function(e) {
+
+            if (e.key === 'ArrowLeft') {
+
+                goToSlide(current - 1);
+
+            }
+
+
+            if (e.key === 'ArrowRight') {
+
+                goToSlide(current + 1);
+
+            }
+
+        }
+    );
+
+});
+
+</script>
+	
 </body>
 
 </html>
