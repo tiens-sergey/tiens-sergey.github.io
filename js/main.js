@@ -33,8 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 			clearTimeout(closeTimer);
 
-			tooltip.classList.add('ts-tooltip-open');
-
 			trigger.setAttribute('aria-expanded', 'true');
 		}
 
