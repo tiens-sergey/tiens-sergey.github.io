@@ -91,10 +91,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 			event.preventDefault();
 			event.stopPropagation();
+			
+			trigger.addEventListener('click', function (e) {
+    e.stopPropagation();
 
-			openTooltip();
+    const isOpen = tooltip.classList.contains('ts-tooltip-open');
 
-		});
+    // Переключаем состояние
+    if (isOpen) {
+        tooltip.classList.remove('ts-tooltip-open');
+        trigger.setAttribute('aria-expanded', 'false');
+    } else {
+        tooltip.classList.add('ts-tooltip-open');
+        trigger.setAttribute('aria-expanded', 'true');
+    }
+});
 
 
 		/* =====================================================
