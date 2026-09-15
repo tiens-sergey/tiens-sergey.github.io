@@ -840,8 +840,6 @@ text-align: center;
 
         max-width: calc(100vw - 30px);
 
-        min-height: 360px;
-
         font-size: 15px;
         line-height: 1.45;
     }
