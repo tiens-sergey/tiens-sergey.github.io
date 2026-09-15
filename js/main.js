@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             clearTimeout(closeTimer);
 
             tooltip.classList.add('ts-tooltip-open');
-
+            trigger.classList.add('ts-tooltip-active');
             trigger.setAttribute('aria-expanded', 'true');
         }
 
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
             clearTimeout(closeTimer);
 
             tooltip.classList.remove('ts-tooltip-open');
-
+            trigger.classList.remove('ts-tooltip-active');
             trigger.setAttribute('aria-expanded', 'false');
         }
 
