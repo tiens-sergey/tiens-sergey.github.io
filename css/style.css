@@ -609,10 +609,13 @@ text-align: center;
 
 
 /* =========================================================
-   ЗНАК ?
+   КНОПКА ?
    ========================================================= */
 
 .ts-tooltip-trigger {
+    appearance: none;
+    -webkit-appearance: none;
+
     display: inline-flex;
 
     align-items: center;
@@ -621,14 +624,13 @@ text-align: center;
     width: 14px;
     height: 14px;
 
+    min-width: 14px;
+    min-height: 14px;
+
     padding: 0;
     margin: 0;
 
     position: relative;
-
-    /*
-       Поднимаем ? немного выше текста.
-    */
     top: -14px;
 
     box-sizing: border-box;
@@ -636,21 +638,24 @@ text-align: center;
     border: 1.5px solid #555;
     border-radius: 50%;
 
+    background: #fff;
     background-color: #fff;
+
     color: #555;
 
     font-family: 'Roboto', sans-serif;
     font-size: 9px;
     font-weight: 700;
-    line-height: 1;
 
+    line-height: 12px;
     text-align: center;
 
     cursor: pointer;
 
-    /*
-       Плавное изменение цвета ?.
-    */
+    outline: none;
+
+    overflow: hidden;
+
     transition:
         background-color 0.2s ease,
         border-color 0.2s ease,
@@ -659,22 +664,24 @@ text-align: center;
 
 
 /* =========================================================
-   ? В ОТКРЫТОМ СОСТОЯНИИ
+   ? — ОТКРЫТО
    ========================================================= */
 
 .ts-tooltip-trigger.ts-tooltip-active {
+    background: #333;
     background-color: #333;
+
     border-color: #333;
+
     color: #fff;
 }
 
 
 /* =========================================================
-   HOVER / FOCUS
-   Не меняем цвет закрытого ?.
+   ? — FOCUS
+   Не меняем форму и цвет.
    ========================================================= */
 
-.ts-tooltip-trigger:hover,
 .ts-tooltip-trigger:focus {
     outline: none;
 }
@@ -687,19 +694,8 @@ text-align: center;
 .ts-tooltip-text {
     position: absolute;
 
-    /*
-       Окно находится над ?.
-       10px — небольшой визуальный отступ.
-    */
-    bottom: calc(100% + 10px);
-
     left: 50%;
-
-    /*
-       Начальная позиция:
-       окно немного ниже своей конечной позиции.
-    */
-    transform: translateX(-50%) translateY(8px);
+    bottom: calc(100% + 10px);
 
     width: 260px;
     min-height: 380px;
@@ -722,16 +718,17 @@ text-align: center;
     z-index: 1000;
 
     /*
-       Скрытое состояние.
+       Скрыто.
     */
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 
     /*
-       Плавное появление:
-       прозрачность + движение вверх.
+       Начальная позиция для анимации.
     */
+    transform: translateX(-50%) translateY(8px);
+
     transition:
         opacity 0.25s ease,
         transform 0.25s ease,
@@ -740,7 +737,8 @@ text-align: center;
 
 
 /* =========================================================
-   ОТКРЫТОЕ ОКНО
+   ОКНО ОТКРЫТО
+   Только класс, который добавляет JavaScript.
    ========================================================= */
 
 .ts-tooltip.ts-tooltip-open .ts-tooltip-text {
@@ -748,9 +746,6 @@ text-align: center;
     visibility: visible;
     pointer-events: auto;
 
-    /*
-       Конечная позиция.
-    */
     transform: translateX(-50%) translateY(0);
 
     transition:
@@ -761,7 +756,7 @@ text-align: center;
 
 
 /* =========================================================
-   СТРЕЛКА ПОДСКАЗКИ
+   СТРЕЛКА
    ========================================================= */
 
 .ts-tooltip-text::after {
@@ -772,10 +767,10 @@ text-align: center;
     left: 50%;
     bottom: -8px;
 
-    transform: translateX(-50%);
-
     width: 0;
     height: 0;
+
+    transform: translateX(-50%);
 
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
@@ -784,10 +779,13 @@ text-align: center;
 
 
 /* =========================================================
-   КНОПКА ЗАКРЫТИЯ ×
+   КНОПКА ×
    ========================================================= */
 
 .ts-tooltip-close {
+    appearance: none;
+    -webkit-appearance: none;
+
     position: absolute;
 
     top: 5px;
@@ -797,27 +795,39 @@ text-align: center;
     height: 25px;
 
     padding: 0;
+    margin: 0;
 
     border: 0;
+    border-radius: 0;
 
     background: transparent;
+
     color: #aaa;
 
     font-family: Arial, sans-serif;
     font-size: 23px;
+    font-weight: normal;
+
     line-height: 25px;
+    text-align: center;
 
     cursor: pointer;
+
+    outline: none;
 }
 
 
-.ts-tooltip-close:hover {
+.ts-tooltip-close:hover,
+.ts-tooltip-close:focus {
+    background: transparent;
     color: #fff;
+
+    outline: none;
 }
 
 
 /* =========================================================
-   МОБИЛЬНЫЕ УСТРОЙСТВА
+   МОБИЛЬНАЯ ВЕРСИЯ
    ========================================================= */
 
 @media (max-width: 576px) {
@@ -832,4 +842,5 @@ text-align: center;
         line-height: 1.45;
     }
 
+}
 }
