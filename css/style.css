@@ -654,11 +654,19 @@ text-align: center;
 }
 
 
-.ts-tooltip-trigger:hover,
-.ts-tooltip-trigger:focus {
+/* ? открыто */
+
+.ts-tooltip-trigger.ts-tooltip-active {
     background-color: #333;
     border-color: #333;
     color: #fff;
+}
+
+
+/* Убираем изменение цвета только из-за hover/focus */
+
+.ts-tooltip-trigger:hover,
+.ts-tooltip-trigger:focus {
     outline: none;
 }
 
