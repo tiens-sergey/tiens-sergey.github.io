@@ -75,30 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         /* =================================================
-           НАВЕДЕНИЕ НА ТУЛТИП
-           ================================================= */
-
-        tooltip.addEventListener('mouseenter', function () {
-
-            clearTimeout(closeTimer);
-
-            openTooltip();
-        });
-
-
-        /* =================================================
-           УХОД С ТУЛТИПА
-           ================================================= */
-
-        tooltip.addEventListener('mouseleave', function () {
-
-            closeTimer = setTimeout(function () {
-                closeTooltip();
-            }, 150);
-        });
-
-
-        /* =================================================
            КЛИК ПО ?
            
            Первый клик  → открыть
