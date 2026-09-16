@@ -667,6 +667,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let isDragging = false;
     let moved = false;
 
+    const CLICK_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 60;
 
 
@@ -675,6 +676,8 @@ document.addEventListener('DOMContentLoaded', function () {
        ========================================================= */
 
     const players = [];
+
+    let youtubeAPIReady = false;
 
 
     /* =========================================================
@@ -714,84 +717,125 @@ document.addEventListener('DOMContentLoaded', function () {
         const iframe =
             slide.querySelector('iframe');
 
-        const id =
+        const youtubeId =
             getYouTubeId(iframe);
 
         const dot =
             dots[index];
 
-        if (!id || !dot) {
+        if (!youtubeId || !dot) {
             return;
         }
 
         const thumb =
             dot.querySelector('.video-thumb');
 
-        if (thumb) {
-
-            thumb.style.backgroundImage =
-                'url("https://img.youtube.com/vi/' +
-                id +
-                '/hqdefault.jpg")';
-
+        if (!thumb) {
+            return;
         }
+
+
+        thumb.style.backgroundImage =
+            'url("https://img.youtube.com/vi/' +
+            youtubeId +
+            '/hqdefault.jpg")';
 
     });
 
 
     /* =========================================================
-       YOUTUBE API
+       YOUTUBE API INITIALIZATION
        ========================================================= */
+
+    function createYouTubePlayers() {
+
+        if (
+            typeof YT === 'undefined' ||
+            typeof YT.Player === 'undefined'
+        ) {
+            return;
+        }
+
+
+        youtubeAPIReady = true;
+
+
+        slides.forEach(function (slide, index) {
+
+            const iframe =
+                slide.querySelector('iframe');
+
+            if (!iframe) {
+                return;
+            }
+
+
+            players[index] =
+                new YT.Player(
+                    iframe,
+                    {
+                        events: {
+
+                            onReady:
+                                function () {
+
+                                    /*
+                                     * Player готов.
+                                     */
+
+                                },
+
+                            onStateChange:
+                                function (event) {
+
+                                    /*
+                                     * Ничего автоматически
+                                     * не переключаем.
+                                     *
+                                     * Активный слайд управляется
+                                     * только navigation.
+                                     */
+
+                                }
+
+                        }
+                    }
+                );
+
+        });
+
+    }
+
+
+    /*
+     * YouTube вызывает эту функцию,
+     * когда API полностью загрузился.
+     */
 
     window.onYouTubeIframeAPIReady =
         function () {
 
-            slides.forEach(
-                function (slide, index) {
-
-                    const iframe =
-                        slide.querySelector('iframe');
-
-                    if (!iframe) {
-                        return;
-                    }
-
-
-                    players[index] =
-                        new YT.Player(
-                            iframe,
-                            {
-
-                                events: {
-
-                                    onReady:
-                                        function () {
-                                            /* Player готов */
-                                        },
-
-                                    onStateChange:
-                                        function (event) {
-
-                                            /*
-                                             * Здесь можно при необходимости
-                                             * отслеживать PLAYING / PAUSED.
-                                             */
-
-                                        }
-
-                                }
-
-                            }
-                        );
-
-                }
-            );
+            createYouTubePlayers();
 
         };
 
 
+    /*
+     * Если API уже был загружен ранее.
+     */
+
+    if (
+        typeof YT !== 'undefined' &&
+        typeof YT.Player !== 'undefined'
+    ) {
+
+        createYouTubePlayers();
+
+    }
+
+
     /* =========================================================
-       VIDEO STEP
+       STEP
        ========================================================= */
 
     function getStep() {
@@ -801,11 +845,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const width =
             slide.getBoundingClientRect().width;
-
-        /*
-         * Расстояние между левыми краями
-         * соседних слайдов.
-         */
 
         const style =
             window.getComputedStyle(slide);
@@ -826,7 +865,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /* =========================================================
-       CENTER POSITION
+       CENTER OFFSET
        ========================================================= */
 
     function getCenterOffset(index) {
@@ -839,11 +878,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        /*
-         * Реальное положение слайда
-         * внутри track.
-         */
-
         const slideWidth =
             slide.getBoundingClientRect().width;
 
@@ -851,24 +885,81 @@ document.addEventListener('DOMContentLoaded', function () {
             slider.getBoundingClientRect().width;
 
 
-        /*
-         * Центрируем слайд
-         * относительно реального окна slider.
-         */
-
         const step =
             getStep();
+
+
+        const style =
+            window.getComputedStyle(slide);
+
+        const marginLeft =
+            parseFloat(style.marginLeft) || 0;
+
 
         return (
             (sliderWidth - slideWidth) / 2
             -
             index * step
             -
-            parseFloat(
-                window.getComputedStyle(slide)
-                    .marginLeft
-            )
+            marginLeft
         );
+
+    }
+
+
+    /* =========================================================
+       UPDATE THUMBNAIL NAVIGATION
+       ========================================================= */
+
+    function updateDots() {
+
+        dots.forEach(function (dot, index) {
+
+            const active =
+                index === current;
+
+
+            dot.classList.toggle(
+                'active',
+                active
+            );
+
+
+            if (active) {
+
+                dot.setAttribute(
+                    'aria-current',
+                    'true'
+                );
+
+            } else {
+
+                dot.removeAttribute(
+                    'aria-current'
+                );
+
+            }
+
+        });
+
+
+        /*
+         * Прокручиваем полоску так,
+         * чтобы активная миниатюра была видна.
+         */
+
+        const activeDot =
+            dots[current];
+
+        if (activeDot) {
+
+            activeDot.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center'
+            });
+
+        }
 
     }
 
@@ -929,52 +1020,58 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        /* Active thumbnail */
+        /* Thumbnails */
 
-        dots.forEach(
-            function (dot, i) {
+        updateDots();
 
-                const active =
-                    i === current;
-
-                dot.classList.toggle(
-                    'active',
-                    active
-                );
-
-                if (active) {
-
-                    dot.setAttribute(
-                        'aria-current',
-                        'true'
-                    );
-
-                } else {
-
-                    dot.removeAttribute(
-                        'aria-current'
-                    );
-
-                }
-
-            }
-        );
+    }
 
 
-        /* Center thumbnail */
+    /* =========================================================
+       PLAY / PAUSE CURRENT VIDEO
+       ========================================================= */
 
-        const activeDot =
-            dots[current];
+    function toggleCurrentVideo() {
 
-        if (activeDot) {
+        const player =
+            players[current];
 
-            activeDot.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'center'
-            });
+
+        /*
+         * API ещё не готов.
+         */
+
+        if (
+            !player ||
+            typeof player.getPlayerState !== 'function'
+        ) {
+            return;
+        }
+
+
+        const state =
+            player.getPlayerState();
+
+
+        /*
+         * 1 = PLAYING
+         */
+
+        if (state === YT.PlayerState.PLAYING) {
+
+            player.pauseVideo();
+
+            return;
 
         }
+
+
+        /*
+         * Любое другое состояние
+         * запускаем.
+         */
+
+        player.playVideo();
 
     }
 
@@ -983,184 +1080,245 @@ document.addEventListener('DOMContentLoaded', function () {
        POINTER DOWN
        ========================================================= */
 
-    slider.addEventListener(
-        'pointerdown',
-        function (e) {
-
-            /*
-             * Миниатюры обрабатываются отдельно.
-             */
-
-            if (
-                e.target.closest &&
-                e.target.closest('.video-dots')
-            ) {
-                return;
-            }
+    const gestureLayers =
+        document.querySelectorAll(
+            '.video-gesture-layer'
+        );
 
 
-            /*
-             * Только левая кнопка мыши.
-             */
+    gestureLayers.forEach(
+        function (layer) {
 
-            if (
-                e.pointerType === 'mouse' &&
-                e.button !== 0
-            ) {
-                return;
-            }
+            layer.addEventListener(
+                'pointerdown',
+                function (e) {
 
+                    /*
+                     * Только левая кнопка мыши.
+                     */
 
-            startX = e.clientX;
-            currentX = e.clientX;
-
-            isDragging = true;
-            moved = false;
-
-        }
-    );
+                    if (
+                        e.pointerType === 'mouse' &&
+                        e.button !== 0
+                    ) {
+                        return;
+                    }
 
 
-    /* =========================================================
-       POINTER MOVE
-       ========================================================= */
+                    startX =
+                        e.clientX;
 
-    slider.addEventListener(
-        'pointermove',
-        function (e) {
+                    currentX =
+                        e.clientX;
 
-            if (!isDragging) {
-                return;
-            }
+                    isDragging = true;
+                    moved = false;
 
 
-            currentX = e.clientX;
+                    /*
+                     * Захватываем pointer,
+                     * чтобы движение не потерялось
+                     * за пределами слоя.
+                     */
+
+                    try {
+
+                        layer.setPointerCapture(
+                            e.pointerId
+                        );
+
+                    } catch (error) {
+                        /* Ничего не делаем */
+                    }
 
 
-            const drag =
-                currentX - startX;
+                    /*
+                     * Убираем transition
+                     * во время движения.
+                     */
+
+                    track.style.transition =
+                        'none';
 
 
-            if (Math.abs(drag) > 10) {
-                moved = true;
-            }
+                    e.preventDefault();
+
+                }
+            );
 
 
-            /*
-             * Двигаем track непосредственно
-             * во время жеста.
-             */
+            /* =================================================
+               POINTER MOVE
+               ================================================= */
 
-            if (moved) {
+            layer.addEventListener(
+                'pointermove',
+                function (e) {
 
-                const base =
-                    getCenterOffset(current);
-
-                const offset =
-                    base + drag;
-
-                track.style.transition =
-                    'none';
-
-                track.style.transform =
-                    'translate3d(' +
-                    offset +
-                    'px,0,0)';
-
-            }
-
-        }
-    );
+                    if (!isDragging) {
+                        return;
+                    }
 
 
-    /* =========================================================
-       POINTER UP
-       ========================================================= */
-
-    slider.addEventListener(
-        'pointerup',
-        function () {
-
-            if (!isDragging) {
-                return;
-            }
+                    currentX =
+                        e.clientX;
 
 
-            isDragging = false;
+                    const drag =
+                        currentX - startX;
 
 
-            const drag =
-                currentX - startX;
+                    if (
+                        Math.abs(drag) >
+                        CLICK_THRESHOLD
+                    ) {
+
+                        moved = true;
+
+                    }
 
 
-            /*
-             * Если движение было небольшим —
-             * это CLICK.
-             */
+                    /*
+                     * Если пользователь действительно
+                     * начал движение — двигаем слайд.
+                     */
 
-            if (
-                Math.abs(drag) < SWIPE_THRESHOLD
-            ) {
+                    if (moved) {
 
-                goToSlide(current);
+                        const base =
+                            getCenterOffset(current);
 
-                return;
-
-            }
+                        const offset =
+                            base + drag;
 
 
-            /*
-             * SWIPE LEFT
-             */
+                        track.style.transform =
+                            'translate3d(' +
+                            offset +
+                            'px,0,0)';
 
-            if (
-                drag < -SWIPE_THRESHOLD
-            ) {
-
-                goToSlide(
-                    current + 1
-                );
-
-                return;
-
-            }
+                    }
 
 
-            /*
-             * SWIPE RIGHT
-             */
+                    e.preventDefault();
 
-            if (
-                drag > SWIPE_THRESHOLD
-            ) {
-
-                goToSlide(
-                    current - 1
-                );
-
-                return;
-
-            }
-
-        }
-    );
+                }
+            );
 
 
-    /* =========================================================
-       POINTER CANCEL
-       ========================================================= */
+            /* =================================================
+               POINTER UP
+               ================================================= */
 
-    slider.addEventListener(
-        'pointercancel',
-        function () {
+            layer.addEventListener(
+                'pointerup',
+                function (e) {
 
-            if (!isDragging) {
-                return;
-            }
+                    if (!isDragging) {
+                        return;
+                    }
 
-            isDragging = false;
 
-            goToSlide(current);
+                    isDragging = false;
+
+
+                    const drag =
+                        currentX - startX;
+
+
+                    /*
+                     * =========================================
+                     * CLICK
+                     * =========================================
+                     *
+                     * Палец практически не двигался.
+                     */
+
+                    if (
+                        Math.abs(drag) <
+                        CLICK_THRESHOLD
+                    ) {
+
+                        goToSlide(current);
+
+                        toggleCurrentVideo();
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * =========================================
+                     * SWIPE LEFT
+                     * =========================================
+                     */
+
+                    if (
+                        drag <
+                        -SWIPE_THRESHOLD
+                    ) {
+
+                        goToSlide(
+                            current + 1
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * =========================================
+                     * SWIPE RIGHT
+                     * =========================================
+                     */
+
+                    if (
+                        drag >
+                        SWIPE_THRESHOLD
+                    ) {
+
+                        goToSlide(
+                            current - 1
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * =========================================
+                     * НЕЗНАЧИТЕЛЬНОЕ ДВИЖЕНИЕ
+                     * =========================================
+                     */
+
+                    goToSlide(current);
+
+                }
+            );
+
+
+            /* =================================================
+               POINTER CANCEL
+               ================================================= */
+
+            layer.addEventListener(
+                'pointercancel',
+                function () {
+
+                    if (!isDragging) {
+                        return;
+                    }
+
+
+                    isDragging = false;
+
+                    goToSlide(current);
+
+                }
+            );
 
         }
     );
@@ -1211,7 +1369,30 @@ document.addEventListener('DOMContentLoaded', function () {
         'keydown',
         function (e) {
 
+            /*
+             * Не реагируем на стрелки,
+             * если пользователь работает
+             * с полем ввода.
+             */
+
+            const tag =
+                e.target.tagName
+                    ? e.target.tagName.toLowerCase()
+                    : '';
+
+
+            if (
+                tag === 'input' ||
+                tag === 'textarea' ||
+                tag === 'select'
+            ) {
+                return;
+            }
+
+
             if (e.key === 'ArrowLeft') {
+
+                e.preventDefault();
 
                 goToSlide(
                     current - 1
@@ -1221,6 +1402,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             if (e.key === 'ArrowRight') {
+
+                e.preventDefault();
 
                 goToSlide(
                     current + 1
@@ -1236,11 +1419,25 @@ document.addEventListener('DOMContentLoaded', function () {
        RESIZE
        ========================================================= */
 
+    let resizeTimer = null;
+
+
     window.addEventListener(
         'resize',
         function () {
 
-            goToSlide(current);
+            clearTimeout(resizeTimer);
+
+
+            resizeTimer =
+                setTimeout(
+                    function () {
+
+                        goToSlide(current);
+
+                    },
+                    100
+                );
 
         }
     );
