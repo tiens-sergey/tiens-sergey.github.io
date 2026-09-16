@@ -658,7 +658,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const counter =
         document.querySelector('.current-number');
+const dotsContainer = document.querySelector('.video-dots');
 
+function syncDotsWidth() {
+    if (dotsContainer && slides[0]) {
+        dotsContainer.style.width = slides[0].getBoundingClientRect().width + 'px';
+    }
+}
 
     if (!slider || !track || !slides.length) {
         return;
