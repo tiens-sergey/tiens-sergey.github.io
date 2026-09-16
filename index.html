@@ -668,6 +668,27 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+	dots.forEach(function (dot, i) {
+
+    const isActive = i === current;
+
+    dot.classList.toggle(
+        'active',
+        isActive
+    );
+
+    if (isActive) {
+        dot.setAttribute(
+            'aria-current',
+            'true'
+        );
+    } else {
+        dot.removeAttribute(
+            'aria-current'
+        );
+    }
+
+});
 
     function startDrag(x) {
 
