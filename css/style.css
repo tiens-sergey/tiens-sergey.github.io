@@ -1386,8 +1386,8 @@ text-align: center;
 
 
     .video-dots {
-        width: 82vw;
-        max-width: 82vw;
+        width: 100%;
+    max-width: none;
 
         gap: 9px;
     }
@@ -1427,8 +1427,8 @@ text-align: center;
 
 
     .video-dots {
-        width: 86vw;
-        max-width: 86vw;
+        width: 100%;
+    max-width: none;
 
         gap: 7px;
 
