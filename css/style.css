@@ -980,9 +980,7 @@ text-align: center;
 
     flex: 0 0 78vw;
 
-    width: 78vw;
     min-width: 78vw;
-    max-width: 78vw;
 
     aspect-ratio: 16 / 9;
 
@@ -1372,10 +1370,8 @@ text-align: center;
 
     .video-slide {
         flex-basis: 82vw;
-
-        width: 82vw;
+		
         min-width: 82vw;
-        max-width: 82vw;
 
         margin-left: 9vw;
         margin-right: 9vw;
@@ -1414,9 +1410,7 @@ text-align: center;
     .video-slide {
         flex-basis: 86vw;
 
-        width: 86vw;
         min-width: 86vw;
-        max-width: 86vw;
 
         margin-left: 7vw;
         margin-right: 7vw;
