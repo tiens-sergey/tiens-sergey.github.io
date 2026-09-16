@@ -1162,8 +1162,8 @@ text-align: center;
 .video-dots {
     display: flex;
 
-    width: 78vw;
-    max-width: 78vw;
+    width: 100%;
+	max-width: none;
 
     margin: 24px auto 0;
 
