@@ -929,62 +929,34 @@ function syncDotsWidth() {
 
     function updateDots() {
 
-        dots.forEach(function (dot, index) {
+    dots.forEach(function (dot, index) {
 
-            const active =
-                index === current;
+        const active = index === current;
 
+        dot.classList.toggle('active', active);
 
-            dot.classList.toggle(
-                'active',
-                active
-            );
-
-
-            if (active) {
-
-                dot.setAttribute(
-                    'aria-current',
-                    'true'
-                );
-
-            } else {
-
-                dot.removeAttribute(
-                    'aria-current'
-                );
-
-            }
-
-        });
-
-
-        /*
-         * Прокручиваем полоску так,
-         * чтобы активная миниатюра была видна.
-         */
-
-        const activeDot =
-            dots[current];
-
-        if (activeDot) {
-
-            const activeDot = dots[current];
-
-if (activeDot && dotsContainer) {
-
-    const target =
-        activeDot.offsetLeft -
-        (dotsContainer.clientWidth - activeDot.offsetWidth) / 2;
-
-    dotsContainer.scrollTo({
-        left: Math.max(0, target),
-        behavior: 'smooth'
-    });
-}
-
+        if (active) {
+            dot.setAttribute('aria-current', 'true');
+        } else {
+            dot.removeAttribute('aria-current');
         }
 
+    });
+
+    const activeDot = dots[current];
+
+    if (activeDot && dotsContainer) {
+
+        const target =
+            activeDot.offsetLeft -
+            (dotsContainer.clientWidth - activeDot.offsetWidth) / 2;
+
+        dotsContainer.scrollTo({
+            left: Math.max(0, target),
+            behavior: 'smooth'
+        });
+    }
+}
 
     /* =========================================================
        GO TO SLIDE
