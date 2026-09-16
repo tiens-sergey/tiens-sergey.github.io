@@ -1438,25 +1438,16 @@ function syncDotsWidth() {
     let resizeTimer = null;
 
 
-    window.addEventListener(
-        'resize',
-        function () {
+    window.addEventListener('resize', function () {
 
-            clearTimeout(resizeTimer);
+    clearTimeout(resizeTimer);
 
+    resizeTimer = setTimeout(function () {
+        syncDotsWidth();
+        goToSlide(current);
+    }, 100);
 
-            resizeTimer =
-                setTimeout(
-                    function () {
-
-                        goToSlide(current);
-
-                    syncDotsWidth(); },100);
-                );
-
-        }
-    );
-
+});
 
     /* =========================================================
        INITIAL
