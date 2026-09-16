@@ -930,17 +930,22 @@ text-align: center;
    ========================================================= */
 
 .video-slider {
-    width: 100%;
-    height: 75vh;
-
     position: relative;
 
-    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+
+    height: auto;
 
     margin: 40px 0;
 
+    overflow: hidden;
+
+    box-sizing: border-box;
+
     touch-action: pan-y;
     user-select: none;
+    -webkit-user-select: none;
 }
 
 
@@ -950,9 +955,16 @@ text-align: center;
 
 .video-track {
     display: flex;
+    flex-direction: row;
+    align-items: center;
 
     width: max-content;
-    height: 100%;
+    max-width: none;
+
+    height: auto;
+
+    margin: 0;
+    padding: 0;
 
     transform: translate3d(0, 0, 0);
 
@@ -968,38 +980,44 @@ text-align: center;
    ========================================================= */
 
 /*
-   Само видео занимает 78vw.
+   Центральное видео:
 
-   + 11vw слева
-   + 11vw справа
+   78vw — само видео
+   11vw — слева
+   11vw — справа
 
-   = ровно 100vw.
-
-   Поэтому каждый следующий слайд
-   начинается ровно через один экран.
+   Итого шаг одного слайда = 100vw.
 */
 
 .video-slide {
     position: relative;
 
+    flex: 0 0 78vw;
+
     width: 78vw;
     min-width: 78vw;
+    max-width: 78vw;
 
-    height: 100%;
+    /*
+       16:9
+    */
+    aspect-ratio: 16 / 9;
 
-    flex: 0 0 78vw;
+    height: auto;
 
     margin-left: 11vw;
     margin-right: 11vw;
 
+    box-sizing: border-box;
+
     overflow: hidden;
 
-    box-sizing: border-box;
+    isolation: isolate;
 }
 
 
 /* =========================================================
-   VIDEO
+   VIDEO INNER
    ========================================================= */
 
 .video-inner {
@@ -1024,25 +1042,36 @@ text-align: center;
 }
 
 
+/* =========================================================
+   YOUTUBE IFRAME
+   ========================================================= */
+
 .video-inner iframe {
     display: block;
 
     width: 100%;
     height: 100%;
-    pointer-events: auto;
+
+    margin: 0;
+    padding: 0;
+
     border: 0;
 
     /*
        ВАЖНО:
-       позволяет свайпу работать
-       поверх iframe.
+       YouTube должен получать клики.
     */
+    pointer-events: auto;
 
+    /*
+       Видео заполняет весь контейнер.
+    */
+    object-fit: cover;
 }
 
 
 /* =========================================================
-   PARALLAX
+   PARALLAX / CINEMATIC EFFECT
    ========================================================= */
 
 .video-slide:not(.active) .video-inner {
@@ -1068,7 +1097,6 @@ text-align: center;
 
     left: 25px;
     right: 25px;
-
     bottom: 30px;
 
     z-index: 10;
@@ -1076,15 +1104,19 @@ text-align: center;
     color: #fff;
 
     font-size: 20px;
-
     line-height: 1.25;
-
     font-weight: 600;
 
     text-shadow:
-        0 2px 8px rgba(0,0,0,.8);
+        0 2px 8px rgba(0, 0, 0, .8);
 
-    pointer-events: auto;
+    box-sizing: border-box;
+
+    /*
+       Заголовок не должен блокировать
+       клики по YouTube.
+    */
+    pointer-events: none;
 }
 
 
@@ -1103,13 +1135,14 @@ text-align: center;
     color: #fff;
 
     font-size: 14px;
+    line-height: 1;
 
     letter-spacing: 3px;
 
     text-shadow:
-        0 2px 5px rgba(0,0,0,.8);
+        0 2px 5px rgba(0, 0, 0, .8);
 
-    pointer-events: auto;
+    pointer-events: none;
 }
 
 
@@ -1128,15 +1161,118 @@ text-align: center;
     color: #fff;
 
     font-size: 12px;
+    line-height: 1;
 
     letter-spacing: 1px;
 
     opacity: .8;
 
     text-shadow:
-        0 2px 5px rgba(0,0,0,.8);
+        0 2px 5px rgba(0, 0, 0, .8);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   DOT NAVIGATION
+   ========================================================= */
+
+.video-dots {
+    position: absolute;
+
+    left: 50%;
+    bottom: 18px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    width: auto;
+    max-width: 90%;
+
+    padding: 6px 10px;
+
+    box-sizing: border-box;
+
+    z-index: 100;
 
     pointer-events: auto;
+}
+
+
+/* =========================================================
+   DOT
+   ========================================================= */
+
+.video-dot {
+    display: block;
+
+    width: 9px;
+    height: 9px;
+
+    flex: 0 0 auto;
+
+    padding: 0;
+    margin: 0;
+
+    border: 1px solid rgba(255, 255, 255, .9);
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, .35);
+
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    box-sizing: border-box;
+
+    transition:
+        transform .25s ease,
+        background-color .25s ease,
+        opacity .25s ease;
+}
+
+
+/* =========================================================
+   DOT HOVER
+   ========================================================= */
+
+.video-dot:hover {
+    transform: scale(1.35);
+
+    background: rgba(255, 255, 255, .75);
+}
+
+
+/* =========================================================
+   ACTIVE DOT
+   ========================================================= */
+
+.video-dot.active {
+    width: 11px;
+    height: 11px;
+
+    background: #fff;
+
+    transform: scale(1.15);
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   DOT KEYBOARD FOCUS
+   ========================================================= */
+
+.video-dot:focus {
+    outline: 2px solid rgba(255, 255, 255, .8);
+    outline-offset: 3px;
 }
 
 
@@ -1147,10 +1283,11 @@ text-align: center;
 @media (max-width: 992px) {
 
     .video-slide {
+        flex-basis: 82vw;
+
         width: 82vw;
         min-width: 82vw;
-
-        flex-basis: 82vw;
+        max-width: 82vw;
 
         margin-left: 9vw;
         margin-right: 9vw;
@@ -1166,149 +1303,92 @@ text-align: center;
 @media (max-width: 768px) {
 
     .video-slider {
-        height: 65svh;
-
         margin: 25px 0;
     }
 
 
     .video-slide {
+        flex-basis: 86vw;
+
         width: 86vw;
         min-width: 86vw;
-
-        flex-basis: 86vw;
+        max-width: 86vw;
 
         margin-left: 7vw;
         margin-right: 7vw;
     }
 
 
+    /* -----------------------------------------
+       TITLE
+       ----------------------------------------- */
+
     .video-title {
         left: 15px;
         right: 15px;
-
         bottom: 35px;
 
         font-size: 16px;
+        line-height: 1.25;
     }
 
+
+    /* -----------------------------------------
+       COUNTER
+       ----------------------------------------- */
 
     .video-counter {
         right: 15px;
         bottom: 12px;
+
+        font-size: 12px;
     }
 
+
+    /* -----------------------------------------
+       SWIPE HINT
+       ----------------------------------------- */
 
     .swipe-hint {
         right: 15px;
         top: 12px;
+
+        font-size: 10px;
     }
 
-}
-}
 
-/*dot navigation slider*/
-
-.video-dots {
-    position: absolute;
-    left: 50%;
-    bottom: 18px;
-
-    transform: translateX(-50%);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 9px;
-
-    z-index: 100;
-
-    width: auto;
-    max-width: 90%;
-
-    padding: 6px 10px;
-
-    box-sizing: border-box;
-}
-
-
-/* Одна точка */
-
-.video-dot {
-    display: block;
-
-    width: 9px;
-    height: 9px;
-
-    padding: 0;
-    margin: 0;
-
-    border: 1px solid rgba(255,255,255,.9);
-    border-radius: 50%;
-
-    background: rgba(255,255,255,.35);
-
-    cursor: pointer;
-
-    transition:
-        transform .25s ease,
-        background-color .25s ease,
-        opacity .25s ease;
-
-    appearance: none;
-    -webkit-appearance: none;
-
-    box-sizing: border-box;
-}
-
-
-/* Наведение */
-
-.video-dot:hover {
-    transform: scale(1.35);
-    background: rgba(255,255,255,.75);
-}
-
-
-/* Текущий слайд */
-
-.video-dot.active {
-    width: 11px;
-    height: 11px;
-
-    background: #fff;
-
-    transform: scale(1.15);
-
-    opacity: 1;
-}
-
-
-/* Фокус с клавиатуры */
-
-.video-dot:focus {
-    outline: 2px solid rgba(255,255,255,.8);
-    outline-offset: 3px;
-}
-
-
-/* Телефон */
-
-@media (max-width: 768px) {
+    /* -----------------------------------------
+       DOTS
+       ----------------------------------------- */
 
     .video-dots {
         bottom: 12px;
+
         gap: 7px;
+
+        padding: 5px 8px;
     }
+
 
     .video-dot {
         width: 7px;
         height: 7px;
     }
 
+
     .video-dot.active {
         width: 9px;
         height: 9px;
     }
+
+}
+
+
+/* =========================================================
+   SAFETY: NO HORIZONTAL PAGE SCROLL
+   ========================================================= */
+
+html,
+body {
+    overflow-x: hidden;
 }
