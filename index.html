@@ -625,6 +625,8 @@ VK.Widgets.Comments("vk_comments", {limit: 10, attach: false});
 
 <script src="js/parallax.min.js"></script>
 
+<script src="https://www.youtube.com/iframe_api"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -641,11 +643,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const slides =
         document.querySelectorAll('.video-slide');
 
-    const counter =
-        document.querySelector('.current-number');
-
     const dots =
         document.querySelectorAll('.video-dot');
+
+    const counter =
+        document.querySelector('.current-number');
 
 
     if (!slider || !track || !slides.length) {
@@ -663,6 +665,16 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentX = 0;
 
     let isDragging = false;
+    let moved = false;
+
+    const SWIPE_THRESHOLD = 60;
+
+
+    /* =========================================================
+       YOUTUBE PLAYERS
+       ========================================================= */
+
+    const players = [];
 
 
     /* =========================================================
@@ -697,33 +709,29 @@ document.addEventListener('DOMContentLoaded', function () {
        CREATE THUMBNAILS
        ========================================================= */
 
-    dots.forEach(function (dot, index) {
-
-        const slide =
-            slides[index];
-
-        if (!slide) {
-            return;
-        }
+    slides.forEach(function (slide, index) {
 
         const iframe =
             slide.querySelector('iframe');
 
-        const youtubeId =
+        const id =
             getYouTubeId(iframe);
+
+        const dot =
+            dots[index];
+
+        if (!id || !dot) {
+            return;
+        }
 
         const thumb =
             dot.querySelector('.video-thumb');
 
-
-        if (
-            youtubeId &&
-            thumb
-        ) {
+        if (thumb) {
 
             thumb.style.backgroundImage =
                 'url("https://img.youtube.com/vi/' +
-                youtubeId +
+                id +
                 '/hqdefault.jpg")';
 
         }
@@ -732,7 +740,58 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /* =========================================================
-       STEP
+       YOUTUBE API
+       ========================================================= */
+
+    window.onYouTubeIframeAPIReady =
+        function () {
+
+            slides.forEach(
+                function (slide, index) {
+
+                    const iframe =
+                        slide.querySelector('iframe');
+
+                    if (!iframe) {
+                        return;
+                    }
+
+
+                    players[index] =
+                        new YT.Player(
+                            iframe,
+                            {
+
+                                events: {
+
+                                    onReady:
+                                        function () {
+                                            /* Player готов */
+                                        },
+
+                                    onStateChange:
+                                        function (event) {
+
+                                            /*
+                                             * Здесь можно при необходимости
+                                             * отслеживать PLAYING / PAUSED.
+                                             */
+
+                                        }
+
+                                }
+
+                            }
+                        );
+
+                }
+            );
+
+        };
+
+
+    /* =========================================================
+       VIDEO STEP
        ========================================================= */
 
     function getStep() {
@@ -742,6 +801,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const width =
             slide.getBoundingClientRect().width;
+
+        /*
+         * Расстояние между левыми краями
+         * соседних слайдов.
+         */
 
         const style =
             window.getComputedStyle(slide);
@@ -757,6 +821,55 @@ document.addEventListener('DOMContentLoaded', function () {
             marginLeft +
             marginRight
         );
+
+    }
+
+
+    /* =========================================================
+       CENTER POSITION
+       ========================================================= */
+
+    function getCenterOffset(index) {
+
+        const slide =
+            slides[index];
+
+        if (!slide) {
+            return 0;
+        }
+
+
+        /*
+         * Реальное положение слайда
+         * внутри track.
+         */
+
+        const slideWidth =
+            slide.getBoundingClientRect().width;
+
+        const sliderWidth =
+            slider.getBoundingClientRect().width;
+
+
+        /*
+         * Центрируем слайд
+         * относительно реального окна slider.
+         */
+
+        const step =
+            getStep();
+
+        return (
+            (sliderWidth - slideWidth) / 2
+            -
+            index * step
+            -
+            parseFloat(
+                window.getComputedStyle(slide)
+                    .marginLeft
+            )
+        );
+
     }
 
 
@@ -779,7 +892,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         const offset =
-            -(current * getStep());
+            getCenterOffset(current);
 
 
         track.style.transition =
@@ -816,7 +929,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
 
-        /* Thumbnails */
+        /* Active thumbnail */
 
         dots.forEach(
             function (dot, i) {
@@ -848,7 +961,7 @@ document.addEventListener('DOMContentLoaded', function () {
         );
 
 
-        /* Центрируем активную миниатюру */
+        /* Center thumbnail */
 
         const activeDot =
             dots[current];
@@ -867,89 +980,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /* =========================================================
-       START DRAG
-       ========================================================= */
-
-    function startDrag(x) {
-
-        startX = x;
-        currentX = x;
-
-        isDragging = true;
-
-        track.style.transition = 'none';
-    }
-
-
-    /* =========================================================
-       MOVE DRAG
-       ========================================================= */
-
-    function moveDrag(x) {
-
-        if (!isDragging) {
-            return;
-        }
-
-        currentX = x;
-
-        const drag =
-            currentX - startX;
-
-        const offset =
-            (-current * getStep()) +
-            drag;
-
-
-        track.style.transform =
-            'translate3d(' +
-            offset +
-            'px,0,0)';
-    }
-
-
-    /* =========================================================
-       END DRAG
-       ========================================================= */
-
-    function endDrag() {
-
-        if (!isDragging) {
-            return;
-        }
-
-        isDragging = false;
-
-
-        const drag =
-            currentX - startX;
-
-
-        const threshold = 60;
-
-
-        if (drag < -threshold) {
-
-            goToSlide(
-                current + 1
-            );
-
-        } else if (drag > threshold) {
-
-            goToSlide(
-                current - 1
-            );
-
-        } else {
-
-            goToSlide(current);
-
-        }
-
-    }
-
-
-    /* =========================================================
        POINTER DOWN
        ========================================================= */
 
@@ -958,7 +988,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function (e) {
 
             /*
-             * Не запускаем drag по миниатюрам.
+             * Миниатюры обрабатываются отдельно.
              */
 
             if (
@@ -981,7 +1011,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
 
-            startDrag(e.clientX);
+            startX = e.clientX;
+            currentX = e.clientX;
+
+            isDragging = true;
+            moved = false;
 
         }
     );
@@ -999,7 +1033,41 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            moveDrag(e.clientX);
+
+            currentX = e.clientX;
+
+
+            const drag =
+                currentX - startX;
+
+
+            if (Math.abs(drag) > 10) {
+                moved = true;
+            }
+
+
+            /*
+             * Двигаем track непосредственно
+             * во время жеста.
+             */
+
+            if (moved) {
+
+                const base =
+                    getCenterOffset(current);
+
+                const offset =
+                    base + drag;
+
+                track.style.transition =
+                    'none';
+
+                track.style.transform =
+                    'translate3d(' +
+                    offset +
+                    'px,0,0)';
+
+            }
 
         }
     );
@@ -1013,7 +1081,66 @@ document.addEventListener('DOMContentLoaded', function () {
         'pointerup',
         function () {
 
-            endDrag();
+            if (!isDragging) {
+                return;
+            }
+
+
+            isDragging = false;
+
+
+            const drag =
+                currentX - startX;
+
+
+            /*
+             * Если движение было небольшим —
+             * это CLICK.
+             */
+
+            if (
+                Math.abs(drag) < SWIPE_THRESHOLD
+            ) {
+
+                goToSlide(current);
+
+                return;
+
+            }
+
+
+            /*
+             * SWIPE LEFT
+             */
+
+            if (
+                drag < -SWIPE_THRESHOLD
+            ) {
+
+                goToSlide(
+                    current + 1
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * SWIPE RIGHT
+             */
+
+            if (
+                drag > SWIPE_THRESHOLD
+            ) {
+
+                goToSlide(
+                    current - 1
+                );
+
+                return;
+
+            }
 
         }
     );
@@ -1027,34 +1154,13 @@ document.addEventListener('DOMContentLoaded', function () {
         'pointercancel',
         function () {
 
-            if (isDragging) {
-
-                isDragging = false;
-
-                goToSlide(current);
-
+            if (!isDragging) {
+                return;
             }
 
-        }
-    );
+            isDragging = false;
 
-
-    /* =========================================================
-       MOUSE LEAVE
-       ========================================================= */
-
-    slider.addEventListener(
-        'pointerleave',
-        function (e) {
-
-            if (
-                isDragging &&
-                e.pointerType === 'mouse'
-            ) {
-
-                endDrag();
-
-            }
+            goToSlide(current);
 
         }
     );
@@ -1064,35 +1170,37 @@ document.addEventListener('DOMContentLoaded', function () {
        THUMBNAIL CLICK
        ========================================================= */
 
-    dots.forEach(function (dot) {
+    dots.forEach(
+        function (dot) {
 
-        dot.addEventListener(
-            'click',
-            function (e) {
+            dot.addEventListener(
+                'click',
+                function (e) {
 
-                e.preventDefault();
-                e.stopPropagation();
-
-
-                const index =
-                    parseInt(
-                        this.getAttribute(
-                            'data-slide'
-                        ),
-                        10
-                    );
+                    e.preventDefault();
+                    e.stopPropagation();
 
 
-                if (!isNaN(index)) {
+                    const index =
+                        parseInt(
+                            this.getAttribute(
+                                'data-slide'
+                            ),
+                            10
+                        );
 
-                    goToSlide(index);
+
+                    if (!isNaN(index)) {
+
+                        goToSlide(index);
+
+                    }
 
                 }
+            );
 
-            }
-        );
-
-    });
+        }
+    );
 
 
     /* =========================================================
@@ -1145,8 +1253,10 @@ document.addEventListener('DOMContentLoaded', function () {
     goToSlide(0);
 
 });
+</script>
 
 
+<script>
 /* =============================================================
    EXISTING TOOLTIP
    ============================================================= */
