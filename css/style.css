@@ -1206,3 +1206,109 @@ text-align: center;
 
 }
 }
+
+/*dot navigation slider*/
+
+.video-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    z-index: 100;
+
+    width: auto;
+    max-width: 90%;
+
+    padding: 6px 10px;
+
+    box-sizing: border-box;
+}
+
+
+/* Одна точка */
+
+.video-dot {
+    display: block;
+
+    width: 9px;
+    height: 9px;
+
+    padding: 0;
+    margin: 0;
+
+    border: 1px solid rgba(255,255,255,.9);
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.35);
+
+    cursor: pointer;
+
+    transition:
+        transform .25s ease,
+        background-color .25s ease,
+        opacity .25s ease;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    box-sizing: border-box;
+}
+
+
+/* Наведение */
+
+.video-dot:hover {
+    transform: scale(1.35);
+    background: rgba(255,255,255,.75);
+}
+
+
+/* Текущий слайд */
+
+.video-dot.active {
+    width: 11px;
+    height: 11px;
+
+    background: #fff;
+
+    transform: scale(1.15);
+
+    opacity: 1;
+}
+
+
+/* Фокус с клавиатуры */
+
+.video-dot:focus {
+    outline: 2px solid rgba(255,255,255,.8);
+    outline-offset: 3px;
+}
+
+
+/* Телефон */
+
+@media (max-width: 768px) {
+
+    .video-dots {
+        bottom: 12px;
+        gap: 7px;
+    }
+
+    .video-dot {
+        width: 7px;
+        height: 7px;
+    }
+
+    .video-dot.active {
+        width: 9px;
+        height: 9px;
+    }
+}
