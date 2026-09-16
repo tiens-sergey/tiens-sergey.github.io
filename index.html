@@ -597,29 +597,48 @@ VK.Widgets.Comments("vk_comments", {limit: 10, attach: false});
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
+    /* =========================================================
+       ЭЛЕМЕНТЫ СЛАЙДЕРА
+       ========================================================= */
+
     const slider = document.querySelector('.video-slider');
     const track = document.querySelector('.video-track');
     const slides = document.querySelectorAll('.video-slide');
     const counter = document.querySelector('.current-number');
-	const dots = document.querySelectorAll('.video-dot');
+    const dots = document.querySelectorAll('.video-dot');
+
+    /* Если слайдер отсутствует — прекращаем выполнение */
     if (!slider || !track || !slides.length) {
         return;
     }
 
+
+    /* =========================================================
+       СОСТОЯНИЕ
+       ========================================================= */
+
     let current = 0;
+
     let startX = 0;
     let currentX = 0;
+
     let isDragging = false;
     let moved = false;
 
+
+    /* =========================================================
+       РАССТОЯНИЕ МЕЖДУ СЛАЙДАМИ
+       ========================================================= */
 
     function getStep() {
 
         const slide = slides[0];
 
-        const width = slide.getBoundingClientRect().width;
+        const width =
+            slide.getBoundingClientRect().width;
 
-        const style = window.getComputedStyle(slide);
+        const style =
+            window.getComputedStyle(slide);
 
         const marginLeft =
             parseFloat(style.marginLeft) || 0;
@@ -631,26 +650,40 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
+    /* =========================================================
+       ПЕРЕХОД К СЛАЙДУ
+       ========================================================= */
+
     function goToSlide(index) {
 
+        /* Ограничиваем номер слайда */
         index = Math.max(
             0,
-            Math.min(index, slides.length - 1)
+            Math.min(
+                index,
+                slides.length - 1
+            )
         );
 
         current = index;
 
+
+        /* Рассчитываем положение */
         const offset =
             -(current * getStep());
 
+
+        /* Анимация */
         track.style.transition =
             'transform .75s cubic-bezier(.16,1,.3,1)';
 
         track.style.transform =
             'translate3d(' +
             offset +
-            'px,0,0)';
+            'px, 0, 0)';
 
+
+        /* Активный слайд */
         slides.forEach(function (slide, i) {
 
             slide.classList.toggle(
@@ -660,35 +693,57 @@ document.addEventListener('DOMContentLoaded', function () {
 
         });
 
+
+        /* =====================================================
+           СЧЁТЧИК
+           ===================================================== */
+
         if (counter) {
 
             counter.textContent =
-                String(current + 1).padStart(2, '0');
+                String(current + 1)
+                    .padStart(2, '0');
 
         }
+
+
+        /* =====================================================
+           DOT NAVIGATION
+           ===================================================== */
+
+        dots.forEach(function (dot, i) {
+
+            const isActive =
+                i === current;
+
+            dot.classList.toggle(
+                'active',
+                isActive
+            );
+
+            if (isActive) {
+
+                dot.setAttribute(
+                    'aria-current',
+                    'true'
+                );
+
+            } else {
+
+                dot.removeAttribute(
+                    'aria-current'
+                );
+
+            }
+
+        });
+
     }
 
-	dots.forEach(function (dot, i) {
 
-    const isActive = i === current;
-
-    dot.classList.toggle(
-        'active',
-        isActive
-    );
-
-    if (isActive) {
-        dot.setAttribute(
-            'aria-current',
-            'true'
-        );
-    } else {
-        dot.removeAttribute(
-            'aria-current'
-        );
-    }
-
-});
+    /* =========================================================
+       НАЧАЛО СВАЙПА
+       ========================================================= */
 
     function startDrag(x) {
 
@@ -698,9 +753,14 @@ document.addEventListener('DOMContentLoaded', function () {
         isDragging = true;
         moved = false;
 
+        /* На время ручного движения убираем анимацию */
         track.style.transition = 'none';
     }
 
+
+    /* =========================================================
+       ДВИЖЕНИЕ СВАЙПА
+       ========================================================= */
 
     function moveDrag(x) {
 
@@ -713,19 +773,27 @@ document.addEventListener('DOMContentLoaded', function () {
         const drag =
             currentX - startX;
 
+
+        /* Считаем, что пользователь действительно двигает */
         if (Math.abs(drag) > 10) {
             moved = true;
         }
 
+
         const offset =
             (-current * getStep()) + drag;
+
 
         track.style.transform =
             'translate3d(' +
             offset +
-            'px,0,0)';
+            'px, 0, 0)';
     }
 
+
+    /* =========================================================
+       ЗАВЕРШЕНИЕ СВАЙПА
+       ========================================================= */
 
     function endDrag() {
 
@@ -735,34 +803,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
         isDragging = false;
 
+
         const drag =
             currentX - startX;
 
+
+        /* Минимальное расстояние для переключения */
         const threshold = 60;
+
 
         if (drag < -threshold) {
 
+            /* Свайп влево */
             goToSlide(current + 1);
 
         } else if (drag > threshold) {
 
+            /* Свайп вправо */
             goToSlide(current - 1);
 
         } else {
 
+            /* Недостаточный свайп — возвращаем текущий */
             goToSlide(current);
 
         }
+
     }
 
 
-    /*
-     * TOUCH
-     *
-     * Не ставим preventDefault().
-     * Поэтому YouTube iframe продолжает
-     * нормально получать клики.
-     */
+    /* =========================================================
+       TOUCH — НАЧАЛО
+       ========================================================= */
 
     slider.addEventListener(
         'touchstart',
@@ -772,31 +844,61 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+
+            /*
+             * Если пользователь нажал на точку,
+             * не запускаем свайп.
+             */
+
+            if (
+                e.target.closest &&
+                e.target.closest('.video-dots')
+            ) {
+                return;
+            }
+
+
             startDrag(
                 e.touches[0].clientX
             );
 
         },
-        { passive: true }
+        {
+            passive: true
+        }
     );
 
+
+    /* =========================================================
+       TOUCH — ДВИЖЕНИЕ
+       ========================================================= */
 
     slider.addEventListener(
         'touchmove',
         function (e) {
 
-            if (!isDragging || !e.touches.length) {
+            if (
+                !isDragging ||
+                !e.touches.length
+            ) {
                 return;
             }
+
 
             moveDrag(
                 e.touches[0].clientX
             );
 
         },
-        { passive: true }
+        {
+            passive: true
+        }
     );
 
+
+    /* =========================================================
+       TOUCH — ЗАВЕРШЕНИЕ
+       ========================================================= */
 
     slider.addEventListener(
         'touchend',
@@ -808,17 +910,48 @@ document.addEventListener('DOMContentLoaded', function () {
     );
 
 
-    /*
-     * MOUSE
-     */
+    /* =========================================================
+       TOUCH — ОТМЕНА
+       ========================================================= */
+
+    slider.addEventListener(
+        'touchcancel',
+        function () {
+
+            if (isDragging) {
+
+                isDragging = false;
+
+                goToSlide(current);
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       MOUSE — НАЖАТИЕ
+       ========================================================= */
 
     slider.addEventListener(
         'mousedown',
         function (e) {
 
             /*
-             * Если клик пришёл из iframe,
-             * не вмешиваемся в YouTube.
+             * Не запускаем drag по точкам.
+             */
+
+            if (
+                e.target.closest &&
+                e.target.closest('.video-dots')
+            ) {
+                return;
+            }
+
+
+            /*
+             * Не вмешиваемся в iframe YouTube.
              */
 
             if (
@@ -828,11 +961,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+
             startDrag(e.clientX);
 
         }
     );
 
+
+    /* =========================================================
+       MOUSE — ДВИЖЕНИЕ
+       ========================================================= */
 
     window.addEventListener(
         'mousemove',
@@ -848,6 +986,10 @@ document.addEventListener('DOMContentLoaded', function () {
     );
 
 
+    /* =========================================================
+       MOUSE — ОТПУСКАНИЕ
+       ========================================================= */
+
     window.addEventListener(
         'mouseup',
         function () {
@@ -857,51 +999,96 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     );
 
-dots.forEach(function (dot) {
 
-    dot.addEventListener('click', function () {
+    /* =========================================================
+       DOT NAVIGATION
+       ========================================================= */
 
-        const index =
-            parseInt(
-                dot.getAttribute('data-slide'),
-                10
-            );
+    dots.forEach(function (dot) {
 
-        if (!isNaN(index)) {
-            goToSlide(index);
-        }
+        dot.addEventListener(
+            'click',
+            function (e) {
+
+                /*
+                 * Не даём клику всплывать
+                 * до обработчиков слайдера.
+                 */
+
+                e.preventDefault();
+                e.stopPropagation();
+
+
+                const index =
+                    parseInt(
+                        this.getAttribute(
+                            'data-slide'
+                        ),
+                        10
+                    );
+
+
+                if (!isNaN(index)) {
+
+                    goToSlide(index);
+
+                }
+
+            }
+        );
 
     });
 
-});
-	
-    /*
-     * Клавиатура
-     */
+
+    /* =========================================================
+       КЛАВИАТУРА
+       ========================================================= */
 
     document.addEventListener(
         'keydown',
         function (e) {
 
+            /*
+             * Левая стрелка
+             */
+
             if (e.key === 'ArrowLeft') {
-                goToSlide(current - 1);
+
+                goToSlide(
+                    current - 1
+                );
+
             }
 
+
+            /*
+             * Правая стрелка
+             */
+
             if (e.key === 'ArrowRight') {
-                goToSlide(current + 1);
+
+                goToSlide(
+                    current + 1
+                );
+
             }
 
         }
     );
 
 
-    /*
-     * Изменение размера окна
-     */
+    /* =========================================================
+       ИЗМЕНЕНИЕ РАЗМЕРА ОКНА
+       ========================================================= */
 
     window.addEventListener(
         'resize',
         function () {
+
+            /*
+             * После изменения ширины пересчитываем
+             * положение текущего слайда.
+             */
 
             goToSlide(current);
 
@@ -909,21 +1096,27 @@ dots.forEach(function (dot) {
     );
 
 
-    /*
-     * Первый слайд
-     */
+    /* =========================================================
+       ПЕРВЫЙ СЛАЙД
+       ========================================================= */
 
     goToSlide(0);
 
 });
-</script>
 
 
-<script>
-/* Ваш существующий tooltip */
+/* =============================================================
+   TOOLTIP
+   ============================================================= */
 
-$('#infoIcon').click(function () {
-    $('#txtName').tooltip('toggle');
+$(document).ready(function () {
+
+    $('#infoIcon').click(function () {
+
+        $('#txtName').tooltip('toggle');
+
+    });
+
 });
 </script>	
 </body>
