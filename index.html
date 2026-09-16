@@ -1442,12 +1442,12 @@ function syncDotsWidth() {
 
     clearTimeout(resizeTimer);
 
-    resizeTimer = setTimeout(function () {
-        syncDotsWidth();
-        goToSlide(current);
-    }, 100);
+   resizeTimer = setTimeout(function () {
 
-});
+    syncDotsWidth();
+    goToSlide(current);
+
+}, 100);
 
     /* =========================================================
        INITIAL
