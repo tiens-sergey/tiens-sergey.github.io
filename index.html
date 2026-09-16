@@ -857,7 +857,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     );
 
+dots.forEach(function (dot) {
 
+    dot.addEventListener('click', function () {
+
+        const index =
+            parseInt(
+                dot.getAttribute('data-slide'),
+                10
+            );
+
+        if (!isNaN(index)) {
+            goToSlide(index);
+        }
+
+    });
+
+});
+	
     /*
      * Клавиатура
      */
