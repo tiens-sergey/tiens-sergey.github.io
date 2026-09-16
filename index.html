@@ -765,63 +765,49 @@ function syncDotsWidth() {
 
     function createYouTubePlayers() {
 
-        if (
-            typeof YT === 'undefined' ||
-            typeof YT.Player === 'undefined'
-        ) {
+    if (playersCreated) {
+        return;
+    }
+
+    if (
+        typeof YT === 'undefined' ||
+        typeof YT.Player === 'undefined'
+    ) {
+        return;
+    }
+
+    playersCreated = true;
+    youtubeAPIReady = true;
+
+    slides.forEach(function (slide, index) {
+
+        const iframe =
+            slide.querySelector('iframe');
+
+        if (!iframe) {
             return;
         }
 
+        players[index] =
+            new YT.Player(
+                iframe,
+                {
+                    events: {
 
-        youtubeAPIReady = true;
+                        onReady: function () {
+                            // Player готов
+                        },
 
-
-        slides.forEach(function (slide, index) {
-
-            const iframe =
-                slide.querySelector('iframe');
-
-            if (!iframe) {
-                return;
-            }
-
-
-            players[index] =
-                new YT.Player(
-                    iframe,
-                    {
-                        events: {
-
-                            onReady:
-                                function () {
-
-                                    /*
-                                     * Player готов.
-                                     */
-
-                                },
-
-                            onStateChange:
-                                function (event) {
-
-                                    /*
-                                     * Ничего автоматически
-                                     * не переключаем.
-                                     *
-                                     * Активный слайд управляется
-                                     * только navigation.
-                                     */
-
-                                }
-
+                        onStateChange: function (event) {
+                            // Ничего автоматически не переключаем
                         }
+
                     }
-                );
+                }
+            );
 
-        });
-
-    }
-
+    });
+}
 
     /*
      * YouTube вызывает эту функцию,
