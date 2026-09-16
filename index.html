@@ -969,15 +969,21 @@ function syncDotsWidth() {
 
         if (activeDot) {
 
-            activeDot.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'center'
-            });
+            const activeDot = dots[current];
+
+if (activeDot && dotsContainer) {
+
+    const target =
+        activeDot.offsetLeft -
+        (dotsContainer.clientWidth - activeDot.offsetWidth) / 2;
+
+    dotsContainer.scrollTo({
+        left: Math.max(0, target),
+        behavior: 'smooth'
+    });
+}
 
         }
-
-    }
 
 
     /* =========================================================
