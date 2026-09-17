@@ -651,6 +651,11 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
+
+    /* =========================================================
+       STATE
+    ========================================================= */
+
     let current = 0;
 
     let startX = 0;
@@ -722,45 +727,158 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+
             const iframe =
                 slides[index].querySelector('iframe');
+
 
             if (!iframe) {
                 return;
             }
 
+
             const videoId =
                 getYouTubeId(iframe);
+
 
             if (!videoId) {
                 return;
             }
 
+
             const thumb =
                 dot.querySelector('.video-thumb');
+
 
             if (!thumb) {
                 return;
             }
 
+
             /*
-             * YouTube thumbnail.
+             * YouTube thumbnail
              */
             thumb.style.backgroundImage =
                 'url("https://img.youtube.com/vi/' +
                 videoId +
                 '/hqdefault.jpg")';
 
+
             thumb.style.backgroundSize =
                 'cover';
+
 
             thumb.style.backgroundPosition =
                 'center';
 
+
             thumb.style.backgroundRepeat =
                 'no-repeat';
 
+
+            /*
+             * Получаем название видео.
+             */
+            loadVideoTitle(
+                dot,
+                videoId,
+                index
+            );
+
         });
+    }
+
+
+    /* =========================================================
+       LOAD YOUTUBE TITLE
+    ========================================================= */
+
+    function loadVideoTitle(
+        dot,
+        videoId,
+        index
+    ) {
+
+        let titleElement =
+            dot.querySelector('.video-dot-title');
+
+
+        /*
+         * Если элемента ещё нет —
+         * создаём его автоматически.
+         */
+        if (!titleElement) {
+
+            titleElement =
+                document.createElement('span');
+
+            titleElement.className =
+                'video-dot-title';
+
+
+            dot.appendChild(
+                titleElement
+            );
+
+        }
+
+
+        titleElement.textContent =
+            'Видео ' +
+            String(index + 1).padStart(2, '0');
+
+
+        const url =
+            'https://www.youtube.com/watch?v=' +
+            videoId;
+
+
+        fetch(
+            'https://www.youtube.com/oembed?url=' +
+            encodeURIComponent(url) +
+            '&format=json'
+        )
+        .then(function (response) {
+
+            if (!response.ok) {
+                throw new Error(
+                    'YouTube oEmbed error'
+                );
+            }
+
+            return response.json();
+
+        })
+        .then(function (data) {
+
+            if (
+                data &&
+                data.title
+            ) {
+
+                titleElement.textContent =
+                    data.title;
+
+                titleElement.title =
+                    data.title;
+
+            }
+
+        })
+        .catch(function () {
+
+            /*
+             * Если YouTube не отдаёт название,
+             * оставляем номер.
+             */
+
+            titleElement.textContent =
+                'Видео ' +
+                String(index + 1)
+                    .padStart(2, '0');
+
+        });
+
     }
 
 
@@ -770,7 +888,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const players = [];
 
-    let youtubeAPIReady = false;
     let playersCreated = false;
 
 
@@ -780,6 +897,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+
         if (
             typeof YT === 'undefined' ||
             typeof YT.Player === 'undefined'
@@ -787,39 +905,52 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+
         playersCreated = true;
-        youtubeAPIReady = true;
 
-        slides.forEach(function (slide, index) {
 
-            const iframe =
-                slide.querySelector('iframe');
+        slides.forEach(
+            function (slide, index) {
 
-            if (!iframe) {
-                return;
-            }
+                const iframe =
+                    slide.querySelector('iframe');
 
-            const videoId =
-                getYouTubeId(iframe);
 
-            if (!videoId) {
-                return;
-            }
+                if (!iframe) {
+                    return;
+                }
 
-            players[index] =
-                new YT.Player(
-                    iframe,
-                    {
-                        videoId: videoId,
 
-                        events: {
-                            onReady: function () {},
-                            onStateChange: function () {}
+                const videoId =
+                    getYouTubeId(iframe);
+
+
+                if (!videoId) {
+                    return;
+                }
+
+
+                players[index] =
+                    new YT.Player(
+                        iframe,
+                        {
+                            videoId: videoId,
+
+                            events: {
+
+                                onReady:
+                                    function () {},
+
+                                onStateChange:
+                                    function () {}
+
+                            }
                         }
-                    }
-                );
+                    );
 
-        });
+            }
+        );
+
     }
 
 
@@ -853,23 +984,33 @@ document.addEventListener('DOMContentLoaded', function () {
             return 0;
         }
 
+
         const width =
             slide.getBoundingClientRect().width;
+
 
         const style =
             window.getComputedStyle(slide);
 
+
         const marginLeft =
-            parseFloat(style.marginLeft) || 0;
+            parseFloat(
+                style.marginLeft
+            ) || 0;
+
 
         const marginRight =
-            parseFloat(style.marginRight) || 0;
+            parseFloat(
+                style.marginRight
+            ) || 0;
+
 
         return (
             width +
             marginLeft +
             marginRight
         );
+
     }
 
 
@@ -885,26 +1026,35 @@ document.addEventListener('DOMContentLoaded', function () {
             return 0;
         }
 
+
         const slideWidth =
             slide.getBoundingClientRect().width;
+
 
         const sliderWidth =
             slider.getBoundingClientRect().width;
 
+
         const step =
             getStep();
+
 
         const style =
             window.getComputedStyle(slide);
 
+
         const marginLeft =
-            parseFloat(style.marginLeft) || 0;
+            parseFloat(
+                style.marginLeft
+            ) || 0;
+
 
         return (
             (sliderWidth - slideWidth) / 2
             - index * step
             - marginLeft
         );
+
     }
 
 
@@ -914,32 +1064,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateDots() {
 
-        dots.forEach(function (dot, index) {
+        dots.forEach(
+            function (dot, index) {
 
-            const active =
-                index === current;
+                const active =
+                    index === current;
 
-            dot.classList.toggle(
-                'active',
-                active
-            );
 
-            if (active) {
-
-                dot.setAttribute(
-                    'aria-current',
-                    'true'
+                dot.classList.toggle(
+                    'active',
+                    active
                 );
 
-            } else {
 
-                dot.removeAttribute(
-                    'aria-current'
-                );
+                if (active) {
+
+                    dot.setAttribute(
+                        'aria-current',
+                        'true'
+                    );
+
+                } else {
+
+                    dot.removeAttribute(
+                        'aria-current'
+                    );
+
+                }
 
             }
-
-        });
+        );
 
 
         const activeDot =
@@ -951,6 +1105,9 @@ document.addEventListener('DOMContentLoaded', function () {
             dotsContainer
         ) {
 
+            /*
+             * Центрируем активную миниатюру.
+             */
             const target =
                 activeDot.offsetLeft -
                 (
@@ -1045,256 +1202,245 @@ document.addEventListener('DOMContentLoaded', function () {
         );
 
 
-    gestureLayers.forEach(function (layer) {
+    gestureLayers.forEach(
+        function (layer) {
 
 
-        layer.addEventListener(
-            'pointerdown',
-            function (e) {
+            layer.addEventListener(
+                'pointerdown',
+                function (e) {
 
-                if (
-                    e.pointerType === 'mouse' &&
-                    e.button !== 0
-                ) {
-                    return;
-                }
-
-
-                startX =
-                    e.clientX;
-
-                currentX =
-                    e.clientX;
+                    if (
+                        e.pointerType === 'mouse' &&
+                        e.button !== 0
+                    ) {
+                        return;
+                    }
 
 
-                isDragging =
-                    true;
-
-                moved =
-                    false;
+                    startX =
+                        e.clientX;
 
 
-                try {
-
-                    layer.setPointerCapture(
-                        e.pointerId
-                    );
-
-                } catch (error) {}
+                    currentX =
+                        e.clientX;
 
 
-                track.style.transition =
-                    'none';
+                    isDragging =
+                        true;
 
 
-                e.preventDefault();
-
-            }
-        );
+                    moved =
+                        false;
 
 
-        layer.addEventListener(
-            'pointermove',
-            function (e) {
+                    try {
 
-                if (!isDragging) {
-                    return;
-                }
-
-
-                currentX =
-                    e.clientX;
-
-
-                const drag =
-                    currentX - startX;
-
-
-                if (
-                    Math.abs(drag) >
-                    CLICK_THRESHOLD
-                ) {
-
-                    moved = true;
-
-                }
-
-
-                if (moved) {
-
-                    const base =
-                        getCenterOffset(
-                            current
+                        layer.setPointerCapture(
+                            e.pointerId
                         );
 
-
-                    const offset =
-                        base + drag;
+                    } catch (error) {}
 
 
-                    track.style.transform =
-                        'translate3d(' +
-                        offset +
-                        'px,0,0)';
+                    track.style.transition =
+                        'none';
+
+
+                    e.preventDefault();
 
                 }
+            );
 
 
-                e.preventDefault();
+            layer.addEventListener(
+                'pointermove',
+                function (e) {
 
-            }
-        );
+                    if (!isDragging) {
+                        return;
+                    }
 
 
-        layer.addEventListener(
-            'pointerup',
-            function (e) {
+                    currentX =
+                        e.clientX;
 
-                if (!isDragging) {
-                    return;
+
+                    const drag =
+                        currentX - startX;
+
+
+                    if (
+                        Math.abs(drag) >
+                        CLICK_THRESHOLD
+                    ) {
+
+                        moved = true;
+
+                    }
+
+
+                    if (moved) {
+
+                        const base =
+                            getCenterOffset(
+                                current
+                            );
+
+
+                        const offset =
+                            base + drag;
+
+
+                        track.style.transform =
+                            'translate3d(' +
+                            offset +
+                            'px,0,0)';
+
+                    }
+
+
+                    e.preventDefault();
+
                 }
+            );
 
 
-                isDragging =
-                    false;
+            layer.addEventListener(
+                'pointerup',
+                function (e) {
+
+                    if (!isDragging) {
+                        return;
+                    }
 
 
-                const drag =
-                    currentX - startX;
+                    isDragging =
+                        false;
 
 
-                try {
-
-                    layer.releasePointerCapture(
-                        e.pointerId
-                    );
-
-                } catch (error) {}
+                    const drag =
+                        currentX - startX;
 
 
-                /*
-                 * Обычный клик.
-                 * Никакого Play/Pause здесь нет.
-                 */
+                    try {
 
-                if (
-                    Math.abs(drag) <
-                    CLICK_THRESHOLD
-                ) {
+                        layer.releasePointerCapture(
+                            e.pointerId
+                        );
+
+                    } catch (error) {}
+
+
+                    if (
+                        Math.abs(drag) <
+                        CLICK_THRESHOLD
+                    ) {
+
+                        goToSlide(current);
+
+                        return;
+
+                    }
+
+
+                    if (
+                        drag <
+                        -SWIPE_THRESHOLD
+                    ) {
+
+                        goToSlide(
+                            current + 1
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        drag >
+                        SWIPE_THRESHOLD
+                    ) {
+
+                        goToSlide(
+                            current - 1
+                        );
+
+                        return;
+
+                    }
+
 
                     goToSlide(current);
 
-                    return;
+                }
+            );
+
+
+            layer.addEventListener(
+                'pointercancel',
+                function (e) {
+
+                    if (!isDragging) {
+                        return;
+                    }
+
+
+                    isDragging =
+                        false;
+
+
+                    try {
+
+                        layer.releasePointerCapture(
+                            e.pointerId
+                        );
+
+                    } catch (error) {}
+
+
+                    goToSlide(current);
 
                 }
+            );
 
-
-                /*
-                 * Swipe LEFT
-                 */
-
-                if (
-                    drag <
-                    -SWIPE_THRESHOLD
-                ) {
-
-                    goToSlide(
-                        current + 1
-                    );
-
-                    return;
-
-                }
-
-
-                /*
-                 * Swipe RIGHT
-                 */
-
-                if (
-                    drag >
-                    SWIPE_THRESHOLD
-                ) {
-
-                    goToSlide(
-                        current - 1
-                    );
-
-                    return;
-
-                }
-
-
-                /*
-                 * Слабый свайп.
-                 */
-
-                goToSlide(current);
-
-            }
-        );
-
-
-        layer.addEventListener(
-            'pointercancel',
-            function (e) {
-
-                if (!isDragging) {
-                    return;
-                }
-
-
-                isDragging =
-                    false;
-
-
-                try {
-
-                    layer.releasePointerCapture(
-                        e.pointerId
-                    );
-
-                } catch (error) {}
-
-
-                goToSlide(current);
-
-            }
-        );
-
-    });
+        }
+    );
 
 
     /* =========================================================
        DOT CLICK
     ========================================================= */
 
-    dots.forEach(function (dot) {
+    dots.forEach(
+        function (dot) {
 
-        dot.addEventListener(
-            'click',
-            function () {
+            dot.addEventListener(
+                'click',
+                function () {
 
-                const index =
-                    parseInt(
-                        dot.dataset.slide,
-                        10
-                    );
+                    const index =
+                        parseInt(
+                            dot.dataset.slide,
+                            10
+                        );
 
 
-                if (
-                    Number.isNaN(index)
-                ) {
-                    return;
+                    if (
+                        Number.isNaN(index)
+                    ) {
+                        return;
+                    }
+
+
+                    goToSlide(index);
+
                 }
+            );
 
-
-                goToSlide(index);
-
-            }
-        );
-
-    });
+        }
+    );
 
 
     /* =========================================================
@@ -1305,7 +1451,9 @@ document.addEventListener('DOMContentLoaded', function () {
         'keydown',
         function (e) {
 
-            if (e.key === 'ArrowLeft') {
+            if (
+                e.key === 'ArrowLeft'
+            ) {
 
                 goToSlide(
                     current - 1
@@ -1314,7 +1462,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
 
-            if (e.key === 'ArrowRight') {
+            if (
+                e.key === 'ArrowRight'
+            ) {
 
                 goToSlide(
                     current + 1
