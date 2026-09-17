@@ -1021,12 +1021,16 @@ text-align: center;
 
 .video-gesture-layer {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 64px;
+
     z-index: 5;
+
     background: transparent;
     cursor: grab;
+
     touch-action: none;
     user-select: none;
     -webkit-user-select: none;
@@ -1042,9 +1046,36 @@ text-align: center;
     width: 100%;
     height: 100%;
     border: 0;
-    pointer-events: none;
+
+    /*
+     * Очень важно:
+     * iframe должен получать события,
+     * поэтому pointer-events НЕ отключаем.
+     */
+    pointer-events: auto;
 }
 
+/* На компьютере controls YouTube обычно занимают
+   только небольшую нижнюю область */
+@media (min-width: 993px) {
+    .video-gesture-layer {
+        bottom: 58px;
+    }
+}
+
+/* Планшет */
+@media (min-width: 769px) and (max-width: 992px) {
+    .video-gesture-layer {
+        bottom: 68px;
+    }
+}
+
+/* Телефон */
+@media (max-width: 768px) {
+    .video-gesture-layer {
+        bottom: 74px;
+    }
+}
 
 /* =========================================================
    CINEMATIC PARALLAX
