@@ -640,40 +640,16 @@ VK.Widgets.Comments("vk_comments", {limit: 10, attach: false});
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-    /* =========================================================
-       ELEMENTS
-       ========================================================= */
-
-    const slider =
-        document.querySelector('.video-slider');
-
-    const track =
-        document.querySelector('.video-track');
-
-    const slides =
-        document.querySelectorAll('.video-slide');
-
-    const dots =
-        document.querySelectorAll('.video-dot');
-
-    const counter =
-        document.querySelector('.current-number');
-const dotsContainer = document.querySelector('.video-dots');
-
-function syncDotsWidth() {
-    if (dotsContainer && slides[0]) {
-        dotsContainer.style.width = slides[0].getBoundingClientRect().width + 'px';
-    }
-}
+    const slider = document.querySelector('.video-slider');
+    const track = document.querySelector('.video-track');
+    const slides = document.querySelectorAll('.video-slide');
+    const dots = document.querySelectorAll('.video-dot');
+    const counter = document.querySelector('.current-number');
+    const dotsContainer = document.querySelector('.video-dots');
 
     if (!slider || !track || !slides.length) {
         return;
     }
-
-
-    /* =========================================================
-       STATE
-       ========================================================= */
 
     let current = 0;
 
@@ -686,19 +662,30 @@ function syncDotsWidth() {
     const CLICK_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 60;
 
+    /* =========================================================
+       DOTS WIDTH
+    ========================================================= */
+
+    function syncDotsWidth() {
+
+        if (dotsContainer && slides[0]) {
+
+            dotsContainer.style.width =
+                slides[0].getBoundingClientRect().width + 'px';
+
+        }
+    }
+
 
     /* =========================================================
-       YOUTUBE PLAYERS
-       ========================================================= */
+       YOUTUBE
+    ========================================================= */
 
     const players = [];
-	
- 	let youtubeAPIReady = false;
-	let playersCreated = false;
 
-    /* =========================================================
-       GET YOUTUBE ID
-       ========================================================= */
+    let youtubeAPIReady = false;
+    let playersCreated = false;
+
 
     function getYouTubeId(iframe) {
 
@@ -706,113 +693,66 @@ function syncDotsWidth() {
             return null;
         }
 
-        const src =
-            iframe.getAttribute('src');
+        const src = iframe.getAttribute('src');
 
         if (!src) {
             return null;
         }
 
         const match =
-            src.match(
-                /youtube\.com\/embed\/([^?&/]+)/
-            );
+            src.match(/youtube\.com\/embed\/([^?&]+)/);
 
-        return match
-            ? match[1]
-            : null;
+        return match ? match[1] : null;
     }
 
-
-    /* =========================================================
-       CREATE THUMBNAILS
-       ========================================================= */
-
-    slides.forEach(function (slide, index) {
-
-        const iframe =
-            slide.querySelector('iframe');
-
-        const youtubeId =
-            getYouTubeId(iframe);
-
-        const dot =
-            dots[index];
-
-        if (!youtubeId || !dot) {
-            return;
-        }
-
-        const thumb =
-            dot.querySelector('.video-thumb');
-
-        if (!thumb) {
-            return;
-        }
-
-
-        thumb.style.backgroundImage =
-            'url("https://img.youtube.com/vi/' +
-            youtubeId +
-            '/hqdefault.jpg")';
-
-    });
-
-
-    /* =========================================================
-       YOUTUBE API INITIALIZATION
-       ========================================================= */
 
     function createYouTubePlayers() {
 
-    if (playersCreated) {
-        return;
-    }
-
-    if (
-        typeof YT === 'undefined' ||
-        typeof YT.Player === 'undefined'
-    ) {
-        return;
-    }
-
-    playersCreated = true;
-    youtubeAPIReady = true;
-
-    slides.forEach(function (slide, index) {
-
-        const iframe =
-            slide.querySelector('iframe');
-
-        if (!iframe) {
+        if (playersCreated) {
             return;
         }
 
-        players[index] =
-            new YT.Player(
-                iframe,
-                {
-                    events: {
+        if (
+            typeof YT === 'undefined' ||
+            typeof YT.Player === 'undefined'
+        ) {
+            return;
+        }
 
-                        onReady: function () {
-                            // Player готов
-                        },
+        playersCreated = true;
+        youtubeAPIReady = true;
 
-                        onStateChange: function (event) {
-                            // Ничего автоматически не переключаем
+        slides.forEach(function (slide, index) {
+
+            const iframe =
+                slide.querySelector('iframe');
+
+            if (!iframe) {
+                return;
+            }
+
+            const videoId =
+                getYouTubeId(iframe);
+
+            if (!videoId) {
+                return;
+            }
+
+            players[index] =
+                new YT.Player(
+                    iframe,
+                    {
+                        videoId: videoId,
+
+                        events: {
+                            onReady: function () {},
+                            onStateChange: function () {}
                         }
-
                     }
-                }
-            );
+                );
+        });
+    }
 
-    });
-}
-
-    /*
-     * YouTube вызывает эту функцию,
-     * когда API полностью загрузился.
-     */
 
     window.onYouTubeIframeAPIReady =
         function () {
@@ -821,10 +761,6 @@ function syncDotsWidth() {
 
         };
 
-
-    /*
-     * Если API уже был загружен ранее.
-     */
 
     if (
         typeof YT !== 'undefined' &&
@@ -837,13 +773,16 @@ function syncDotsWidth() {
 
 
     /* =========================================================
-       STEP
-       ========================================================= */
+       SLIDER STEP
+    ========================================================= */
 
     function getStep() {
 
-        const slide =
-            slides[0];
+        const slide = slides[0];
+
+        if (!slide) {
+            return 0;
+        }
 
         const width =
             slide.getBoundingClientRect().width;
@@ -862,23 +801,20 @@ function syncDotsWidth() {
             marginLeft +
             marginRight
         );
-
     }
 
 
     /* =========================================================
        CENTER OFFSET
-       ========================================================= */
+    ========================================================= */
 
     function getCenterOffset(index) {
 
-        const slide =
-            slides[index];
+        const slide = slides[index];
 
         if (!slide) {
             return 0;
         }
-
 
         const slideWidth =
             slide.getBoundingClientRect().width;
@@ -886,10 +822,8 @@ function syncDotsWidth() {
         const sliderWidth =
             slider.getBoundingClientRect().width;
 
-
         const step =
             getStep();
-
 
         const style =
             window.getComputedStyle(slide);
@@ -897,66 +831,92 @@ function syncDotsWidth() {
         const marginLeft =
             parseFloat(style.marginLeft) || 0;
 
-
         return (
             (sliderWidth - slideWidth) / 2
-            -
-            index * step
-            -
-            marginLeft
+            - index * step
+            - marginLeft
         );
-
     }
 
 
     /* =========================================================
-       UPDATE THUMBNAIL NAVIGATION
-       ========================================================= */
+       DOT NAVIGATION
+    ========================================================= */
 
     function updateDots() {
 
-    dots.forEach(function (dot, index) {
+        dots.forEach(function (dot, index) {
 
-        const active = index === current;
+            const active =
+                index === current;
 
-        dot.classList.toggle('active', active);
+            dot.classList.toggle(
+                'active',
+                active
+            );
 
-        if (active) {
-            dot.setAttribute('aria-current', 'true');
-        } else {
-            dot.removeAttribute('aria-current');
-        }
+            if (active) {
 
-    });
+                dot.setAttribute(
+                    'aria-current',
+                    'true'
+                );
 
-    const activeDot = dots[current];
+            } else {
 
-    if (activeDot && dotsContainer) {
+                dot.removeAttribute(
+                    'aria-current'
+                );
 
-        const target =
-            activeDot.offsetLeft -
-            (dotsContainer.clientWidth - activeDot.offsetWidth) / 2;
-
-        dotsContainer.scrollTo({
-            left: Math.max(0, target),
-            behavior: 'smooth'
+            }
         });
+
+
+        const activeDot =
+            dots[current];
+
+
+        if (
+            activeDot &&
+            dotsContainer
+        ) {
+
+            const target =
+                activeDot.offsetLeft -
+                (
+                    dotsContainer.clientWidth -
+                    activeDot.offsetWidth
+                ) / 2;
+
+
+            dotsContainer.scrollTo({
+
+                left: Math.max(
+                    0,
+                    target
+                ),
+
+                behavior: 'smooth'
+
+            });
+        }
     }
-}
+
 
     /* =========================================================
        GO TO SLIDE
-       ========================================================= */
+    ========================================================= */
 
     function goToSlide(index) {
 
-        index = Math.max(
-            0,
-            Math.min(
-                index,
-                slides.length - 1
-            )
-        );
+        index =
+            Math.max(
+                0,
+                Math.min(
+                    index,
+                    slides.length - 1
+                )
+            );
 
 
         current = index;
@@ -969,13 +929,12 @@ function syncDotsWidth() {
         track.style.transition =
             'transform .75s cubic-bezier(.16,1,.3,1)';
 
+
         track.style.transform =
             'translate3d(' +
             offset +
             'px,0,0)';
 
-
-        /* Active slide */
 
         slides.forEach(
             function (slide, i) {
@@ -989,26 +948,30 @@ function syncDotsWidth() {
         );
 
 
-        /* Counter */
-
         if (counter) {
 
             counter.textContent =
-                String(current + 1)
-                    .padStart(2, '0');
+                String(
+                    current + 1
+                ).padStart(2, '0');
 
         }
 
 
-        /* Thumbnails */
-
         updateDots();
-
     }
 
+
     /* =========================================================
-       POINTER DOWN
-       ========================================================= */
+       GESTURE SWIPE
+       
+       ВАЖНО:
+       gesture layer теперь физически ограничен CSS
+       зоной свайпа.
+       
+       Центральная область iframe свободна,
+       поэтому YouTube получает обычные клики.
+    ========================================================= */
 
     const gestureLayers =
         document.querySelectorAll(
@@ -1016,16 +979,8 @@ function syncDotsWidth() {
         );
 
 
-    /* =========================================================
-   VIDEO GESTURE
-   ========================================================= */
+    gestureLayers.forEach(function (layer) {
 
-gestureLayers.forEach(
-    function (layer) {
-
-        /* =================================================
-           POINTER DOWN
-           ================================================= */
 
         layer.addEventListener(
             'pointerdown',
@@ -1034,12 +989,13 @@ gestureLayers.forEach(
                 /*
                  * Только левая кнопка мыши.
                  */
-
                 if (
                     e.pointerType === 'mouse' &&
                     e.button !== 0
                 ) {
+
                     return;
+
                 }
 
 
@@ -1049,15 +1005,13 @@ gestureLayers.forEach(
                 currentX =
                     e.clientX;
 
-                isDragging = true;
-                moved = false;
-				layer.classList.add('dragging');
 
-                /*
-                 * Захватываем pointer,
-                 * чтобы движение не потерялось
-                 * за пределами слоя.
-                 */
+                isDragging =
+                    true;
+
+                moved =
+                    false;
+
 
                 try {
 
@@ -1065,15 +1019,8 @@ gestureLayers.forEach(
                         e.pointerId
                     );
 
-                } catch (error) {
-                    /* Ничего не делаем */
-                }
+                } catch (error) {}
 
-
-                /*
-                 * Убираем transition
-                 * во время движения.
-                 */
 
                 track.style.transition =
                     'none';
@@ -1084,10 +1031,6 @@ gestureLayers.forEach(
             }
         );
 
-
-        /* =================================================
-           POINTER MOVE
-           ================================================= */
 
         layer.addEventListener(
             'pointermove',
@@ -1106,10 +1049,6 @@ gestureLayers.forEach(
                     currentX - startX;
 
 
-                /*
-                 * Определяем настоящий жест.
-                 */
-
                 if (
                     Math.abs(drag) >
                     CLICK_THRESHOLD
@@ -1120,15 +1059,13 @@ gestureLayers.forEach(
                 }
 
 
-                /*
-                 * Двигаем слайд только после
-                 * фактического начала жеста.
-                 */
-
                 if (moved) {
 
                     const base =
-                        getCenterOffset(current);
+                        getCenterOffset(
+                            current
+                        );
+
 
                     const offset =
                         base + drag;
@@ -1148,10 +1085,6 @@ gestureLayers.forEach(
         );
 
 
-        /* =================================================
-           POINTER UP
-           ================================================= */
-
         layer.addEventListener(
             'pointerup',
             function (e) {
@@ -1161,17 +1094,13 @@ gestureLayers.forEach(
                 }
 
 
-                isDragging = false;
+                isDragging =
+                    false;
 
-				layer.classList.remove('dragging');
 
                 const drag =
                     currentX - startX;
 
-
-                /*
-                 * Освобождаем pointer.
-                 */
 
                 try {
 
@@ -1179,21 +1108,13 @@ gestureLayers.forEach(
                         e.pointerId
                     );
 
-                } catch (error) {
-                    /* Ничего не делаем */
-                }
+                } catch (error) {}
 
 
-                /* =================================================
-                   ОБЫЧНЫЙ КЛИК
-                   =================================================
-                   
-                   Ничего не делаем.
-
-                   Это принципиально:
-                   YouTube iframe работает самостоятельно.
-                */
-
+                /*
+                 * Обычный клик по gesture-зоне.
+                 * Никакого Play/Pause здесь нет.
+                 */
                 if (
                     Math.abs(drag) <
                     CLICK_THRESHOLD
@@ -1206,10 +1127,9 @@ gestureLayers.forEach(
                 }
 
 
-                /* =================================================
-                   SWIPE LEFT
-                   ================================================= */
-
+                /*
+                 * Swipe LEFT
+                 */
                 if (
                     drag <
                     -SWIPE_THRESHOLD
@@ -1224,10 +1144,9 @@ gestureLayers.forEach(
                 }
 
 
-                /* =================================================
-                   SWIPE RIGHT
-                   ================================================= */
-
+                /*
+                 * Swipe RIGHT
+                 */
                 if (
                     drag >
                     SWIPE_THRESHOLD
@@ -1242,19 +1161,15 @@ gestureLayers.forEach(
                 }
 
 
-                /* =================================================
-                   НЕЗНАЧИТЕЛЬНОЕ ДВИЖЕНИЕ
-                   ================================================= */
-
+                /*
+                 * Недостаточно сильный свайп —
+                 * возвращаем текущее видео.
+                 */
                 goToSlide(current);
 
             }
         );
 
-
-        /* =================================================
-           POINTER CANCEL
-           ================================================= */
 
         layer.addEventListener(
             'pointercancel',
@@ -1265,9 +1180,9 @@ gestureLayers.forEach(
                 }
 
 
-                isDragging = false;
+                isDragging =
+                    false;
 
-				layer.classList.remove('dragging');
 
                 try {
 
@@ -1275,9 +1190,7 @@ gestureLayers.forEach(
                         e.pointerId
                     );
 
-                } catch (error) {
-                    /* Ничего не делаем */
-                }
+                } catch (error) {}
 
 
                 goToSlide(current);
@@ -1285,78 +1198,57 @@ gestureLayers.forEach(
             }
         );
 
-    }
-);
+    });
+
 
     /* =========================================================
-       THUMBNAIL CLICK
-       ========================================================= */
+       DOT CLICK
+    ========================================================= */
 
-    dots.forEach(
-        function (dot) {
+    dots.forEach(function (dot) {
 
-            dot.addEventListener(
-                'click',
-                function (e) {
+        dot.addEventListener(
+            'click',
+            function () {
 
-                    e.preventDefault();
-                    e.stopPropagation();
-
-
-                    const index =
-                        parseInt(
-                            this.getAttribute(
-                                'data-slide'
-                            ),
-                            10
-                        );
+                const index =
+                    parseInt(
+                        dot.dataset.slide,
+                        10
+                    );
 
 
-                    if (!isNaN(index)) {
+                if (
+                    Number.isNaN(index)
+                ) {
 
-                        goToSlide(index);
-
-                    }
+                    return;
 
                 }
-            );
 
-        }
-    );
+
+                goToSlide(index);
+
+            }
+        );
+
+    });
 
 
     /* =========================================================
        KEYBOARD
-       ========================================================= */
+    ========================================================= */
 
     document.addEventListener(
         'keydown',
         function (e) {
 
             /*
-             * Не реагируем на стрелки,
-             * если пользователь работает
-             * с полем ввода.
+             * Не вмешиваемся в YouTube,
+             * если пользователь работает с iframe.
              */
 
-            const tag =
-                e.target.tagName
-                    ? e.target.tagName.toLowerCase()
-                    : '';
-
-
-            if (
-                tag === 'input' ||
-                tag === 'textarea' ||
-                tag === 'select'
-            ) {
-                return;
-            }
-
-
             if (e.key === 'ArrowLeft') {
-
-                e.preventDefault();
 
                 goToSlide(
                     current - 1
@@ -1366,8 +1258,6 @@ gestureLayers.forEach(
 
 
             if (e.key === 'ArrowRight') {
-
-                e.preventDefault();
 
                 goToSlide(
                     current + 1
@@ -1381,34 +1271,48 @@ gestureLayers.forEach(
 
     /* =========================================================
        RESIZE
-       ========================================================= */
+    ========================================================= */
 
     let resizeTimer = null;
 
- window.addEventListener('resize', function () {
 
-    clearTimeout(resizeTimer);
+    window.addEventListener(
+        'resize',
+        function () {
 
-    resizeTimer = setTimeout(function () {
-
-        syncDotsWidth();
-        goToSlide(current);
-
-    }, 100);
-
-});
+            clearTimeout(
+                resizeTimer
+            );
 
 
-/* =========================================================
-   INITIAL
-   ========================================================= */
+            resizeTimer =
+                setTimeout(
+                    function () {
 
-goToSlide(0);
-syncDotsWidth();
+                        syncDotsWidth();
+
+                        goToSlide(
+                            current
+                        );
+
+                    },
+                    100
+                );
+
+        }
+    );
+
+
+    /* =========================================================
+       INITIAL
+    ========================================================= */
+
+    goToSlide(0);
+
+    syncDotsWidth();
 
 });
 </script>
-
 
 <script>
 /* =============================================================
