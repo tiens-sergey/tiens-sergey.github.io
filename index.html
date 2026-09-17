@@ -1011,50 +1011,10 @@ function syncDotsWidth() {
        PLAY / PAUSE CURRENT VIDEO
        ========================================================= */
 
-    function toggleCurrentVideo() {
-
-        const player =
-            players[current];
-
-
-        /*
-         * API ещё не готов.
-         */
-
-        if (
-            !player ||
-            typeof player.getPlayerState !== 'function'
-        ) {
-            return;
-        }
-
-
-        const state =
-            player.getPlayerState();
-
-
-        /*
-         * 1 = PLAYING
-         */
-
-        if (state === YT.PlayerState.PLAYING) {
-
-            player.pauseVideo();
-
-            return;
-
-        }
-
-
-        /*
-         * Любое другое состояние
-         * запускаем.
-         */
-
-        player.playVideo();
-
-    }
-
+    if (!moved) {
+    goToSlide(current);
+    return;
+}
 
     /* =========================================================
        POINTER DOWN
