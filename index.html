@@ -662,6 +662,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const CLICK_THRESHOLD = 10;
     const SWIPE_THRESHOLD = 60;
 
+
     /* =========================================================
        DOTS WIDTH
     ========================================================= */
@@ -678,14 +679,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /* =========================================================
-       YOUTUBE
+       YOUTUBE ID
     ========================================================= */
-
-    const players = [];
-
-    let youtubeAPIReady = false;
-    let playersCreated = false;
-
 
     function getYouTubeId(iframe) {
 
@@ -704,6 +699,79 @@ document.addEventListener('DOMContentLoaded', function () {
 
         return match ? match[1] : null;
     }
+
+
+    /* =========================================================
+       VIDEO THUMBNAILS
+    ========================================================= */
+
+    function setupVideoThumbnails() {
+
+        dots.forEach(function (dot) {
+
+            const index =
+                parseInt(
+                    dot.dataset.slide,
+                    10
+                );
+
+            if (
+                Number.isNaN(index) ||
+                !slides[index]
+            ) {
+                return;
+            }
+
+            const iframe =
+                slides[index].querySelector('iframe');
+
+            if (!iframe) {
+                return;
+            }
+
+            const videoId =
+                getYouTubeId(iframe);
+
+            if (!videoId) {
+                return;
+            }
+
+            const thumb =
+                dot.querySelector('.video-thumb');
+
+            if (!thumb) {
+                return;
+            }
+
+            /*
+             * YouTube thumbnail.
+             */
+            thumb.style.backgroundImage =
+                'url("https://img.youtube.com/vi/' +
+                videoId +
+                '/hqdefault.jpg")';
+
+            thumb.style.backgroundSize =
+                'cover';
+
+            thumb.style.backgroundPosition =
+                'center';
+
+            thumb.style.backgroundRepeat =
+                'no-repeat';
+
+        });
+    }
+
+
+    /* =========================================================
+       YOUTUBE API
+    ========================================================= */
+
+    const players = [];
+
+    let youtubeAPIReady = false;
+    let playersCreated = false;
 
 
     function createYouTubePlayers() {
@@ -750,6 +818,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 );
+
         });
     }
 
@@ -869,6 +938,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 );
 
             }
+
         });
 
 
@@ -899,7 +969,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 behavior: 'smooth'
 
             });
+
         }
+
     }
 
 
@@ -959,18 +1031,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         updateDots();
+
     }
 
 
     /* =========================================================
        GESTURE SWIPE
-       
-       ВАЖНО:
-       gesture layer теперь физически ограничен CSS
-       зоной свайпа.
-       
-       Центральная область iframe свободна,
-       поэтому YouTube получает обычные клики.
     ========================================================= */
 
     const gestureLayers =
@@ -986,16 +1052,11 @@ document.addEventListener('DOMContentLoaded', function () {
             'pointerdown',
             function (e) {
 
-                /*
-                 * Только левая кнопка мыши.
-                 */
                 if (
                     e.pointerType === 'mouse' &&
                     e.button !== 0
                 ) {
-
                     return;
-
                 }
 
 
@@ -1112,9 +1173,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                 /*
-                 * Обычный клик по gesture-зоне.
+                 * Обычный клик.
                  * Никакого Play/Pause здесь нет.
                  */
+
                 if (
                     Math.abs(drag) <
                     CLICK_THRESHOLD
@@ -1130,6 +1192,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 /*
                  * Swipe LEFT
                  */
+
                 if (
                     drag <
                     -SWIPE_THRESHOLD
@@ -1147,6 +1210,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 /*
                  * Swipe RIGHT
                  */
+
                 if (
                     drag >
                     SWIPE_THRESHOLD
@@ -1162,9 +1226,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                 /*
-                 * Недостаточно сильный свайп —
-                 * возвращаем текущее видео.
+                 * Слабый свайп.
                  */
+
                 goToSlide(current);
 
             }
@@ -1221,9 +1285,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (
                     Number.isNaN(index)
                 ) {
-
                     return;
-
                 }
 
 
@@ -1242,11 +1304,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener(
         'keydown',
         function (e) {
-
-            /*
-             * Не вмешиваемся в YouTube,
-             * если пользователь работает с iframe.
-             */
 
             if (e.key === 'ArrowLeft') {
 
@@ -1304,17 +1361,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /* =========================================================
-       INITIAL
+       INITIALIZATION
     ========================================================= */
 
     goToSlide(0);
 
     syncDotsWidth();
-	
-	setupVideoThumbnails();
+
+    setupVideoThumbnails();
+
 });
 </script>
-
 <script>
 /* =============================================================
    EXISTING TOOLTIP
