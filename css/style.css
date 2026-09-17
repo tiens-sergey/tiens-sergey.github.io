@@ -927,9 +927,10 @@ text-align: center;
 
 /* =========================================================
    VIDEO SLIDER
-   ========================================================= */
+========================================================= */
 
 .video-slider {
+
     position: relative;
 
     width: 100%;
@@ -945,16 +946,20 @@ text-align: center;
 
     user-select: none;
     -webkit-user-select: none;
+
 }
 
 
 /* =========================================================
-   VIDEO TRACK
-   ========================================================= */
+   TRACK
+========================================================= */
 
 .video-track {
+
     display: flex;
+
     flex-direction: row;
+
     align-items: center;
 
     width: max-content;
@@ -962,20 +967,24 @@ text-align: center;
     margin: 0;
     padding: 0;
 
-    transform: translate3d(0, 0, 0);
+    transform:
+        translate3d(0, 0, 0);
 
     will-change: transform;
 
     transition:
-        transform .75s cubic-bezier(.16, 1, .3, 1);
+        transform .75s
+        cubic-bezier(.16, 1, .3, 1);
+
 }
 
 
 /* =========================================================
-   VIDEO SLIDE
-   ========================================================= */
+   SLIDE
+========================================================= */
 
 .video-slide {
+
     position: relative;
 
     flex: 0 0 78vw;
@@ -992,14 +1001,16 @@ text-align: center;
     overflow: hidden;
 
     isolation: isolate;
+
 }
 
 
 /* =========================================================
-   VIDEO
-   ========================================================= */
+   VIDEO INNER
+========================================================= */
 
 .video-inner {
+
     position: absolute;
 
     inset: 0;
@@ -1016,414 +1027,200 @@ text-align: center;
     will-change: transform;
 
     transition:
-        transform .75s cubic-bezier(.16, 1, .3, 1);
+        transform .75s
+        cubic-bezier(.16, 1, .3, 1);
+
 }
 
+
+/* =========================================================
+   YOUTUBE IFRAME
+========================================================= */
+
+.video-inner iframe {
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+
+    pointer-events: auto;
+
+}
+
+
+/* =========================================================
+   SWIPE LAYER
+=========================================================
+
+   ВАЖНО:
+
+   Это НЕ сплошной слой поверх iframe.
+
+   Он представляет собой:
+   - верхнюю полосу;
+   - левую боковую полосу;
+   - правую боковую полосу.
+
+   Центральная часть свободна.
+
+   Нижняя часть свободна для YouTube controls.
+========================================================= */
+
 .video-gesture-layer {
+
     position: absolute;
+
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 64px;
 
-    z-index: 1;
+    width: 100%;
+    height: 100%;
+
+    z-index: 5;
 
     background: transparent;
 
     cursor: default;
 
     touch-action: none;
+
     user-select: none;
     -webkit-user-select: none;
-    -webkit-tap-highlight-color: transparent;
-}
-.video-gesture-layer.dragging {
-    cursor: grabbing;
-}
-.video-gesture-layer:active {
-    cursor: grabbing;
-}
 
-.video-inner iframe {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: 0;
+    -webkit-tap-highlight-color: transparent;
+
 
     /*
-     * Очень важно:
-     * iframe должен получать события,
-     * поэтому pointer-events НЕ отключаем.
+     * Форма:
+     *
+     * ┌──────────────────────────┐
+     * │       SWIPE ZONE         │
+     * ├──┐                    ┌──┤
+     * │  │                    │  │
+     * │  │    YOUTUBE         │  │
+     * │  │      VIDEO          │  │
+     * │  │                    │  │
+     * ├──┴────────────────────┴──┤
+     * │     YOUTUBE CONTROLS     │
+     * └──────────────────────────┘
+     *
+     * Центральная и нижняя зоны
+     * остаются доступными iframe.
      */
-    pointer-events: auto;
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 0,
+
+            100% 76%,
+
+            92% 76%,
+            92% 22%,
+
+            8% 22%,
+            8% 76%,
+
+            0 76%
+        );
+
 }
 
-/* На компьютере controls YouTube обычно занимают
-   только небольшую нижнюю область */
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
 @media (min-width: 993px) {
-    .video-gesture-layer {
-        bottom: 58px;
+
+    .video-slide {
+
+        flex-basis: 78vw;
+        min-width: 78vw;
+
+        margin-left: 11vw;
+        margin-right: 11vw;
+
     }
-}
 
-/* Планшет */
-@media (min-width: 769px) and (max-width: 992px) {
+
     .video-gesture-layer {
-        bottom: 68px;
+
+        /*
+         * Верхняя swipe-зона — 22%
+         * Боковые — 8%
+         * Нижние 24% полностью свободны.
+         */
+
+        clip-path:
+            polygon(
+                0 0,
+                100% 0,
+
+                100% 76%,
+
+                92% 76%,
+                92% 22%,
+
+                8% 22%,
+                8% 76%,
+
+                0 76%
+            );
+
     }
-}
 
-/* Телефон */
-@media (max-width: 768px) {
-    .video-gesture-layer {
-        bottom: 74px;
-    }
-}
-
-/* =========================================================
-   CINEMATIC PARALLAX
-   ========================================================= */
-
-.video-slide:not(.active) .video-inner {
-    transform:
-        translate3d(5%, 0, 0)
-        scale(1.05);
-}
-
-
-.video-slide.active .video-inner {
-    transform:
-        translate3d(0, 0, 0)
-        scale(1.03);
-}
-
-
-/* =========================================================
-   TITLE
-   ========================================================= */
-
-.video-title {
-    position: absolute;
-
-    left: 25px;
-    right: 25px;
-    bottom: 30px;
-
-    z-index: 10;
-
-    color: #fff;
-
-    font-size: 20px;
-    line-height: 1.25;
-    font-weight: 600;
-
-    text-shadow:
-        0 2px 8px rgba(0, 0, 0, .8);
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   COUNTER
-   ========================================================= */
-
-.video-counter {
-    position: absolute;
-
-    right: 30px;
-    bottom: 20px;
-
-    z-index: 20;
-
-    color: #fff;
-
-    font-size: 14px;
-
-    letter-spacing: 3px;
-
-    text-shadow:
-        0 2px 5px rgba(0, 0, 0, .8);
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   SWIPE HINT
-   ========================================================= */
-
-.swipe-hint {
-    position: absolute;
-
-    right: 30px;
-    top: 20px;
-
-    z-index: 20;
-
-    color: #fff;
-
-    font-size: 12px;
-
-    letter-spacing: 1px;
-
-    opacity: .8;
-
-    text-shadow:
-        0 2px 5px rgba(0, 0, 0, .8);
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   THUMBNAIL NAVIGATION
-   ========================================================= */
-
-/*
-   Очень важно:
-
-   ширина блока миниатюр НЕ больше ширины
-   самого видео.
-*/
-
-.video-dots {
-    display: flex;
-
-    width: 100%;
-	max-width: none;
-
-    margin: 24px auto 0;
-
-    padding: 0;
-
-    box-sizing: border-box;
-
-    gap: 10px;
-
-    overflow-x: auto;
-    overflow-y: visible;
-
-    scrollbar-width: none;
-
-    justify-content: flex-start;
-
-    touch-action: pan-x;
-
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-.video-dots::-webkit-scrollbar {
-    display: none;
-}
-
-
-/* =========================================================
-   THUMBNAIL
-   ========================================================= */
-
-.video-dot {
-    position: relative;
-
-    flex: 0 0 105px;
-
-    width: 105px;
-    height: 60px;
-
-    padding: 0;
-    margin: 0;
-
-    border: 2px solid rgba(255,255,255,.25);
-
-    border-radius: 5px;
-
-    background: #111;
-
-    overflow: hidden;
-
-    cursor: pointer;
-
-    appearance: none;
-    -webkit-appearance: none;
-
-    opacity: .55;
-
-    box-sizing: border-box;
-
-    transform:
-        translate3d(0,0,0)
-        scale(.94);
-
-    transform-origin: center bottom;
-
-    transition:
-        transform .45s cubic-bezier(.16,1,.3,1),
-        opacity .35s ease,
-        border-color .35s ease,
-        box-shadow .35s ease;
-}
-
-
-/* =========================================================
-   THUMBNAIL IMAGE
-   ========================================================= */
-
-.video-thumb {
-    position: absolute;
-
-    inset: 0;
-
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-
-    transform:
-        translate3d(0,0,0)
-        scale(1.08);
-
-    transition:
-        transform .65s cubic-bezier(.16,1,.3,1),
-        filter .4s ease;
-}
-
-
-/* =========================================================
-   DARK OVERLAY
-   ========================================================= */
-
-.video-dot::after {
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,.05),
-            rgba(0,0,0,.65)
-        );
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   NUMBER
-   ========================================================= */
-
-.video-thumb-number {
-    position: absolute;
-
-    left: 7px;
-    bottom: 5px;
-
-    z-index: 2;
-
-    color: #fff;
-
-    font-size: 10px;
-
-    letter-spacing: 1px;
-
-    text-shadow:
-        0 1px 4px rgba(0,0,0,.9);
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   ACTIVE THUMBNAIL
-   ========================================================= */
-
-.video-dot.active {
-    opacity: 1;
-
-    border-color: #fff;
-
-    transform:
-        translate3d(0,-7px,0)
-        scale(1.08);
-
-    box-shadow:
-        0 8px 20px rgba(0,0,0,.35);
-}
-
-
-.video-dot.active .video-thumb {
-    transform:
-        translate3d(0,0,0)
-        scale(1.02);
-
-    filter: brightness(1.12);
-}
-
-
-.video-dot.active::after {
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(255,255,255,.05),
-            rgba(0,0,0,.25)
-        );
-}
-
-
-/* =========================================================
-   HOVER
-   ========================================================= */
-
-.video-dot:hover {
-    opacity: .9;
-
-    transform:
-        translate3d(0,-4px,0)
-        scale(1.02);
-}
-
-
-/* =========================================================
-   FOCUS
-   ========================================================= */
-
-.video-dot:focus {
-    outline: 2px solid rgba(255,255,255,.9);
-    outline-offset: 3px;
 }
 
 
 /* =========================================================
    TABLET
-   ========================================================= */
+========================================================= */
 
-@media (max-width: 992px) {
+@media (
+    min-width: 769px
+) and (
+    max-width: 992px
+) {
 
     .video-slide {
+
         flex-basis: 82vw;
-		
         min-width: 82vw;
 
         margin-left: 9vw;
         margin-right: 9vw;
+
     }
 
 
-    .video-dots {
-        width: 100%;
-    max-width: none;
+    .video-gesture-layer {
 
-        gap: 9px;
-    }
+        /*
+         * Немного больше боковая зона,
+         * поскольку на планшете свайп пальцем
+         * удобнее начинать ближе к краю.
+         */
 
+        clip-path:
+            polygon(
+                0 0,
+                100% 0,
 
-    .video-dot {
-        flex-basis: 95px;
+                74% 74%,
 
-        width: 95px;
-        height: 55px;
+                88% 74%,
+                88% 22%,
+
+                12% 22%,
+                12% 74%,
+
+                0 74%
+            );
+
     }
 
 }
@@ -1431,90 +1228,72 @@ text-align: center;
 
 /* =========================================================
    MOBILE
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 768px) {
 
-    .video-slider {
-        margin-top: 25px;
-    }
-
-
     .video-slide {
-        flex-basis: 86vw;
 
+        flex-basis: 86vw;
         min-width: 86vw;
 
         margin-left: 7vw;
         margin-right: 7vw;
+
     }
 
 
-    .video-dots {
-        width: 100%;
-    max-width: none;
+    .video-gesture-layer {
 
-        gap: 7px;
+        /*
+         * На мобильном:
+         * верхняя зона + более широкие боковые зоны.
+         *
+         * Нижние ~26% остаются полностью
+         * под управлением YouTube.
+         */
 
-        margin-top: 16px;
-    }
+        clip-path:
+            polygon(
+                0 0,
+                100% 0,
 
+                100% 74%,
 
-    .video-dot {
-        flex-basis: 82px;
+                88% 74%,
+                88% 22%,
 
-        width: 82px;
-        height: 48px;
-    }
+                12% 22%,
+                12% 74%,
 
+                0 74%
+            );
 
-    .video-dot.active {
-        transform:
-            translate3d(0,-5px,0)
-            scale(1.06);
-    }
-
-
-    .video-title {
-        left: 15px;
-        right: 15px;
-        bottom: 35px;
-
-        font-size: 16px;
-    }
-
-
-    .video-counter {
-        right: 15px;
-        bottom: 12px;
-
-        font-size: 12px;
-    }
-
-
-    .swipe-hint {
-        right: 15px;
-        top: 12px;
-
-        font-size: 10px;
-    }
-
-
-    .video-thumb-number {
-        left: 5px;
-        bottom: 4px;
-
-        font-size: 9px;
     }
 
 }
 
 
 /* =========================================================
-   PAGE SAFETY
-   ========================================================= */
+   ACTIVE SLIDE
+========================================================= */
+
+.video-slide.active .video-inner {
+
+    transform:
+        translate3d(0, 0, 0)
+        scale(1.03);
+
+}
+
+
+/* =========================================================
+   PREVENT HORIZONTAL PAGE SCROLL
+========================================================= */
 
 html,
 body {
+
     overflow-x: hidden;
+
 }
