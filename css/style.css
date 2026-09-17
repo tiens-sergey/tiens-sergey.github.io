@@ -1029,7 +1029,8 @@ text-align: center;
     z-index: 5;
 
     background: transparent;
-    cursor: grab;
+
+    cursor: default;
 
     touch-action: none;
     user-select: none;
@@ -1037,6 +1038,9 @@ text-align: center;
     -webkit-tap-highlight-color: transparent;
 }
 
+.video-gesture-layer.dragging {
+    cursor: grabbing;
+}
 .video-gesture-layer:active {
     cursor: grabbing;
 }
