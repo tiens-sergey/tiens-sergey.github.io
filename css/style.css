@@ -1217,39 +1217,58 @@ body {
 
 
 /* =========================================================
-   DOT NAVIGATION CONTAINER
+   VIDEO DOTS
 ========================================================= */
 
 .video-dots {
     display: flex;
 
-    align-items: center;
-
+    align-items: flex-start;
     justify-content: flex-start;
 
     gap: 10px;
 
     width: 78vw;
-
     max-width: 78vw;
 
     margin: 22px auto 0;
 
-    padding: 0;
+    padding: 8px 0 10px;
 
     box-sizing: border-box;
 
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: visible;
 
     scrollbar-width: none;
 
     -webkit-overflow-scrolling: touch;
-}
 
+    scroll-behavior: smooth;
+}
 
 .video-dots::-webkit-scrollbar {
     display: none;
+}
+
+
+/*
+ * Дополнительное пространство после последней
+ * миниатюры.
+ *
+ * Именно это исправляет ситуацию,
+ * когда последняя миниатюра на мобильном
+ * не прокручивается полностью.
+ */
+
+.video-dots::after {
+    content: "";
+
+    flex: 0 0 18px;
+
+    width: 18px;
+
+    height: 1px;
 }
 
 
@@ -1260,21 +1279,23 @@ body {
 .video-dot {
     position: relative;
 
-    flex: 0 0 auto;
+    flex: 0 0 86px;
 
     width: 86px;
+
     height: 52px;
 
     margin: 0;
-    padding: 0;
+
+    padding: 0 0 24px;
 
     border: 0;
 
     border-radius: 4px;
 
-    overflow: hidden;
+    overflow: visible;
 
-    background: #111;
+    background: transparent;
 
     cursor: pointer;
 
@@ -1282,40 +1303,49 @@ body {
 
     box-sizing: border-box;
 
+    transform:
+        translateY(0);
+
     transition:
         opacity .3s ease,
-        transform .3s ease;
+        transform .35s cubic-bezier(.16,1,.3,1);
 }
 
 
 /* =========================================================
-   THUMBNAIL
+   THUMB
 ========================================================= */
 
 .video-thumb {
     position: absolute;
 
-    inset: 0;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 52px;
 
     display: block;
 
-    width: 100%;
-    height: 100%;
+    border-radius: 4px;
 
     background-color: #111;
-
-    background-image: none;
 
     background-repeat: no-repeat;
 
     background-position: center;
 
     background-size: cover;
+
+    overflow: hidden;
+
+    transition:
+        box-shadow .3s ease;
 }
 
 
 /* =========================================================
-   THUMBNAIL OVERLAY
+   THUMB OVERLAY
 ========================================================= */
 
 .video-thumb::after {
@@ -1328,8 +1358,8 @@ body {
     background:
         linear-gradient(
             to top,
-            rgba(0, 0, 0, .45),
-            rgba(0, 0, 0, 0) 60%
+            rgba(0,0,0,.55),
+            rgba(0,0,0,0) 65%
         );
 
     pointer-events: none;
@@ -1337,7 +1367,7 @@ body {
 
 
 /* =========================================================
-   THUMBNAIL NUMBER
+   NUMBER
 ========================================================= */
 
 .video-thumb-number {
@@ -1358,37 +1388,78 @@ body {
 
     padding: 0 5px;
 
-    box-sizing: border-box;
-
     border-radius: 2px;
 
-    background: rgba(0, 0, 0, .7);
+    background: rgba(0,0,0,.72);
 
     color: #fff;
 
-    font-family: inherit;
-
     font-size: 11px;
-
     font-weight: 600;
 
     line-height: 1;
 
-    text-align: center;
+    box-sizing: border-box;
 }
 
 
 /* =========================================================
-   ACTIVE THUMBNAIL
+   VIDEO TITLE
+========================================================= */
+
+.video-dot-title {
+    position: absolute;
+
+    top: 58px;
+    left: 0;
+
+    width: 100%;
+
+    display: block;
+
+    padding: 0 2px;
+
+    box-sizing: border-box;
+
+    color: inherit;
+
+    font-size: 11px;
+
+    line-height: 1.25;
+
+    text-align: center;
+
+    white-space: normal;
+
+    overflow: hidden;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    opacity: .72;
+
+    transition:
+        opacity .3s ease,
+        transform .3s ease;
+}
+
+
+/* =========================================================
+   ACTIVE DOT
 ========================================================= */
 
 .video-dot.active {
     opacity: 1;
 
     transform:
-        translateY(-2px);
+        translateY(-7px);
 }
 
+
+/* =========================================================
+   ACTIVE THUMB
+========================================================= */
 
 .video-dot.active .video-thumb {
     box-shadow:
@@ -1397,11 +1468,25 @@ body {
 
 
 /* =========================================================
+   ACTIVE TITLE
+========================================================= */
+
+.video-dot.active .video-dot-title {
+    opacity: 1;
+
+    transform:
+        translateY(1px);
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
    ACTIVE NUMBER
 ========================================================= */
 
 .video-dot.active .video-thumb-number {
-    background: rgba(255, 255, 255, .92);
+    background: rgba(255,255,255,.92);
 
     color: #000;
 }
@@ -1417,92 +1502,7 @@ body {
         opacity: 1;
 
         transform:
-            translateY(-2px);
-    }
-
-}
-
-
-/* =========================================================
-   DESKTOP
-========================================================= */
-
-@media (min-width: 993px) {
-
-    .video-slide {
-        flex: 0 0 78vw;
-        min-width: 78vw;
-
-        margin-left: 11vw;
-        margin-right: 11vw;
-    }
-
-
-    .video-title {
-        width: 78vw;
-    }
-
-
-    .video-counter {
-        width: 78vw;
-    }
-
-
-    .swipe-hint {
-        width: 78vw;
-    }
-
-
-    .video-dots {
-        width: 78vw;
-        max-width: 78vw;
-
-        gap: 10px;
-
-        margin-top: 22px;
-    }
-
-
-    .video-dot {
-        width: 86px;
-        height: 52px;
-    }
-
-
-    .video-thumb-number {
-        left: 7px;
-        bottom: 5px;
-
-        min-width: 24px;
-        height: 20px;
-
-        font-size: 11px;
-    }
-
-
-    .video-gesture-layer {
-
-        /*
-         * Верхняя зона — 22%.
-         * Боковые зоны — 8%.
-         * Нижние 24% свободны.
-         */
-
-        clip-path:
-            polygon(
-                0 0,
-                100% 0,
-
-                100% 76%,
-
-                92% 76%,
-                92% 22%,
-
-                8% 22%,
-                8% 76%,
-
-                0 76%
-            );
+            translateY(-4px);
     }
 
 }
@@ -1518,43 +1518,34 @@ body {
     max-width: 992px
 ) {
 
-    .video-slide {
-        flex: 0 0 82vw;
-        min-width: 82vw;
-
-        margin-left: 9vw;
-        margin-right: 9vw;
-    }
-
-
-    .video-title {
-        width: 82vw;
-    }
-
-
-    .video-counter {
-        width: 82vw;
-    }
-
-
-    .swipe-hint {
-        width: 82vw;
-    }
-
-
     .video-dots {
         width: 82vw;
         max-width: 82vw;
 
         gap: 9px;
 
-        margin-top: 20px;
+        padding-top: 8px;
     }
 
 
     .video-dot {
+        flex-basis: 78px;
+
         width: 78px;
+
         height: 48px;
+    }
+
+
+    .video-thumb {
+        height: 48px;
+    }
+
+
+    .video-dot-title {
+        top: 54px;
+
+        font-size: 10px;
     }
 
 
@@ -1568,31 +1559,6 @@ body {
         font-size: 10px;
     }
 
-
-    .video-gesture-layer {
-
-        /*
-         * Боковые зоны немного шире
-         * для удобства свайпа пальцем.
-         */
-
-        clip-path:
-            polygon(
-                0 0,
-                100% 0,
-
-                100% 74%,
-
-                88% 74%,
-                88% 22%,
-
-                12% 22%,
-                12% 74%,
-
-                0 74%
-            );
-    }
-
 }
 
 
@@ -1602,49 +1568,6 @@ body {
 
 @media (max-width: 768px) {
 
-    .video-slider {
-        margin-top: 28px;
-    }
-
-
-    .video-slide {
-        flex: 0 0 86vw;
-        min-width: 86vw;
-
-        margin-left: 7vw;
-        margin-right: 7vw;
-    }
-
-
-    .video-title {
-        width: 86vw;
-
-        margin-top: 14px;
-
-        font-size: 16px;
-    }
-
-
-    .video-counter {
-        width: 86vw;
-
-        margin-top: 13px;
-
-        font-size: 13px;
-    }
-
-
-    .swipe-hint {
-        width: 86vw;
-
-        margin-top: 10px;
-
-        font-size: 10px;
-
-        letter-spacing: .15em;
-    }
-
-
     .video-dots {
         width: 86vw;
         max-width: 86vw;
@@ -1652,14 +1575,46 @@ body {
         gap: 8px;
 
         margin-top: 18px;
+
+        padding-top: 10px;
+        padding-bottom: 34px;
+    }
+
+
+    /*
+     * Запас справа увеличен.
+     */
+    .video-dots::after {
+        flex-basis: 28px;
+
+        width: 28px;
     }
 
 
     .video-dot {
+        flex-basis: 72px;
+
         width: 72px;
+
+        height: 44px;
+
+        padding-bottom: 30px;
+    }
+
+
+    .video-thumb {
         height: 44px;
 
         border-radius: 3px;
+    }
+
+
+    .video-dot-title {
+        top: 49px;
+
+        font-size: 10px;
+
+        line-height: 1.25;
     }
 
 
@@ -1676,34 +1631,19 @@ body {
     }
 
 
-    .video-gesture-layer {
+    /*
+     * Активная миниатюра заметно
+     * поднимается вверх.
+     */
+    .video-dot.active {
+        transform:
+            translateY(-9px);
+    }
 
-        /*
-         * На мобильном боковые зоны
-         * увеличены до 12%.
-         *
-         * Центральная область iframe
-         * остаётся свободной.
-         *
-         * Нижние 26% полностью
-         * доступны YouTube.
-         */
 
-        clip-path:
-            polygon(
-                0 0,
-                100% 0,
-
-                100% 74%,
-
-                88% 74%,
-                88% 22%,
-
-                12% 22%,
-                12% 74%,
-
-                0 74%
-            );
+    .video-dot.active .video-dot-title {
+        transform:
+            translateY(1px);
     }
 
 }
@@ -1717,12 +1657,36 @@ body {
 
     .video-dots {
         gap: 7px;
+
+        padding-bottom: 32px;
+    }
+
+
+    .video-dots::after {
+        flex-basis: 32px;
+
+        width: 32px;
     }
 
 
     .video-dot {
+        flex-basis: 68px;
+
         width: 68px;
+
         height: 42px;
+    }
+
+
+    .video-thumb {
+        height: 42px;
+    }
+
+
+    .video-dot-title {
+        top: 47px;
+
+        font-size: 9px;
     }
 
 
