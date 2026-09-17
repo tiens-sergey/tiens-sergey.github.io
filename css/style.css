@@ -1039,10 +1039,10 @@ text-align: center;
 }
 
 .video-gesture-layer.dragging {
-    cursor: default;
+    cursor: grabbing;
 }
 .video-gesture-layer:active {
-    cursor: default;
+    cursor: grabbing;
 }
 
 .video-inner iframe {
