@@ -1066,243 +1066,275 @@ function syncDotsWidth() {
         );
 
 
-    gestureLayers.forEach(
-        function (layer) {
+    /* =========================================================
+   VIDEO GESTURE
+   ========================================================= */
 
-            layer.addEventListener(
-                'pointerdown',
-                function (e) {
+gestureLayers.forEach(
+    function (layer) {
 
-                    /*
-                     * Только левая кнопка мыши.
-                     */
+        /* =================================================
+           POINTER DOWN
+           ================================================= */
 
-                    if (
-                        e.pointerType === 'mouse' &&
-                        e.button !== 0
-                    ) {
-                        return;
-                    }
+        layer.addEventListener(
+            'pointerdown',
+            function (e) {
 
+                /*
+                 * Только левая кнопка мыши.
+                 */
 
-                    startX =
-                        e.clientX;
-
-                    currentX =
-                        e.clientX;
-
-                    isDragging = true;
-                    moved = false;
+                if (
+                    e.pointerType === 'mouse' &&
+                    e.button !== 0
+                ) {
+                    return;
+                }
 
 
-                    /*
-                     * Захватываем pointer,
-                     * чтобы движение не потерялось
-                     * за пределами слоя.
-                     */
+                startX =
+                    e.clientX;
 
-                    try {
+                currentX =
+                    e.clientX;
 
-                        layer.setPointerCapture(
-                            e.pointerId
-                        );
-
-                    } catch (error) {
-                        /* Ничего не делаем */
-                    }
+                isDragging = true;
+                moved = false;
 
 
-                    /*
-                     * Убираем transition
-                     * во время движения.
-                     */
+                /*
+                 * Захватываем pointer,
+                 * чтобы движение не потерялось
+                 * за пределами слоя.
+                 */
 
-                    track.style.transition =
-                        'none';
+                try {
+
+                    layer.setPointerCapture(
+                        e.pointerId
+                    );
+
+                } catch (error) {
+                    /* Ничего не делаем */
+                }
 
 
-                    e.preventDefault();
+                /*
+                 * Убираем transition
+                 * во время движения.
+                 */
+
+                track.style.transition =
+                    'none';
+
+
+                e.preventDefault();
+
+            }
+        );
+
+
+        /* =================================================
+           POINTER MOVE
+           ================================================= */
+
+        layer.addEventListener(
+            'pointermove',
+            function (e) {
+
+                if (!isDragging) {
+                    return;
+                }
+
+
+                currentX =
+                    e.clientX;
+
+
+                const drag =
+                    currentX - startX;
+
+
+                /*
+                 * Определяем настоящий жест.
+                 */
+
+                if (
+                    Math.abs(drag) >
+                    CLICK_THRESHOLD
+                ) {
+
+                    moved = true;
 
                 }
-            );
 
 
-            /* =================================================
-               POINTER MOVE
-               ================================================= */
+                /*
+                 * Двигаем слайд только после
+                 * фактического начала жеста.
+                 */
 
-            layer.addEventListener(
-                'pointermove',
-                function (e) {
+                if (moved) {
 
-                    if (!isDragging) {
-                        return;
-                    }
+                    const base =
+                        getCenterOffset(current);
 
-
-                    currentX =
-                        e.clientX;
+                    const offset =
+                        base + drag;
 
 
-                    const drag =
-                        currentX - startX;
-
-
-                    if (
-                        Math.abs(drag) >
-                        CLICK_THRESHOLD
-                    ) {
-
-                        moved = true;
-
-                    }
-
-
-                    /*
-                     * Если пользователь действительно
-                     * начал движение — двигаем слайд.
-                     */
-
-                    if (moved) {
-
-                        const base =
-                            getCenterOffset(current);
-
-                        const offset =
-                            base + drag;
-
-
-                        track.style.transform =
-                            'translate3d(' +
-                            offset +
-                            'px,0,0)';
-
-                    }
-
-
-                    e.preventDefault();
+                    track.style.transform =
+                        'translate3d(' +
+                        offset +
+                        'px,0,0)';
 
                 }
-            );
 
 
-            /* =================================================
-               POINTER UP
-               ================================================= */
+                e.preventDefault();
 
-            layer.addEventListener(
-                'pointerup',
-                function (e) {
-
-                    if (!isDragging) {
-                        return;
-                    }
+            }
+        );
 
 
-                    isDragging = false;
+        /* =================================================
+           POINTER UP
+           ================================================= */
+
+        layer.addEventListener(
+            'pointerup',
+            function (e) {
+
+                if (!isDragging) {
+                    return;
+                }
 
 
-                    const drag =
-                        currentX - startX;
+                isDragging = false;
 
 
-                    /*
-                     * =========================================
-                     * CLICK
-                     * =========================================
-                     *
-                     * Палец практически не двигался.
-                     */
-
-                    if (
-                        Math.abs(drag) <
-                        CLICK_THRESHOLD
-                    ) {
-
-                        goToSlide(current);
-
-                        toggleCurrentVideo();
-
-                        return;
-
-                    }
+                const drag =
+                    currentX - startX;
 
 
-                    /*
-                     * =========================================
-                     * SWIPE LEFT
-                     * =========================================
-                     */
+                /*
+                 * Освобождаем pointer.
+                 */
 
-                    if (
-                        drag <
-                        -SWIPE_THRESHOLD
-                    ) {
+                try {
 
-                        goToSlide(
-                            current + 1
-                        );
+                    layer.releasePointerCapture(
+                        e.pointerId
+                    );
 
-                        return;
-
-                    }
+                } catch (error) {
+                    /* Ничего не делаем */
+                }
 
 
-                    /*
-                     * =========================================
-                     * SWIPE RIGHT
-                     * =========================================
-                     */
+                /* =================================================
+                   ОБЫЧНЫЙ КЛИК
+                   =================================================
+                   
+                   Ничего не делаем.
 
-                    if (
-                        drag >
-                        SWIPE_THRESHOLD
-                    ) {
+                   Это принципиально:
+                   YouTube iframe работает самостоятельно.
+                */
 
-                        goToSlide(
-                            current - 1
-                        );
-
-                        return;
-
-                    }
-
-
-                    /*
-                     * =========================================
-                     * НЕЗНАЧИТЕЛЬНОЕ ДВИЖЕНИЕ
-                     * =========================================
-                     */
+                if (
+                    Math.abs(drag) <
+                    CLICK_THRESHOLD
+                ) {
 
                     goToSlide(current);
 
-                }
-            );
-
-
-            /* =================================================
-               POINTER CANCEL
-               ================================================= */
-
-            layer.addEventListener(
-                'pointercancel',
-                function () {
-
-                    if (!isDragging) {
-                        return;
-                    }
-
-
-                    isDragging = false;
-
-                    goToSlide(current);
+                    return;
 
                 }
-            );
 
-        }
-    );
 
+                /* =================================================
+                   SWIPE LEFT
+                   ================================================= */
+
+                if (
+                    drag <
+                    -SWIPE_THRESHOLD
+                ) {
+
+                    goToSlide(
+                        current + 1
+                    );
+
+                    return;
+
+                }
+
+
+                /* =================================================
+                   SWIPE RIGHT
+                   ================================================= */
+
+                if (
+                    drag >
+                    SWIPE_THRESHOLD
+                ) {
+
+                    goToSlide(
+                        current - 1
+                    );
+
+                    return;
+
+                }
+
+
+                /* =================================================
+                   НЕЗНАЧИТЕЛЬНОЕ ДВИЖЕНИЕ
+                   ================================================= */
+
+                goToSlide(current);
+
+            }
+        );
+
+
+        /* =================================================
+           POINTER CANCEL
+           ================================================= */
+
+        layer.addEventListener(
+            'pointercancel',
+            function (e) {
+
+                if (!isDragging) {
+                    return;
+                }
+
+
+                isDragging = false;
+
+
+                try {
+
+                    layer.releasePointerCapture(
+                        e.pointerId
+                    );
+
+                } catch (error) {
+                    /* Ничего не делаем */
+                }
+
+
+                goToSlide(current);
+
+            }
+        );
+
+    }
+);
 
     /* =========================================================
        THUMBNAIL CLICK
