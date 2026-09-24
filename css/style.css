@@ -1457,7 +1457,6 @@ body {
        and (orientation: landscape) {
 
     .video-dots {
-
         width: 82vw;
         max-width: 82vw;
 
@@ -1468,17 +1467,13 @@ body {
         padding:
             8px 0 12px;
 
-        /*
-         * КРИТИЧЕСКИ ВАЖНО:
-         * ни горизонтального,
-         * ни вертикального scrollbar.
-         */
+        box-sizing: border-box;
+
         overflow: hidden;
 
         scrollbar-width: none;
 
         justify-content: space-between;
-
         align-items: flex-start;
     }
 
@@ -1487,7 +1482,6 @@ body {
     }
 
     .video-dot {
-
         flex: 1 1 0;
 
         width: auto;
@@ -1495,16 +1489,14 @@ body {
 
         height: auto;
 
+        overflow: visible;
+
         padding: 0;
 
-        overflow: hidden;
-
-        transform:
-            translateY(0);
+        transform: translateY(0);
     }
 
     .video-thumb {
-
         width: 100%;
         height: 48px;
 
@@ -1512,12 +1504,6 @@ body {
     }
 
     .video-dots .video-thumbnail-title {
-
-        position: relative;
-
-        top: auto;
-        left: auto;
-
         width: 100%;
         height: 23px;
 
@@ -1533,7 +1519,6 @@ body {
     }
 
     .video-thumb-number {
-
         left: 4px;
         bottom: 4px;
 
@@ -1546,7 +1531,6 @@ body {
     }
 
     .video-dot.active {
-
         transform:
             translateY(-5px);
     }
