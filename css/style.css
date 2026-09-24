@@ -1376,7 +1376,7 @@ body {
    VIDEO TITLE
 ========================================================= */
 
-.video-dot-title {
+.video-dots .video-thumbnail-title {
     position: absolute;
 
     top: 58px;
@@ -1384,7 +1384,9 @@ body {
 
     width: 100%;
 
-    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 
     padding: 0 2px;
 
@@ -1393,7 +1395,6 @@ body {
     color: inherit;
 
     font-size: 11px;
-
     line-height: 1.25;
 
     text-align: center;
@@ -1402,15 +1403,35 @@ body {
 
     overflow: hidden;
 
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-
     opacity: .72;
+
+    pointer-events: none;
 
     transition:
         opacity .3s ease,
         transform .3s ease;
+}
+
+.video-dot.active .video-thumbnail-title {
+    opacity: 1;
+
+    transform:
+        translateY(1px);
+
+    font-weight: 600;
+}
+
+.video-dots {
+    position: relative;
+    z-index: 10;
+}
+
+.video-dots .video-dot {
+    position: relative;
+}
+
+.video-dots .video-thumbnail-title {
+    z-index: 10;
 }
 
 
@@ -1718,7 +1739,7 @@ body {
     }
 
 
-    .video-dot-title {
+   .video-dots .video-thumbnail-title {
         top: 47px;
 
         font-size: 9px;
