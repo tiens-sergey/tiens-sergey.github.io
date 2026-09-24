@@ -776,13 +776,16 @@ document.addEventListener('DOMContentLoaded', function () {
         );
     }
 
+
     titleElement.textContent =
         'Видео ' +
         String(index + 1).padStart(2, '0');
 
+
     const url =
         'https://www.youtube.com/watch?v=' +
         videoId;
+
 
     fetch(
         'https://www.youtube.com/oembed?url=' +
@@ -792,6 +795,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(function (response) {
 
         if (!response.ok) {
+
             throw new Error(
                 'YouTube oEmbed error'
             );
@@ -805,6 +809,7 @@ document.addEventListener('DOMContentLoaded', function () {
             data &&
             data.title
         ) {
+
             titleElement.textContent =
                 data.title;
 
@@ -821,7 +826,6 @@ document.addEventListener('DOMContentLoaded', function () {
             String(index + 1).padStart(2, '0');
     });
 }
-
 
     /* =========================================================
        YOUTUBE API
