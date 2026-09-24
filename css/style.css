@@ -1560,7 +1560,6 @@ body {
 @media (max-width: 768px) {
 
     .video-dots {
-
         width: 86vw;
         max-width: 86vw;
 
@@ -1571,7 +1570,8 @@ body {
         padding:
             10px 0 34px;
 
-        /*
+        box-sizing: border-box;
+ /*
          * ВАЖНО:
          * horizontal scroll разрешён,
          * vertical scroll ЗАПРЕЩЁН.
@@ -1593,14 +1593,15 @@ body {
     }
 
     .video-dots::after {
+        content: "";
 
         flex: 0 0 28px;
 
         width: 28px;
+        height: 1px;
     }
 
     .video-dot {
-
         flex: 0 0 72px;
 
         width: 72px;
@@ -1608,13 +1609,11 @@ body {
 
         height: auto;
 
-        padding: 0;
-
-        overflow: hidden;
+        overflow: visible;
     }
 
     .video-thumb {
-
+        width: 100%;
         height: 44px;
 
         flex: 0 0 44px;
@@ -1623,16 +1622,10 @@ body {
     }
 
     .video-dots .video-thumbnail-title {
-
-        position: relative;
-
-        top: auto;
-        left: auto;
-
         width: 100%;
         height: 25px;
 
-        margin-top: 4px;
+        margin-top: 5px;
 
         padding:
             0 1px;
@@ -1642,7 +1635,6 @@ body {
     }
 
     .video-thumb-number {
-
         left: 5px;
         bottom: 4px;
 
@@ -1655,12 +1647,10 @@ body {
     }
 
     .video-dot.active {
-
         transform:
             translateY(-9px);
     }
 }
-
 
 /* =========================================
    VERY SMALL MOBILE
