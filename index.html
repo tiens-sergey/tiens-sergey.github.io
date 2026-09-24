@@ -1137,217 +1137,321 @@ document.addEventListener('DOMContentLoaded', function () {
        GESTURE SWIPE
     ========================================================= */
 
-    const gestureLayers =
-        document.querySelectorAll(
-            '.video-gesture-layer'
-        );
+    const swipeZones = document.querySelectorAll(
+    '.video-swipe-left, .video-swipe-right'
+);
 
+swipeZones.forEach(function (zone) {
 
-    gestureLayers.forEach(
-        function (layer) {
+    zone.addEventListener(
+        'pointerdown',
+        function (e) {
 
+            if (
+                e.pointerType === 'mouse' &&
+                e.button !== 0
+            ) {
+                return;
+            }
 
-            layer.addEventListener(
-                'pointerdown',
-                function (e) {
+            startX = e.clientX;
+            currentX = e.clientX;
 
-                    if (
-                        e.pointerType === 'mouse' &&
-                        e.button !== 0
-                    ) {
-                        return;
-                    }
+            isDragging = true;
+            moved = false;
 
+            try {
+                zone.setPointerCapture(
+                    e.pointerId
+                );
+            } catch (error) {}
 
-                    startX =
-                        e.clientX;
+            track.style.transition = 'none';
 
-
-                    currentX =
-                        e.clientX;
-
-
-                    isDragging =
-                        true;
-
-
-                    moved =
-                        false;
-
-
-                    try {
-
-                        layer.setPointerCapture(
-                            e.pointerId
-                        );
-
-                    } catch (error) {}
-
-
-                    track.style.transition =
-                        'none';
-
-
-                    e.preventDefault();
-
-                }
-            );
-
-
-            layer.addEventListener(
-                'pointermove',
-                function (e) {
-
-                    if (!isDragging) {
-                        return;
-                    }
-
-
-                    currentX =
-                        e.clientX;
-
-
-                    const drag =
-                        currentX - startX;
-
-
-                    if (
-                        Math.abs(drag) >
-                        CLICK_THRESHOLD
-                    ) {
-
-                        moved = true;
-
-                    }
-
-
-                    if (moved) {
-
-                        const base =
-                            getCenterOffset(
-                                current
-                            );
-
-
-                        const offset =
-                            base + drag;
-
-
-                        track.style.transform =
-                            'translate3d(' +
-                            offset +
-                            'px,0,0)';
-
-                    }
-
-
-                    e.preventDefault();
-
-                }
-            );
-
-
-            layer.addEventListener(
-                'pointerup',
-                function (e) {
-
-                    if (!isDragging) {
-                        return;
-                    }
-
-
-                    isDragging =
-                        false;
-
-
-                    const drag =
-                        currentX - startX;
-
-
-                    try {
-
-                        layer.releasePointerCapture(
-                            e.pointerId
-                        );
-
-                    } catch (error) {}
-
-
-                    if (
-                        Math.abs(drag) <
-                        CLICK_THRESHOLD
-                    ) {
-
-                        goToSlide(current);
-
-                        return;
-
-                    }
-
-
-                    if (
-                        drag <
-                        -SWIPE_THRESHOLD
-                    ) {
-
-                        goToSlide(
-                            current + 1
-                        );
-
-                        return;
-
-                    }
-
-
-                    if (
-                        drag >
-                        SWIPE_THRESHOLD
-                    ) {
-
-                        goToSlide(
-                            current - 1
-                        );
-
-                        return;
-
-                    }
-
-
-                    goToSlide(current);
-
-                }
-            );
-
-
-            layer.addEventListener(
-                'pointercancel',
-                function (e) {
-
-                    if (!isDragging) {
-                        return;
-                    }
-
-
-                    isDragging =
-                        false;
-
-
-                    try {
-
-                        layer.releasePointerCapture(
-                            e.pointerId
-                        );
-
-                    } catch (error) {}
-
-
-                    goToSlide(current);
-
-                }
-            );
-
+            e.preventDefault();
         }
     );
+
+
+    zone.addEventListener(
+        'pointermove',
+        function (e) {
+
+            if (!isDragging) {
+                return;
+            }
+
+            currentX = e.clientX;
+
+            const drag =
+                currentX - startX;
+
+            if (
+                Math.abs(drag) >
+                CLICK_THRESHOLD
+            ) {
+                moved = true;
+            }
+
+            if (moved) {
+
+                const base =
+                    getCenterOffset(current);
+
+                const offset =
+                    base + drag;
+
+                track.style.transform =
+                    'translate3d(' +
+                    offset +
+                    'px,0,0)';
+            }
+
+            e.preventDefault();
+        }
+    );
+
+
+    zone.addEventListener(
+        'pointerup',
+        function (e) {
+
+            if (!isDragging) {
+                return;
+            }
+
+            isDragging = false;
+
+            const drag =
+                currentX - startX;
+
+            try {
+                zone.releasePointerCapture(
+                    e.pointerId
+                );
+            } catch (error) {}
+
+
+            if (
+                Math.abs(drag) <
+                CLICK_THRESHOLD
+            ) {
+
+                goToSlide(current);
+
+                return;
+            }
+
+
+            if (
+                drag <
+                -SWIPE_THRESHOLD
+            ) {
+
+                goToSlide(
+                    current + 1
+                );
+
+                return;
+            }
+
+
+            if (
+                drag >
+                SWIPE_THRESHOLD
+            ) {
+
+                goToSlide(
+                    current - 1
+                );
+
+                return;
+            }
+
+
+            goToSlide(current);
+        }
+    );
+
+
+    zone.addEventListener(
+        'pointercancel',
+        function (e) {
+
+            if (!isDragging) {
+                return;
+            }
+
+            isDragging = false;
+
+            try {
+                zone.releasePointerCapture(
+                    e.pointerId
+                );
+            } catch (error) {}
+
+            goToSlide(current);
+        }
+    );
+
+});const swipeZones = document.querySelectorAll(
+    '.video-swipe-left, .video-swipe-right'
+);
+
+swipeZones.forEach(function (zone) {
+
+    zone.addEventListener(
+        'pointerdown',
+        function (e) {
+
+            if (
+                e.pointerType === 'mouse' &&
+                e.button !== 0
+            ) {
+                return;
+            }
+
+            startX = e.clientX;
+            currentX = e.clientX;
+
+            isDragging = true;
+            moved = false;
+
+            try {
+                zone.setPointerCapture(
+                    e.pointerId
+                );
+            } catch (error) {}
+
+            track.style.transition = 'none';
+
+            e.preventDefault();
+        }
+    );
+
+
+    zone.addEventListener(
+        'pointermove',
+        function (e) {
+
+            if (!isDragging) {
+                return;
+            }
+
+            currentX = e.clientX;
+
+            const drag =
+                currentX - startX;
+
+            if (
+                Math.abs(drag) >
+                CLICK_THRESHOLD
+            ) {
+                moved = true;
+            }
+
+            if (moved) {
+
+                const base =
+                    getCenterOffset(current);
+
+                const offset =
+                    base + drag;
+
+                track.style.transform =
+                    'translate3d(' +
+                    offset +
+                    'px,0,0)';
+            }
+
+            e.preventDefault();
+        }
+    );
+
+
+    zone.addEventListener(
+        'pointerup',
+        function (e) {
+
+            if (!isDragging) {
+                return;
+            }
+
+            isDragging = false;
+
+            const drag =
+                currentX - startX;
+
+            try {
+                zone.releasePointerCapture(
+                    e.pointerId
+                );
+            } catch (error) {}
+
+
+            if (
+                Math.abs(drag) <
+                CLICK_THRESHOLD
+            ) {
+
+                goToSlide(current);
+
+                return;
+            }
+
+
+            if (
+                drag <
+                -SWIPE_THRESHOLD
+            ) {
+
+                goToSlide(
+                    current + 1
+                );
+
+                return;
+            }
+
+
+            if (
+                drag >
+                SWIPE_THRESHOLD
+            ) {
+
+                goToSlide(
+                    current - 1
+                );
+
+                return;
+            }
+
+
+            goToSlide(current);
+        }
+    );
+
+
+    zone.addEventListener(
+        'pointercancel',
+        function (e) {
+
+            if (!isDragging) {
+                return;
+            }
+
+            isDragging = false;
+
+            try {
+                zone.releasePointerCapture(
+                    e.pointerId
+                );
+            } catch (error) {}
+
+            goToSlide(current);
+        }
+    );
+
+});
 
 
     /* =========================================================
