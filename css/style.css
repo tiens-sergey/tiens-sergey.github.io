@@ -1461,7 +1461,7 @@ body {
    ACTIVE TITLE
 ========================================================= */
 
-.video-dot.active .video-dot-title {
+.video-dot.active .video-dots .video-thumbnail-title {
     opacity: 1;
 
     transform:
@@ -1665,7 +1665,7 @@ body {
     }
 
 
-    .video-dot-title {
+    .video-dots .video-thumbnail-title {
         top: 49px;
 
         font-size: 10px;
@@ -1697,7 +1697,7 @@ body {
     }
 
 
-    .video-dot.active .video-dot-title {
+    .video-dot.active .video-dots .video-thumbnail-title {
         transform:
             translateY(1px);
     }
