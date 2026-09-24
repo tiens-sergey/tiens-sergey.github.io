@@ -1561,7 +1561,18 @@ body {
 
 }
 
+@media (min-width: 769px) and (max-width: 1199px)
+       and (orientation: landscape) {
 
+    .video-dots {
+        overflow: hidden;
+        overscroll-behavior: none;
+    }
+
+    .video-dots .video-thumbnail-title {
+        max-height: 23px;
+    }
+}
 /* =========================================================
    MOBILE
 ========================================================= */
