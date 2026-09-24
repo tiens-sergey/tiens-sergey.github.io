@@ -839,10 +839,8 @@ document.addEventListener('DOMContentLoaded', function () {
             titleElement.textContent =
                 data.title;
 
-            titleElement.setAttribute(
-                'aria-label',
-                data.title
-            );
+            titleElement.title =
+                data.title;
         }
     })
     .catch(function () {
