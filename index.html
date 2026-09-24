@@ -759,16 +759,21 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadVideoTitle(dot, videoId, index) {
 
     let titleElement =
-        dot.querySelector('.video-thumbnail-title');
+        dot.querySelector(
+            '.video-thumbnail-title'
+        );
 
     if (!titleElement) {
+
         titleElement =
             document.createElement('span');
 
         titleElement.className =
             'video-thumbnail-title';
 
-        dot.appendChild(titleElement);
+        dot.appendChild(
+            titleElement
+        );
     }
 
     titleElement.textContent =
@@ -776,7 +781,8 @@ document.addEventListener('DOMContentLoaded', function () {
         String(index + 1).padStart(2, '0');
 
     const url =
-        'https://www.youtube.com/watch?v=' + videoId;
+        'https://www.youtube.com/watch?v=' +
+        videoId;
 
     fetch(
         'https://www.youtube.com/oembed?url=' +
@@ -802,8 +808,10 @@ document.addEventListener('DOMContentLoaded', function () {
             titleElement.textContent =
                 data.title;
 
-            titleElement.title =
-                data.title;
+            titleElement.setAttribute(
+                'title',
+                data.title
+            );
         }
     })
     .catch(function () {
