@@ -793,93 +793,65 @@ document.addEventListener('DOMContentLoaded', function () {
        LOAD YOUTUBE TITLE
     ========================================================= */
 
-    function loadVideoTitle(
-        dot,
-        videoId,
-        index
-    ) {
+    function loadVideoTitle(dot, videoId, index) {
 
-        let titleElement =
-            dot.querySelector('.video-dot-title');
+    let titleElement =
+        dot.querySelector('.video-thumbnail-title');
 
+    if (!titleElement) {
+        titleElement =
+            document.createElement('span');
 
-        /*
-         * Если элемента ещё нет —
-         * создаём его автоматически.
-         */
-        if (!titleElement) {
+        titleElement.className =
+            'video-thumbnail-title';
 
-            titleElement =
-                document.createElement('span');
+        dot.appendChild(titleElement);
+    }
 
-            titleElement.className =
-                'video-dot-title';
+    titleElement.textContent =
+        'Видео ' +
+        String(index + 1).padStart(2, '0');
 
+    const url =
+        'https://www.youtube.com/watch?v=' + videoId;
 
-            dot.appendChild(
-                titleElement
+    fetch(
+        'https://www.youtube.com/oembed?url=' +
+        encodeURIComponent(url) +
+        '&format=json'
+    )
+    .then(function (response) {
+
+        if (!response.ok) {
+            throw new Error(
+                'YouTube oEmbed error'
             );
-
         }
 
+        return response.json();
+    })
+    .then(function (data) {
+
+        if (
+            data &&
+            data.title
+        ) {
+            titleElement.textContent =
+                data.title;
+
+            titleElement.setAttribute(
+                'aria-label',
+                data.title
+            );
+        }
+    })
+    .catch(function () {
 
         titleElement.textContent =
             'Видео ' +
             String(index + 1).padStart(2, '0');
-
-
-        const url =
-            'https://www.youtube.com/watch?v=' +
-            videoId;
-
-
-        fetch(
-            'https://www.youtube.com/oembed?url=' +
-            encodeURIComponent(url) +
-            '&format=json'
-        )
-        .then(function (response) {
-
-            if (!response.ok) {
-                throw new Error(
-                    'YouTube oEmbed error'
-                );
-            }
-
-            return response.json();
-
-        })
-        .then(function (data) {
-
-            if (
-                data &&
-                data.title
-            ) {
-
-                titleElement.textContent =
-                    data.title;
-
-                titleElement.title =
-                    data.title;
-
-            }
-
-        })
-        .catch(function () {
-
-            /*
-             * Если YouTube не отдаёт название,
-             * оставляем номер.
-             */
-
-            titleElement.textContent =
-                'Видео ' +
-                String(index + 1)
-                    .padStart(2, '0');
-
-        });
-
-    }
+    });
+}
 
 
     /* =========================================================
