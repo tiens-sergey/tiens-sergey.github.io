@@ -941,81 +941,35 @@ body {
 
 
 /* =========================================================
-   MAIN SLIDER
+   VIDEO SLIDER
 ========================================================= */
 
 .video-slider {
     position: relative;
-
     width: 100%;
-    max-width: 100%;
-
-    margin: 40px 0 0;
-
-    box-sizing: border-box;
-
     overflow: hidden;
-
-    touch-action: pan-y;
-
-    user-select: none;
-    -webkit-user-select: none;
+    box-sizing: border-box;
 }
-
-
-/* =========================================================
-   TRACK
-========================================================= */
 
 .video-track {
     display: flex;
-
-    flex-direction: row;
-
-    align-items: center;
-
+    align-items: stretch;
     width: max-content;
-
-    margin: 0;
-    padding: 0;
-
-    transform: translate3d(0, 0, 0);
-
     will-change: transform;
-
-    transition:
-        transform .75s cubic-bezier(.16, 1, .3, 1);
 }
-
-
-/* =========================================================
-   VIDEO SLIDE
-========================================================= */
 
 .video-slide {
     position: relative;
 
     flex: 0 0 78vw;
-    min-width: 78vw;
+    width: 78vw;
 
     aspect-ratio: 16 / 9;
 
-    margin-left: 11vw;
-    margin-right: 11vw;
+    margin: 0;
 
     box-sizing: border-box;
-
-    overflow: hidden;
-
-    isolation: isolate;
-
-    background: #000;
 }
-
-
-/* =========================================================
-   VIDEO INNER
-========================================================= */
 
 .video-inner {
     position: absolute;
@@ -1055,74 +1009,66 @@ body {
 
 
 /* =========================================================
-   SWIPE / GESTURE LAYER
-=========================================================
-
-   Слой НЕ перекрывает всю площадь iframe.
-
-   Он состоит из:
-   - верхней зоны для свайпа;
-   - левой зоны;
-   - правой зоны.
-
-   Центральная область остаётся кликабельной
-   для обычного YouTube Play/Pause.
-
-   Нижняя область остаётся доступной
-   для YouTube controls.
+   OLD VIDEO TITLE
 ========================================================= */
 
-.video-gesture-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
+.video-title {
+    display: none !important;
+}
 
-    width: 100%;
-    height: 72%;
+
+/* =========================================================
+   SWIPE ZONES
+=========================================================
+
+   ВАЖНО:
+
+   Мы НЕ накладываем прозрачный слой на весь iframe.
+
+   Центральная часть полностью принадлежит YouTube:
+   - Play
+   - Pause
+   - ссылка YouTube
+   - меню
+   - перемотка
+
+   Свайп ловится только по боковым зонам.
+========================================================= */
+
+.video-swipe-left,
+.video-swipe-right {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    width: 22%;
 
     z-index: 5;
 
     background: transparent;
 
-    cursor: default;
-    touch-action: none;
+    touch-action: pan-y;
+
     user-select: none;
     -webkit-user-select: none;
+
     -webkit-tap-highlight-color: transparent;
+
+    cursor: grab;
 }
 
+.video-swipe-left {
+    left: 0;
+}
 
-/* =========================================================
-   DRAG STATE
-========================================================= */
+.video-swipe-right {
+    right: 0;
+}
 
-.video-gesture-layer:active {
+.video-swipe-left:active,
+.video-swipe-right:active {
     cursor: grabbing;
-}
-
-
-/* =========================================================
-   VIDEO TITLE
-========================================================= */
-
-.video-title {
-    position: relative;
-
-    z-index: 10;
-
-    margin: 18px auto 0;
-
-    width: 78vw;
-
-    box-sizing: border-box;
-
-    text-align: center;
-
-    font-size: 18px;
-
-    line-height: 1.35;
-
-    font-weight: 500;
 }
 
 
@@ -1150,7 +1096,6 @@ body {
     user-select: none;
     -webkit-user-select: none;
 }
-
 
 .current-number {
     font-weight: 700;
@@ -1185,12 +1130,13 @@ body {
 }
 
 
-/* =========================================
+/* =========================================================
    VIDEO DOTS
-   ========================================= */
+========================================================= */
 
 .video-dots {
     display: flex;
+
     align-items: flex-start;
     justify-content: flex-start;
 
@@ -1205,15 +1151,12 @@ body {
 
     box-sizing: border-box;
 
-    /*
-     * На desktop вообще не допускаем
-     * никакой прокрутки.
-     */
     overflow: hidden;
 
     scrollbar-width: none;
 
     position: relative;
+
     z-index: 10;
 }
 
@@ -1222,21 +1165,9 @@ body {
 }
 
 
-/* Последний дополнительный отступ */
-
-.video-dots::after {
-    content: "";
-
-    flex: 0 0 18px;
-
-    width: 18px;
-    height: 1px;
-}
-
-
-/* =========================================
+/* =========================================================
    DOT
-   ========================================= */
+========================================================= */
 
 .video-dot {
     position: relative;
@@ -1244,7 +1175,7 @@ body {
     flex: 0 0 86px;
 
     width: 86px;
-    min-width: 0;
+    min-width: 86px;
 
     height: auto;
 
@@ -1263,10 +1194,15 @@ body {
     box-sizing: border-box;
 
     display: flex;
+
     flex-direction: column;
+
     align-items: stretch;
-	overflow: visible;
-    transform: translateY(0);
+
+    overflow: visible;
+
+    transform:
+        translateY(0);
 
     transition:
         opacity .3s ease,
@@ -1274,9 +1210,9 @@ body {
 }
 
 
-/* =========================================
+/* =========================================================
    THUMBNAIL
-   ========================================= */
+========================================================= */
 
 .video-thumb {
     position: relative;
@@ -1293,41 +1229,20 @@ body {
     background-color: #111;
 
     background-repeat: no-repeat;
+
     background-position: center;
+
     background-size: cover;
 
     overflow: hidden;
 
     box-sizing: border-box;
-
-    transition:
-        box-shadow .3s ease;
 }
 
 
-/* Затемнение */
-
-.video-thumb::after {
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    background:
-        linear-gradient(
-            to top,
-            rgba(0,0,0,.55),
-            rgba(0,0,0,0) 65%
-        );
-
-    pointer-events: none;
-}
-
-
-/* =========================================
+/* =========================================================
    NUMBER
-   ========================================= */
+========================================================= */
 
 .video-thumb-number {
     position: absolute;
@@ -1338,6 +1253,7 @@ body {
     z-index: 2;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -1348,11 +1264,12 @@ body {
 
     border-radius: 2px;
 
-    background: rgba(0,0,0,.72);
+    background: rgba(0, 0, 0, .72);
 
     color: #fff;
 
     font-size: 11px;
+
     font-weight: 600;
 
     line-height: 1;
@@ -1363,24 +1280,27 @@ body {
 }
 
 
-/* =========================================
-   TITLE
-   НАЗВАНИЕ ТЕПЕРЬ В ПОТОКЕ,
-   А НЕ position:absolute
-   ========================================= */
+/* =========================================================
+   VIDEO TITLE UNDER THUMBNAIL
+========================================================= */
 
 .video-dots .video-thumbnail-title {
     position: relative;
 
-    display: -webkit-box;
+    top: auto;
+    left: auto;
 
     width: 100%;
+
     height: 28px;
 
     margin: 6px 0 0;
+
     padding: 0 2px;
 
     box-sizing: border-box;
+
+    display: -webkit-box;
 
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -1390,6 +1310,7 @@ body {
     color: inherit;
 
     font-size: 11px;
+
     line-height: 1.25;
 
     text-align: center;
@@ -1401,11 +1322,15 @@ body {
     pointer-events: none;
 
     transform: none;
+
+    transition:
+        opacity .3s ease;
 }
 
-/* =========================================
+
+/* =========================================================
    ACTIVE
-   ========================================= */
+========================================================= */
 
 .video-dot.active {
     opacity: 1;
@@ -1426,15 +1351,15 @@ body {
 }
 
 .video-dot.active .video-thumb-number {
-    background: rgba(255,255,255,.92);
+    background: rgba(255, 255, 255, .92);
 
     color: #000;
 }
 
 
-/* =========================================
+/* =========================================================
    HOVER
-   ========================================= */
+========================================================= */
 
 @media (hover: hover) {
 
@@ -1447,14 +1372,18 @@ body {
 }
 
 
-/* =========================================
-   MEDIUM SCREENS
-   LANDSCAPE
-   ========================================= */
+/* =========================================================
+   MEDIUM LANDSCAPE
+========================================================= */
 
 @media (min-width: 769px)
        and (max-width: 1199px)
        and (orientation: landscape) {
+
+    .video-slide {
+        flex-basis: 82vw;
+        width: 82vw;
+    }
 
     .video-dots {
         width: 82vw;
@@ -1467,18 +1396,13 @@ body {
         padding:
             8px 0 12px;
 
-        box-sizing: border-box;
-
         overflow: hidden;
 
         scrollbar-width: none;
 
         justify-content: space-between;
-        align-items: flex-start;
-    }
 
-    .video-dots::after {
-        display: none;
+        align-items: flex-start;
     }
 
     .video-dot {
@@ -1489,15 +1413,17 @@ body {
 
         height: auto;
 
-        overflow: visible;
-
         padding: 0;
 
-        transform: translateY(0);
+        overflow: visible;
+
+        transform:
+            translateY(0);
     }
 
     .video-thumb {
         width: 100%;
+
         height: 48px;
 
         flex: 0 0 48px;
@@ -1505,14 +1431,15 @@ body {
 
     .video-dots .video-thumbnail-title {
         width: 100%;
+
         height: 23px;
 
         margin-top: 4px;
 
-        padding:
-            0 1px;
+        padding: 0 1px;
 
         font-size: 9px;
+
         line-height: 1.2;
 
         overflow: hidden;
@@ -1537,11 +1464,16 @@ body {
 }
 
 
-/* =========================================
+/* =========================================================
    MOBILE
-   ========================================= */
+========================================================= */
 
 @media (max-width: 768px) {
+
+    .video-slide {
+        flex-basis: 86vw;
+        width: 86vw;
+    }
 
     .video-dots {
         width: 86vw;
@@ -1554,12 +1486,6 @@ body {
         padding:
             10px 0 34px;
 
-        box-sizing: border-box;
- /*
-         * ВАЖНО:
-         * horizontal scroll разрешён,
-         * vertical scroll ЗАПРЕЩЁН.
-         */
         overflow-x: auto;
         overflow-y: hidden;
 
@@ -1576,13 +1502,17 @@ body {
         display: none;
     }
 
+    .video-dots::before,
     .video-dots::after {
         content: "";
 
-        flex: 0 0 28px;
+        flex: 0 0 calc(
+            (86vw - 72px) / 2
+        );
 
-        width: 28px;
-        height: 1px;
+        width: calc(
+            (86vw - 72px) / 2
+        );
     }
 
     .video-dot {
@@ -1593,11 +1523,12 @@ body {
 
         height: auto;
 
+        padding: 0;
+
         overflow: visible;
     }
 
     .video-thumb {
-        width: 100%;
         height: 44px;
 
         flex: 0 0 44px;
@@ -1607,14 +1538,15 @@ body {
 
     .video-dots .video-thumbnail-title {
         width: 100%;
+
         height: 25px;
 
-        margin-top: 5px;
+        margin-top: 4px;
 
-        padding:
-            0 1px;
+        padding: 0 1px;
 
         font-size: 10px;
+
         line-height: 1.25;
     }
 
@@ -1636,31 +1568,36 @@ body {
     }
 }
 
-/* =========================================
+
+/* =========================================================
    VERY SMALL MOBILE
-   ========================================= */
+========================================================= */
 
 @media (max-width: 480px) {
 
-    .video-dots {
+    .video-slide {
+        flex-basis: 86vw;
+        width: 86vw;
+    }
 
+    .video-dots {
         gap: 7px;
 
         padding-bottom: 32px;
-
-        overflow-x: auto;
-        overflow-y: hidden;
     }
 
+    .video-dots::before,
     .video-dots::after {
+        flex-basis: calc(
+            (86vw - 68px) / 2
+        );
 
-        flex: 0 0 32px;
-
-        width: 32px;
+        width: calc(
+            (86vw - 68px) / 2
+        );
     }
 
     .video-dot {
-
         flex: 0 0 68px;
 
         width: 68px;
@@ -1668,14 +1605,12 @@ body {
     }
 
     .video-thumb {
-
         height: 42px;
 
         flex-basis: 42px;
     }
 
     .video-dots .video-thumbnail-title {
-
         height: 23px;
 
         margin-top: 4px;
@@ -1684,7 +1619,6 @@ body {
     }
 
     .video-thumb-number {
-
         left: 4px;
         bottom: 4px;
 
